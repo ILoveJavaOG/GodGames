@@ -12,11 +12,11 @@ import de.ilovejava.utils.Utils;
 public class Event_Build implements Listener {
 	@EventHandler
 	public void onBuild(BlockPlaceEvent e) {
-		if(Utils.getTypes().get(e.getPlayer()).equals(ChatType.LOBBY)) {
+		if (Utils.getTypes().get(e.getPlayer()).equals(ChatType.LOBBY)) {
 			if(!e.getPlayer().hasPermission("GG.Build") && !e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
 				e.setCancelled(true);
 			}
-		}else {
+		} else {
 			if(!e.getPlayer().hasPermission("GG.Build") && !e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
 				e.setCancelled(true);
 			}
@@ -25,12 +25,12 @@ public class Event_Build implements Listener {
 	
 	@EventHandler
 	public void onBuild(BlockBreakEvent e) {
-		if(Utils.getTypes().get(e.getPlayer()).equals(ChatType.LOBBY)) {
+		if (Utils.getTypes().get(e.getPlayer()).equals(ChatType.LOBBY)) {
 			if(!e.getPlayer().hasPermission("GG.Build") && !e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
 				e.setCancelled(true);
 			}
-		}else {
-			if(!e.getPlayer().hasPermission("GG.Build") && !e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+		} else {
+			if (!e.getPlayer().hasPermission("GG.Build") && !e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
 				e.setCancelled(true);
 			}
 		}

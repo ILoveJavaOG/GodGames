@@ -21,7 +21,7 @@ public class SkullCard {
 	private boolean canPlay = false;
 	public SkullCard(Player p) {
 		this.p = p;
-		this.win = new ItemStack(Material.STAINED_GLASS_PANE,1,(short)13);
+		this.win = new ItemStack(Material.WHITE_STAINED_GLASS_PANE,1,(short)13);
 		ItemMeta i = this.win.getItemMeta();
 		i.setDisplayName(" ");
 		this.win.setItemMeta(i);

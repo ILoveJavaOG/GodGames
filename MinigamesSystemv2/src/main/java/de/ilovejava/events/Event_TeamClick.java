@@ -2,7 +2,7 @@ package de.ilovejava.events;
 
 import java.util.Random;
 
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,11 +21,10 @@ public class Event_TeamClick implements Listener {
 		if(e.getInventory() == null) return;
 		if(e.getCurrentItem() == null) return;
 		if(!e.getCurrentItem().hasItemMeta()) return;
-		if(e.getInventory().getName() == null) return;
 		
 		Player p = (Player) e.getWhoClicked();
 		
-		if(e.getInventory().getName().equalsIgnoreCase("§eTeam Arena")) {
+		if(e.getView().getTitle().equalsIgnoreCase("§eTeam Arena")) {
 			e.setCancelled(true);
 			switch(e.getCurrentItem().getItemMeta().getDisplayName()) {
 				case "§eUndercover Modus":

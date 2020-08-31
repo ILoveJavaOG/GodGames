@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import de.ilovejava.utils.Utils;
 
 public class TNTRUN_SelectorInventory {
+
 	Player p;
 	Inventory inv;
 	public TNTRUN_SelectorInventory(Player p) {
@@ -27,7 +28,7 @@ public class TNTRUN_SelectorInventory {
 			im.setDisplayName("§cKein Spiel vorhanden!");
 			i.setItemMeta(im);
 			this.inv.setItem(22, i);
-		}else {
+		} else {
 			for(String key : Utils.getTNTReady().keySet()) {
 				TNT tnt = Utils.getTNTReady().get(key);
 				ItemStack i = new ItemStack(Material.SAND);

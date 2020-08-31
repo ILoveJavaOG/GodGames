@@ -4,8 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class API_TitleSendEvent extends Event
-{
+public class API_TitleSendEvent extends Event {
   private static final HandlerList handlers = new HandlerList();
   private final Player player;
   private String header;

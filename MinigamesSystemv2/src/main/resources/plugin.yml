@@ -2,5 +2,5 @@ main: de.ilovejava.lobby.Lobby
 name: Minigames
 author: ILoveJava
 version: 0.0.1
-depend: [Vault]
-depend: [Multiverse-Core]
+api-version: 1.13
+depend: [Vault, Multiverse-Core]

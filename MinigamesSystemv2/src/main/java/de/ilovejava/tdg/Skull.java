@@ -3,8 +3,8 @@ package de.ilovejava.tdg;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
-import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.libs.org.apache.commons.codec.binary.Base64;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -14,7 +14,7 @@ import com.mojang.authlib.properties.Property;
 public class Skull {
 	
     public static ItemStack getSkull(String url) {
-        ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         if(url.isEmpty())return item;
      
      

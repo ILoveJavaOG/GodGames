@@ -31,7 +31,7 @@ public class Event_Damge implements Listener {
 					break;
 				case PVPNONFOOD:
 					System.out.println(e.getCause().toString());
-					if(e.getCause().equals(DamageCause.FALL)) {e.setCancelled(true);}else {e.setCancelled(false);}
+					e.setCancelled(e.getCause().equals(DamageCause.FALL));
 					break;
 				}
 			}

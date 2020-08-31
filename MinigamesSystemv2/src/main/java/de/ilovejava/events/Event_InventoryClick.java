@@ -17,12 +17,11 @@ import de.ilovejava.uuid.uuidfetcher;
 public class Event_InventoryClick implements Listener {
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
-		if(e.getInventory().getName() == null) return;
 		if(e.getCurrentItem().getType().equals(Material.AIR))return;
 		if(!e.getCurrentItem().hasItemMeta()) return;
 		
 		Player p = (Player) e.getWhoClicked();
-		String inv = e.getInventory().getName();
+		String inv = e.getView().getTitle();
 		String item = e.getCurrentItem().getItemMeta().getDisplayName();
 		String uuid = uuidfetcher.getUUID(p).toString();
 		switch(inv) {

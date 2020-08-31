@@ -11,14 +11,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import de.ilovejava.utils.Utils;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_15_R1.EntityPlayer;
 
 public class uuidfetcher{
 	

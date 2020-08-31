@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.UUID;
 
+import de.ilovejava.minigames.GameLogic.LoadDefaultConfig;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,14 +15,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.mojang.authlib.GameProfile;
-
-import de.ilovejava.Enums.PVPContainer;
-import de.ilovejava.autoinit.TNTRun;
 import de.ilovejava.commands.Command_Nick;
 import de.ilovejava.commands.Command_Spawn;
 import de.ilovejava.commands.Command_TnTRun;
@@ -44,22 +42,20 @@ import de.ilovejava.events.Event_TDGSelector;
 import de.ilovejava.events.Event_TNTSelectorClick;
 import de.ilovejava.events.Event_TeamClick;
 import de.ilovejava.events.Event_WeahtChange;
-import de.ilovejava.lottochest.Lottochest;
-import de.ilovejava.mysql.InsertTypes;
-import de.ilovejava.scoreboard.Scoreboard;
-import de.ilovejava.shop.Shop;
-import de.ilovejava.skull.SkullBase;
-import de.ilovejava.tdg.Skull;
 import de.ilovejava.tdg.TDG;
 import de.ilovejava.tntrun.TNTEvents;
 import de.ilovejava.utils.Utils;
 import de.ilovejava.vault.VaultConnector;
-import de.lovejava.autoinit.LoadSkulls;
-import de.lovejava.autoinit.LoadUser;
 import net.milkbowl.vault.economy.Economy;
+import org.jetbrains.annotations.NotNull;
 
 public class Lobby extends JavaPlugin{
-	
+
+	@NotNull
+	public static Plugin getPlugin() {
+		return Lobby.getPlugin(Lobby.class);
+	}
+
 	private static Economy econ = null;
 	
 	public String ver = this.getDescription().getVersion();
@@ -72,37 +68,37 @@ public class Lobby extends JavaPlugin{
 	@Override
 	public void onEnable() {
 		removeEntety();
-		
-		Utils.setInstance(this);
-		Utils.setUser(new HashMap<>());
-		Utils.setTypes(new HashMap<>());
-		Utils.setTimeSkull(Skull.getSkull("http://textures.minecraft.net/texture/f37cae5c51eb1558ea828f58e0dff8e6b7b0b1a183d737eecf714661761"));
-		Utils.setSkullbase(new SkullBase());
-		Utils.setSkullcards(new HashMap<>());
-		Utils.setTntcreate(new HashMap<>());
-		Utils.setTNTReady(new HashMap<>());
-		Utils.setWaitLottochest(new ArrayList<Player>());
-		Utils.setLottoCards(new HashMap<Player, Lottochest>());
-		Utils.setNicked(new HashMap<UUID, String>());
-		Utils.setRealnames(new HashMap<UUID, String>());
-		Utils.setOlddisplaynames(new HashMap<UUID, String>());
-		Utils.setOldplayerlistnames(new HashMap<UUID, String>());
-		Utils.setNames(new ArrayList<String>());
-		Utils.setProfielUUIDS(new HashMap<GameProfile, UUID>());
-		Utils.setPvpStats(new HashMap<Player, PVPContainer>());
-		new TNTRun();
-		setUpConfig();
-		loadEvent();
-		loadCommands();
-		new InsertTypes();
-		new LoadUser();
-		new LoadSkulls();
-		new Shop();
-		setupEconomy();
-		setupEco();
-		Utils.setEco(econ);
-		Scoreboard.update();
-		setNickNames();
+		LoadDefaultConfig.load();
+//		Utils.setInstance(this);
+//		Utils.setUser(new HashMap<>());
+//		Utils.setTypes(new HashMap<>());
+//		Utils.setTimeSkull(Skull.getSkull("http://textures.minecraft.net/texture/f37cae5c51eb1558ea828f58e0dff8e6b7b0b1a183d737eecf714661761"));
+//		Utils.setSkullbase(new SkullBase());
+//		Utils.setSkullcards(new HashMap<>());
+//		Utils.setTntcreate(new HashMap<>());
+//		Utils.setTNTReady(new HashMap<>());
+//		Utils.setWaitLottochest(new ArrayList<Player>());
+//		Utils.setLottoCards(new HashMap<Player, Lottochest>());
+//		Utils.setNicked(new HashMap<UUID, String>());
+//		Utils.setRealnames(new HashMap<UUID, String>());
+//		Utils.setOlddisplaynames(new HashMap<UUID, String>());
+//		Utils.setOldplayerlistnames(new HashMap<UUID, String>());
+//		Utils.setNames(new ArrayList<String>());
+//		Utils.setProfielUUIDS(new HashMap<GameProfile, UUID>());
+//		Utils.setPvpStats(new HashMap<Player, PVPContainer>());
+//		new TNTRun();
+//		setUpConfig();
+//		loadEvent();
+//		loadCommands();
+//		new InsertTypes();
+//		new LoadUser();
+//		new LoadSkulls();
+//		new Shop();
+//		setupEconomy();
+//		setupEco();
+//		Utils.setEco(econ);
+//		Scoreboard.update();
+//		setNickNames();
 	}
 	
 	@Override

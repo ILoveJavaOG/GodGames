@@ -26,7 +26,7 @@ public abstract class AbstartcCommands extends BukkitCommand{
 	
 	public abstract boolean command(CommandSender paramCommandSender, String[] paramArrayOfString);
 	
-	public CommandMap getCommandMap()throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException{
+	public CommandMap getCommandMap() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException{
 		Field commandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 		commandMap.setAccessible(true);
 		return (CommandMap) commandMap.get(Bukkit.getServer());

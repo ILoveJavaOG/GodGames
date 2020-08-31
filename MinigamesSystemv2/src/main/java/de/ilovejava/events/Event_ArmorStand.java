@@ -12,10 +12,10 @@ public class Event_ArmorStand implements Listener {
 	public void entityDes(EntityDamageByEntityEvent e) {
 		Entity target = e.getEntity();
 		Entity Damager = e.getDamager();
-		if(Damager instanceof Player) {
-			if(target.getType().equals(EntityType.ARMOR_STAND)) {
+		if (Damager instanceof Player) {
+			if (target.getType().equals(EntityType.ARMOR_STAND)) {
 				Player p = (Player) Damager;
-				if(!p.hasPermission("*")) {
+				if (!p.hasPermission("*")) {
 					e.setCancelled(true);
 				}
 			}

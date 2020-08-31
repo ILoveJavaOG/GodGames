@@ -138,10 +138,10 @@ public class Event_InterAcct implements Listener {
 		}
 		
 		gui.addIcon(p, Utils.setPosition(loc, 1, 1, 4, 2, 2, 4), "ßb1VS1", new ItemStack(Material.DIAMOND_SWORD), true, true, 2);
-		gui.addIcon(p, Utils.setPosition(loc, 2, 1, 4, 2, 2, 4), "ßeBedWars", new ItemStack(Material.GOLD_SWORD), true, true, 2);
+		gui.addIcon(p, Utils.setPosition(loc, 2, 1, 4, 2, 2, 4), "ßeBedWars", new ItemStack(Material.GOLDEN_SWORD), true, true, 2);
 		gui.addIcon(p, Utils.setPosition(loc, 3, 1, 4, 2, 2, 4), "ß6Void-Run", new ItemStack(Material.SAND), 2);
 		gui.addIcon(p, Utils.setPosition(loc, 4, 1, 4, 2, 2, 4), "ßaIce Scooter", new ItemStack(Material.ICE), 2);
-		gui.addIcon(p, Utils.setPosition(loc, 5, 1, 4, 2, 2, 4), "ß5Fischeschlacht", new ItemStack(Material.RAW_FISH), true, 2);
+		gui.addIcon(p, Utils.setPosition(loc, 5, 1, 4, 2, 2, 4), "ß5Fischeschlacht", new ItemStack(Material.COD), true, 2);
 		gui.addIcon(p, Utils.setPosition(loc, 1, 2, 4, 2, 2, 4), "ß9Schleimervalley", new ItemStack(Material.TNT), 3);
 		gui.addIcon(p, Utils.setPosition(loc, 2, 2, 4, 2, 2, 4), "ß3Schatzkiste", new ItemStack(Material.ENDER_CHEST), 3);
 		gui.addIcon(p, Utils.setPosition(loc, 5, 2, 4, 2, 2, 4), "ßcSchlieﬂen", "http://textures.minecraft.net/texture/5a6787ba32564e7c2f3a0ce64498ecbb23b89845e5a66b5cec7736f729ed37", 3);

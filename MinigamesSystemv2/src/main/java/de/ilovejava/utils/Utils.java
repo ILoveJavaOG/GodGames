@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -25,7 +25,7 @@ import de.ilovejava.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_15_R1.NBTTagCompound;
 
 public class Utils {
 	@Getter @Setter
@@ -165,13 +165,13 @@ public class Utils {
     
     
     public static String getNBTTag(ItemStack i) {
-		net.minecraft.server.v1_12_R1.ItemStack cItem = CraftItemStack.asNMSCopy(i);
+		net.minecraft.server.v1_15_R1.ItemStack cItem = CraftItemStack.asNMSCopy(i);
 		NBTTagCompound co = (cItem.hasTag()) ? cItem.getTag() : new NBTTagCompound();
 		return co.getString("arena");
 	}
     
     public static ItemStack setCustomNBTTag(ItemStack i, String key, String name) {
-		net.minecraft.server.v1_12_R1.ItemStack cItem = CraftItemStack.asNMSCopy(i);
+		net.minecraft.server.v1_15_R1.ItemStack cItem = CraftItemStack.asNMSCopy(i);
 		NBTTagCompound co = (cItem.hasTag()) ? cItem.getTag() : new NBTTagCompound();
 		co.setString(key, name);
 		cItem.setTag(co);

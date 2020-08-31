@@ -19,7 +19,7 @@ public class Event_TNTSelectorClick implements Listener {
 		if(e.getCurrentItem() == null) return;
 		if(!e.getCurrentItem().hasItemMeta()) return;
 		if(e.getSlotType() == null) return;
-		if(e.getInventory().getName().contentEquals("§eVoid-Run")) {
+		if(e.getView().getTitle().contentEquals("§eVoid-Run")) {
 			e.setCancelled(true);
 			if(e.getCurrentItem().getType().equals(Material.BARRIER)) return;
 			String aname = Utils.getNBTTag(e.getCurrentItem());

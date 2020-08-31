@@ -122,7 +122,7 @@ public class TDG {
 			a.setHelmet(Skull.getSkull(texture));
 		}
 		else {
-			ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+			ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
 			SkullMeta meta = (SkullMeta) skull.getItemMeta();
 			meta.setOwner(texture.replace("%player%", p.getName()));
 			skull.setItemMeta(meta);

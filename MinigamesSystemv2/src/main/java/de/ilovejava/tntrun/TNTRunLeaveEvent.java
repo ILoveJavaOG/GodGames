@@ -9,6 +9,7 @@ import de.ilovejava.Enums.ChatType;
 import de.ilovejava.utils.Utils;
 
 public class TNTRunLeaveEvent extends Event implements Cancellable{
+
 	public static HandlerList handlers = new HandlerList();
     public boolean cancelled = false;
 	

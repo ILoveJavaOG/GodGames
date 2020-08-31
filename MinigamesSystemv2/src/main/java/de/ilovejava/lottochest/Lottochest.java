@@ -115,12 +115,12 @@ public class Lottochest {
 		ItemStack i = new ItemStack(Material.EMERALD);
 		ItemMeta im = i.getItemMeta();
 		
-		ItemStack normal = new ItemStack(Material.STAINED_GLASS_PANE);
+		ItemStack normal = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 		ItemMeta inormal = normal.getItemMeta();
 		inormal.setDisplayName("§aNormal");
 		normal.setItemMeta(inormal);
 		
-		ItemStack wertvoll = new ItemStack(Material.STAINED_GLASS_PANE,1,(short)14);
+		ItemStack wertvoll = new ItemStack(Material.RED_STAINED_GLASS_PANE);
 		ItemMeta iwert = wertvoll.getItemMeta();
 		iwert.setDisplayName("§cWertvoll");
 		wertvoll.setItemMeta(iwert);
@@ -185,7 +185,7 @@ public class Lottochest {
 		i.setItemMeta(im);
 		inv.setItem(24, i);
 		
-		ItemStack all = new ItemStack(Material.STAINED_GLASS_PANE,1,(short) 3);
+		ItemStack all = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
 		ItemMeta iall = all.getItemMeta();
 		int al = prices.get(0) + prices.get(1)+prices.get(2)+prices.get(3)+prices.get(4);
 		iall.setDisplayName("§6" + al);

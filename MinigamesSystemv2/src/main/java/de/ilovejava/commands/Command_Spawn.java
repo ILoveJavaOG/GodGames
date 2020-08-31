@@ -20,10 +20,12 @@ public class Command_Spawn extends AbstartcCommands{
 		if(sender instanceof Player) {
 			Player p = (Player) sender;
 			if(args.length == 0) {
-				if(Utils.getSpawn() != null) {
+				if (Utils.getSpawn() != null) {
 					p.teleport(Utils.getSpawn());
-				}else {p.sendMessage(Utils.getPrefix() + "§cAchtung, der Spawn ist zurzeit nicht aktiv!");}
-			}else if(args.length == 1) {
+				} else {
+					p.sendMessage(Utils.getPrefix() + "§cAchtung, der Spawn ist zurzeit nicht aktiv!");
+				}
+			} else if(args.length == 1) {
 				FileConfiguration cfg;
 				Location loc;
 				switch(args[0].toLowerCase()) {

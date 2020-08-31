@@ -54,6 +54,7 @@ public class TNT implements TNTRun{
 	Integer replaceTimer;
 	Integer timer;
 	int period = 0;
+
 	public TNT(String key) {
 		this.Key = key;
 		this.f = new File("plugins/Minigames/TNTRun",key+".tntrun");
@@ -357,7 +358,7 @@ public class TNT implements TNTRun{
 						break;
 				}
 			}
-		}, 0, 20*1);
+		}, 0, 20);
 	}
 
 	public void setNewScoreBoard() {

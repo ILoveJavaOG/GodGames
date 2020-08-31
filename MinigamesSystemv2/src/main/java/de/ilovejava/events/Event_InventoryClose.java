@@ -11,13 +11,13 @@ public class Event_InventoryClose implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClose(InventoryCloseEvent e) {
-		if(e.getInventory().getName().equalsIgnoreCase("§e§o§lShop")) {
+		if(e.getView().getTitle().equalsIgnoreCase("§e§o§lShop")) {
 			if(Utils.getSkullcards().containsKey(e.getPlayer())) {
 				if(!Utils.getSkullcards().get(e.getPlayer()).canPlay()) {
 					Utils.getSkullcards().remove(e.getPlayer());
 				}
 			}
-		}else if(e.getInventory().getName().equalsIgnoreCase("§5LottoChest")) {
+		}else if(e.getView().getTitle().equalsIgnoreCase("§5LottoChest")) {
 			if(Utils.getLottoCards().containsKey(e.getPlayer())) {
 				if(!Utils.getLottoCards().get(e.getPlayer()).isGive()) {
 					Utils.getEco().depositPlayer(Bukkit.getOfflinePlayer(e.getPlayer().getName()), Utils.getLottoCards().get(e.getPlayer()).getSadPrice());

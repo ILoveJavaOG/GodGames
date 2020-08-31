@@ -56,7 +56,7 @@ public class Event_Join implements Listener {
 	public static void giveLobbyItems(Player p) {
 		p.getInventory().clear();
 		
-		ItemStack i = new ItemStack(Material.WATCH);
+		ItemStack i = new ItemStack(Material.CLOCK);
 		ItemMeta im = i.getItemMeta();
 		im.setDisplayName("§e§o§lSpiel wählen§8(§cRechtklick§8)");
 		i.setItemMeta(im);

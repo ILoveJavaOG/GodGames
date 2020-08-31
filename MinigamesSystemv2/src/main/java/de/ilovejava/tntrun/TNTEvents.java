@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class TNTEvents implements Listener{
+
 	@EventHandler
 	public void tntjoin(TNTRunJoinEvent e) {
 		if(e.canJoin()) {
