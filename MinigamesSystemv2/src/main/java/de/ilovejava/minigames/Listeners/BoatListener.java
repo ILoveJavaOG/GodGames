@@ -3,14 +3,19 @@ package de.ilovejava.minigames.Listeners;
 import de.ilovejava.minigames.Communication.Tracker;
 import de.ilovejava.minigames.Events.BoatBlockCollisionEvent;
 import de.ilovejava.minigames.Events.BoatEntityCollisionEvent;
+import de.ilovejava.minigames.GameLogic.Game;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,14 +84,16 @@ public class BoatListener implements Listener {
 				Player player = (Player) passenger;
 				//Check the game and call events
 				if (Tracker.isInGame(player)) {
+					Game game = Tracker.getGame(player);
 					collidingEntities(boat).forEach(entity -> {
 						BoatEntityCollisionEvent entityCollisionEvent = new BoatEntityCollisionEvent(boat, player, entity);
-						Tracker.getGame(player).callEvent(entityCollisionEvent);
+						game.callEvent(entityCollisionEvent);
 					});
 					collidingBlocks(boat).forEach(block -> {
 						BoatBlockCollisionEvent blockCollisionEvent = new BoatBlockCollisionEvent(boat, player, block);
-						Tracker.getGame(player).callEvent(blockCollisionEvent);
+						game.callEvent(blockCollisionEvent);
 					});
+					game.callEvent(event);
 				}
 			}
 		}

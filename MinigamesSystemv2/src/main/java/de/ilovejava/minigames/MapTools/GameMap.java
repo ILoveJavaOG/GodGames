@@ -1,11 +1,14 @@
 package de.ilovejava.minigames.MapTools;
+
 import com.mojang.datafixers.util.Pair;
 import lombok.Getter;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class to represent a map for a given game
@@ -26,7 +29,7 @@ public class GameMap {
 
 	//Optional options for the map
 	@Getter
-	private final HashMap<DefaultOptions, Object> extraOptions = new HashMap<>();
+	private final Map<String, Object> options;
 
 	@Getter
 	private final HashMap<String, Pair<Double, Double>> items = new HashMap<>();
@@ -36,26 +39,17 @@ public class GameMap {
 
 	/**
 	 * Constructor for map
-	 *
-	 * @param mapName(String) Name of the map
+	 *  @param mapName(String) Name of the map
 	 * @param world(World) World of the map
 	 * @param locations(List) List of locations in the map
+	 * @param options(Map): Map containing all options for the map
 	 */
-	public GameMap(String mapName, World world, List<CustomLocation> locations, ProbabilityMap items) {
+	public GameMap(String mapName, World world, Map<String, Object> options, List<CustomLocation> locations, ProbabilityMap items) {
 		this.mapName = mapName;
 		this.locations = locations;
 		this.world = world;
+		this.options = options;
 		this.probabilities = items;
-	}
-
-	/**
-	 * Method to add option to the map
-	 *
-	 * @param key(String) Key to retrieve option by
-	 * @param option(Object) Option to store
-	 */
-	protected void addOption(DefaultOptions key, Object option) {
-		extraOptions.put(key, option);
 	}
 
 	/**
@@ -67,8 +61,8 @@ public class GameMap {
 	 * @return Object at key casted to T. May be null
 	 */
 	@Nullable
-	public <T> T getOption(DefaultOptions key, @NotNull Class<T> castTo) {
-		return castTo.cast(extraOptions.get(key));
+	public <T> T getOption(String key, @NotNull Class<T> castTo) {
+		return castTo.cast(options.get(key));
 	}
 
 	/**
@@ -79,7 +73,7 @@ public class GameMap {
 	 * @return Object at key. May be null
 	 */
 	@Nullable
-	public Object getOption(DefaultOptions key) {
-		return extraOptions.get(key);
+	public Object getOption(String key) {
+		return options.get(key);
 	}
 }

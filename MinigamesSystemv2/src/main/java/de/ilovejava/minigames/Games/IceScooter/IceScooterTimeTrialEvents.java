@@ -12,13 +12,10 @@ import de.ilovejava.minigames.MapTools.CheckPoint;
 import de.ilovejava.minigames.MapTools.ProbabilityMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Vehicle;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
@@ -33,7 +30,7 @@ import java.util.List;
 /**
  * Class to represent events during the race
  */
-public class IceScooterRaceEvents {
+public class IceScooterTimeTrialEvents {
 
 	/**
 	 * Method to prevent players from exiting during the race
@@ -60,7 +57,7 @@ public class IceScooterRaceEvents {
 			//Check if the player has no item box
 			if (!ItemBox.hasBox(player)) {
 				//Build probabilities for items
-				IceScooterRace race = (IceScooterRace) Tracker.getGame(player);
+				IceScooterTimeTrial race = (IceScooterTimeTrial) Tracker.getGame(player);
 				ProbabilityMap probabilities = race.getGameMap().getProbabilities();
 				probabilities.setPlaces(race.getNumPlayers());
 				List<GameItem> items = new ArrayList<>();
@@ -127,32 +124,6 @@ public class IceScooterRaceEvents {
 	}
 
 	/**
-	 * Method to handle damage
-	 *
-	 * @param event(EntityDamageEvent): Damage event
-	 */
-	public void onDamage(EntityDamageEvent event) {
-		//Stop damage
-		event.setCancelled(true);
-		Player player = (Player) event.getEntity();
-		Vehicle boat = (Vehicle) player.getVehicle();
-		if (boat != null) {
-			//Make player invulnerable
-			player.setInvulnerable(true);
-			Vector stop = new Vector(0, 0, 0);
-			//Create particles
-			boat.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, boat.getLocation(), 10, 1.5, 1.5, 1.5);
-			//Stop boat
-			int rotation = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> boat.setVelocity(stop), 1L, 1L);
-			//Reset state and stop task
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-				Bukkit.getScheduler().cancelTask(rotation);
-				player.setInvulnerable(false);
-			}, 21L);
-		}
-	}
-
-	/**
 	 * Method to handle moving of boats
 	 *
 	 * @param event(VehicleMoveEvent): Move event
@@ -167,7 +138,7 @@ public class IceScooterRaceEvents {
 			//Increase lap count if first checkpoint was reached
 			if (next.getNumber() == 1) {
 				Player driver = (Player) boat.getPassengers().get(0);
-				IceScooterRace race = (IceScooterRace) Tracker.getGame(driver);
+				IceScooterTimeTrial race = (IceScooterTimeTrial) Tracker.getGame(driver);
 				race.newLap(driver);
 			}
 			//Get next checkpoints

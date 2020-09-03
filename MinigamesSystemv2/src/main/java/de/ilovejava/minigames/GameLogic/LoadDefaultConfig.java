@@ -1,12 +1,13 @@
 package de.ilovejava.minigames.GameLogic;
+
 import de.ilovejava.lobby.Lobby;
-import de.ilovejava.minigames.Games.IceScooter.IceScooterRace;
-import de.ilovejava.minigames.Listeners.BoatListener;
-import de.ilovejava.minigames.Listeners.DamageListener;
-import de.ilovejava.minigames.Listeners.InteractListener;
-import de.ilovejava.minigames.Listeners.LeaveListener;
 import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.GameSelector.SelectorEvents;
+import de.ilovejava.minigames.Games.FishFight.FishFight;
+import de.ilovejava.minigames.Games.IceScooter.IceScooterPVP;
+import de.ilovejava.minigames.Games.IceScooter.IceScooterRace;
+import de.ilovejava.minigames.Games.IceScooter.IceScooterTimeTrial;
+import de.ilovejava.minigames.Listeners.*;
 import de.ilovejava.minigames.MapTools.MapLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -64,7 +65,11 @@ public class LoadDefaultConfig {
 		Bukkit.getServer().getPluginManager().registerEvents(new BoatListener(), Lobby.getPlugin());
 		Bukkit.getServer().getPluginManager().registerEvents(new InteractListener(), Lobby.getPlugin());
 		Bukkit.getServer().getPluginManager().registerEvents(new DamageListener(), Lobby.getPlugin());
+		Bukkit.getServer().getPluginManager().registerEvents(new FishListener(), Lobby.getPlugin());
 		MapLoader.loadMaps();
 		new Selector(IceScooterRace.factory);
+		new Selector(IceScooterPVP.factory);
+		new Selector(IceScooterTimeTrial.factory);
+		new Selector(FishFight.factory);
 	}
 }

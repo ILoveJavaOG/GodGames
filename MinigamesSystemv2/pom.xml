@@ -30,7 +30,7 @@
       <version>2.5</version>
       <scope>compile</scope>
     </dependency>
-	<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 	<dependency>
 	    <groupId>org.projectlombok</groupId>
 	    <artifactId>lombok</artifactId>
@@ -52,6 +52,18 @@
 	    <artifactId>snakeyaml</artifactId>
 	    <version>1.13</version>
 	</dependency>
+      <dependency>
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
+          <version>16.0.2</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.jetbrains</groupId>
+          <artifactId>annotations</artifactId>
+          <version>16.0.2</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
   <build>
   <plugins>
@@ -123,6 +135,14 @@
     </execution>
   </executions>
  </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+              <source>8</source>
+              <target>8</target>
+          </configuration>
+      </plugin>
   </plugins>
 </build>
 </project>

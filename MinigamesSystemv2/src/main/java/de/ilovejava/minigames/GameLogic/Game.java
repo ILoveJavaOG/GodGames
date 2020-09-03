@@ -2,7 +2,6 @@ package de.ilovejava.minigames.GameLogic;
 
 import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.Communication.Tracker;
-import de.ilovejava.minigames.MapTools.DefaultOptions;
 import de.ilovejava.minigames.MapTools.GameMap;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -11,7 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Core class to represent a game
@@ -93,7 +94,7 @@ public abstract class Game implements Events {
 		Tracker.registerPlayer(joinedPlayer, getId());
 		this.playerJoin(joinedPlayer);
 		//Start loading if minimum number of players is reached
-		if (this.getGameMap().getOption(DefaultOptions.MINPLAYERS, Integer.class) <= getNumPlayers() && !isLoading) {
+		if (this.getGameMap().getOption(GameOptions.MINPLAYERS.name(), Integer.class) <= getNumPlayers() && !isLoading) {
 			load();
 		}
 	}
@@ -172,7 +173,7 @@ public abstract class Game implements Events {
 		Tracker.unregisterPlayer(leavingPlayer);
 		this.playerLeave(leavingPlayer);
 		//Stop loading if not enough players
-		if (this.getGameMap().getOption(DefaultOptions.MINPLAYERS, Integer.class) > getNumPlayers() && isLoading) {
+		if (this.getGameMap().getOption(GameOptions.MINPLAYERS.name(), Integer.class) > getNumPlayers() && isLoading) {
 			abortLoad();
 		}
 	}
@@ -192,4 +193,9 @@ public abstract class Game implements Events {
 	 * @param event(Event) Event which is called and regards the game
 	 */
 	public abstract void callEvent(Event event);
+
+	/**
+	 * Method to setup the game. Must be called by game itself
+	 */
+	protected abstract void setup();
 }

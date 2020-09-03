@@ -3,10 +3,10 @@ package de.ilovejava.minigames.GameSelector;
 import de.ilovejava.minigames.Communication.Tracker;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameFactory;
-import de.ilovejava.minigames.MapTools.DefaultOptions;
+import de.ilovejava.minigames.GameLogic.GameOptions;
+import de.ilovejava.minigames.GameLogic.GameState;
 import de.ilovejava.minigames.MapTools.GameMap;
 import de.ilovejava.minigames.MapTools.MapLoader;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Class which represents a selector to choose the maps
@@ -54,31 +56,36 @@ public class Selector implements InventoryHolder {
 	}
 
 	private void fillMaps() {
-		int i = 0;
 		//Get maps for the current game
 		for (GameMap map : MapLoader.allMaps.get(game)) {
-			//Create the game and create the item to display each map
-			Game game = factory.createGame(map);
-			loadedGames.add(game.getId());
-			ItemStack display = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
-			ItemMeta meta = display.getItemMeta();
-			if (meta != null) {
-				meta.setDisplayName(map.getOption(DefaultOptions.TITLE, String.class));
-				List<String> lore = new ArrayList<>();
-				lore.add("State: Waiting");
-				lore.add("Current Players: 0");
-				lore.add("Minimum Players: " + map.getOption(DefaultOptions.MINPLAYERS));
-				lore.add("Maximum Players: " + map.getOption(DefaultOptions.MAXPLAYERS));
-				meta.setLore(lore);
-				meta.addItemFlags();
-			}
-			display.setItemMeta(meta);
-			selector.setItem(i, display);
-			loadedGames.add(game.getId());
-			i++;
+			loadMap(map);
 		}
 	}
 
+	private void loadMap(GameMap map) {
+        //Create the game and create the item to display each map
+		Game game = factory.createGame(map);
+		loadedGames.add(game.getId());
+		ItemStack display = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+		ItemMeta meta = display.getItemMeta();
+		if (meta != null) {
+			meta.setDisplayName(map.getOption(GameOptions.TITLE.name(), String.class));
+			List<String> lore = new ArrayList<>();
+			lore.add("State: Waiting");
+			lore.add("Current Players: 0");
+			lore.add("Minimum Players: " + map.getOption(GameOptions.MINPLAYERS.name(), Integer.class));
+			lore.add("Maximum Players: " + map.getOption(GameOptions.MAXPLAYERS.name(), Integer.class));
+			meta.setLore(lore);
+			meta.addItemFlags();
+		}
+		display.setItemMeta(meta);
+		selector.setItem(0, display);
+	}
+	public void nextGame(int closedGame, GameMap map) {
+		loadedGames.remove((Integer) closedGame);
+		Game.allGames.remove(closedGame);
+		loadMap(map);
+	}
 	/**
 	 * Method to get the hold inventory
 	 *
@@ -121,8 +128,11 @@ public class Selector implements InventoryHolder {
 		if (numMap < loadedGames.size() && !Tracker.isInGame(joining)) {
 			//Get the id and notify that a player has joined
 			int gameId = loadedGames.get(numMap);
-			Game.allGames.get(gameId).joiningPlayer(joining);
-			updatePlayerCount(numMap);
+			Game game = Game.allGames.get(gameId);
+			if (game.getState() == GameState.WAIT) {
+				game.joiningPlayer(joining);
+				updatePlayerCount(numMap);
+			}
 		}
 	}
 
@@ -132,6 +142,7 @@ public class Selector implements InventoryHolder {
 	 * @param gameId(int): Id of the changed game
 	 */
 	public void leaving(int gameId) {
-		updatePlayerCount(loadedGames.indexOf(gameId));
+		int leave = loadedGames.indexOf(gameId);
+		if (leave != -1) updatePlayerCount(loadedGames.indexOf(gameId));
 	}
 }

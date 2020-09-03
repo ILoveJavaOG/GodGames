@@ -1,5 +1,6 @@
 package de.ilovejava.minigames.Items;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -31,7 +32,7 @@ public abstract class GameItem implements Listener {
 		ItemMeta meta = item.getItemMeta();
 		//Set name and uses
 		if (meta != null) {
-			meta.setDisplayName(name);
+			meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&r" + name));
 			item.setItemMeta(meta);
 		}
 		item.setAmount(uses);

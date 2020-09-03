@@ -1,12 +1,15 @@
 package de.ilovejava.lobby;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
+import de.ilovejava.commands.Command_Nick;
+import de.ilovejava.commands.Command_Spawn;
+import de.ilovejava.commands.Command_TnTRun;
+import de.ilovejava.events.*;
 import de.ilovejava.minigames.GameLogic.LoadDefaultConfig;
-import lombok.Getter;
+import de.ilovejava.tdg.TDG;
+import de.ilovejava.tntrun.TNTEvents;
+import de.ilovejava.utils.Utils;
+import de.ilovejava.vault.VaultConnector;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,35 +22,12 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import de.ilovejava.commands.Command_Nick;
-import de.ilovejava.commands.Command_Spawn;
-import de.ilovejava.commands.Command_TnTRun;
-import de.ilovejava.events.Event_ArmorStand;
-import de.ilovejava.events.Event_BlockChange;
-import de.ilovejava.events.Event_Build;
-import de.ilovejava.events.Event_Chat;
-import de.ilovejava.events.Event_CreatureSpawn;
-import de.ilovejava.events.Event_Damge;
-import de.ilovejava.events.Event_Drop;
-import de.ilovejava.events.Event_Food;
-import de.ilovejava.events.Event_InterAcct;
-import de.ilovejava.events.Event_InterActWithEntity;
-import de.ilovejava.events.Event_InventoryClick;
-import de.ilovejava.events.Event_InventoryClose;
-import de.ilovejava.events.Event_Join;
-import de.ilovejava.events.Event_Leave;
-import de.ilovejava.events.Event_PickUpItem;
-import de.ilovejava.events.Event_TDGSelector;
-import de.ilovejava.events.Event_TNTSelectorClick;
-import de.ilovejava.events.Event_TeamClick;
-import de.ilovejava.events.Event_WeahtChange;
-import de.ilovejava.tdg.TDG;
-import de.ilovejava.tntrun.TNTEvents;
-import de.ilovejava.utils.Utils;
-import de.ilovejava.vault.VaultConnector;
-import net.milkbowl.vault.economy.Economy;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 public class Lobby extends JavaPlugin{
 

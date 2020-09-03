@@ -1,15 +1,12 @@
 package de.ilovejava.minigames.Games.IceScooter;
 
-import com.mojang.datafixers.util.Pair;
 import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.Events.BoatBlockCollisionEvent;
 import de.ilovejava.minigames.Events.BoatEntityCollisionEvent;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameCommand;
 import de.ilovejava.minigames.GameLogic.GameFactory;
-import de.ilovejava.minigames.GameLogic.GameOptions;
 import de.ilovejava.minigames.GameSelector.Selector;
-import de.ilovejava.minigames.MapTools.CheckPoint;
 import de.ilovejava.minigames.MapTools.CustomLocation;
 import de.ilovejava.minigames.MapTools.GameMap;
 import org.bukkit.Bukkit;
@@ -20,28 +17,23 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Class to represent the race mini game
- */
-public class IceScooterRace extends Game {
+public class IceScooterPVP extends Game {
 
 	//Name of the game
-	public static final String name = "IceScooterRace";
+	public static final String name = "IceScooterPVP";
 
 	//Register command
 	private static final GameCommand command = new GameCommand(name);
 
 	//Factory to work with selector
-	public static final GameFactory<IceScooterRace> factory = new GameFactory<IceScooterRace>() {
+	public static final GameFactory<IceScooterPVP> factory = new GameFactory<IceScooterPVP>() {
 
 		@Override
 		public String getGame() {
@@ -52,13 +44,13 @@ public class IceScooterRace extends Game {
 		@Contract(pure = true)
 		@Override
 		public String getTitle() {
-			return "§2IceScooterRace";
+			return "§2IceScooterPVP";
 		}
 
 		@NotNull
 		@Override
-		public IceScooterRace createGame(GameMap map) {
-			IceScooterRace newGame = new IceScooterRace();
+		public IceScooterPVP createGame(GameMap map) {
+			IceScooterPVP newGame = new IceScooterPVP();
 			newGame.loadMap(map);
 			newGame.setup();
 			return newGame;
@@ -66,29 +58,18 @@ public class IceScooterRace extends Game {
 	};
 
 	//Events will be handled by this class
-	private final IceScooterRaceEvents events = new IceScooterRaceEvents();
+	private final IceScooterPVPEvents events = new IceScooterPVPEvents();
 
 	//Start location for all players
 	private CustomLocation startPosition;
 
-	//Ordered list of checkpoints
-	private final List<CheckPoint> checkPoints = new ArrayList<>();
-
 	//List of currently active boats
 	private final List<Boat> activeBoats = new ArrayList<>();
-
-	//Map of currently driving boats
-	private final HashMap<Boat, Pair<CheckPoint, CheckPoint>> state = new HashMap<>();
-
-	//Map of laps for the player
-	private final HashMap<Player, Integer> rounds = new HashMap<>();
-
-	private int positions;
 
 	/**
 	 * Constructor for the game
 	 */
-	public IceScooterRace() {
+	public IceScooterPVP() {
 		super(name);
 	}
 
@@ -98,27 +79,12 @@ public class IceScooterRace extends Game {
 	@Override
 	protected void setup() {
 		//Map for checkpoints
-		HashMap<Integer, CustomLocation> cps  = new HashMap<>();
 		for (CustomLocation location : gameMap.getLocations()) {
 			//Start point
 			if (location.getName().equals("START")) {
 				startPosition = location;
-			//Checkpoints
-			} else if (location.getName().contains("CHECKPOINT")) {
-				//Retrieve number of checkpoint
-				Integer number = location.getData("NUMBER", Integer.class);
-				//Check if another edge of the checkpoint has been found
-				if (cps.containsKey(number)) {
-					CustomLocation first = cps.get(number);
-					checkPoints.add(new CheckPoint(first, location));
-				//No checkpoint edge existed before
-				} else {
-					cps.put(number, location);
-				}
 			}
 		}
-		//Sort checkpoints by number
-		checkPoints.sort((CheckPoint first, CheckPoint second) -> first.getNumber() < second.getNumber() ? -1 : 1);
 	}
 
 	/**
@@ -145,9 +111,7 @@ public class IceScooterRace extends Game {
 		Boat boat = (Boat) player.getVehicle();
 		if (boat != null) {
 			boat.removePassenger(player);
-			int place = activeBoats.indexOf(boat);
-			activeBoats.remove(place);
-			adjustPlaces(place);
+			activeBoats.remove(boat);
 		}
 	}
 
@@ -175,36 +139,15 @@ public class IceScooterRace extends Game {
 			Boat boat = allBoats.remove(random);
 			boat.addPassenger(playing);
 			activeBoats.add(boat);
-			state.put(boat, new Pair<>(checkPoints.get(0), checkPoints.get(0)));
-			rounds.put(playing, 0);
+			playing.setLevel(3);
 		}
-		//Task to update player position in the race
-		positions = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-			activeBoats.sort((Boat first, Boat second) -> {
-				//Order by checkpoint
-				if (state.get(first).getFirst().getNumber() > state.get(second).getFirst().getNumber()) {
-					return -1;
-				} else  if (state.get(first).getSecond().distanceSquared(first.getLocation()) > state.get(second).getSecond().distanceSquared(second.getLocation())) {
-					return -1;
-				}
-				return 1;
-			});
-			//Change level to position in race
-			adjustPlaces(0);
-		}, 0L, 1L);
 	}
 
-	private void adjustPlaces(int left) {
-		for (int i = left; i < activeBoats.size(); i++) {
-			((Player) activeBoats.get(i).getPassengers().get(0)).setLevel(i + 1);
-		}
-	}
 	/**
 	 * Method to be called when the game is over
 	 */
 	@Override
 	public void stopGame() {
-		Bukkit.getScheduler().cancelTask(positions);
 		if (activePlayers.size() == 1) {
 			Boat boat = activeBoats.remove(0);
 			Player player = (Player) boat.getPassengers().get(0);
@@ -233,33 +176,20 @@ public class IceScooterRace extends Game {
 			events.onRightClick((PlayerInteractEvent) event);
 		} else if (event instanceof EntityDamageEvent) {
 			events.onDamage((EntityDamageEvent) event);
-		} else if (event instanceof VehicleMoveEvent) {
-			events.onMove((VehicleMoveEvent) event, state, checkPoints);
 		}
 	}
 
-	/**
-	 * Method to increase the lab count for a given player
-	 *
-	 * @param player(Player): Player to increase lab count for
-	 */
-	public void newLap(Player player) {
-		int currentLap = rounds.get(player);
-		int maxLap = gameMap.getOption(GameOptions.MAXLAP.name(), Integer.class);
-		if (currentLap == maxLap) {
-			Boat boat = activeBoats.get(player.getLevel() - 1);
-			activeBoats.remove(boat);
+	public void playerDie(Player player) {
+		Boat boat = (Boat) player.getVehicle();
+		activeBoats.remove(boat);
+		if (boat != null) {
 			boat.removePassenger(player);
-			boat.remove();
-			activePlayers.remove(player);
-			watchingPlayers.add(player);
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> player.teleport(startPosition.getLocation()), 1L);
-			adjustPlaces(player.getLevel() - 1);
-			if (activePlayers.size() == 1) {
-				stopGame();
-			}
-		} else {
-			rounds.put(player, currentLap + 1);
+		}
+		activePlayers.remove(player);
+		watchingPlayers.add(player);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> player.teleport(startPosition.getLocation()), 1L);
+		if (activePlayers.size() == 1) {
+			stopGame();
 		}
 	}
 }

@@ -8,9 +8,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -140,28 +143,13 @@ public class MapLoader {
 				itemProbabilities.add(new Pair<>(min, max));
 			}
 		}
-		//Create the map
-		GameMap map = new GameMap(mapFile.getName().replace(".yml", ""), loadedWorld, allLocations, new ProbabilityMap(itemNames, itemProbabilities));
-		//Get options for the map
+		Map<String, Object> options = new HashMap<>();
 		ConfigurationSection extraOptions = mapConfig.getConfigurationSection("Options");
 		if (extraOptions != null) {
 			//Iterate over keys and check for default values
-			Map<String, Object> optionMap = extraOptions.getValues(false);
-			for (DefaultOptions option : DefaultOptions.values()) {
-				Object opt = optionMap.get(option.getKey());
-				if (opt != null) {
-					map.addOption(option, opt);
-				} else {
-					map.addOption(option, option.getDefaultValue());
-				}
-			}
-		} else {
-			//No options specified so take default values
-			for (DefaultOptions option : DefaultOptions.values()) {
-				map.addOption(option, option.getDefaultValue());
-			}
-			map.addOption(DefaultOptions.TITLE, map.getMapName());
+			options = extraOptions.getValues(false);
 		}
-		return map;
+		//Create the map
+		return new GameMap(mapFile.getName().replace(".yml", ""), loadedWorld, options, allLocations, new ProbabilityMap(itemNames, itemProbabilities));
 	}
 }
