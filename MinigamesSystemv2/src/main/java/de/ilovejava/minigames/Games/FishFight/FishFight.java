@@ -4,20 +4,12 @@ import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameCommand;
 import de.ilovejava.minigames.GameLogic.GameFactory;
-import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.Games.FishFight.Items.Rod;
 import de.ilovejava.minigames.MapTools.CustomLocation;
 import de.ilovejava.minigames.MapTools.GameMap;
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +24,7 @@ import java.util.stream.Collectors;
 public class FishFight extends Game {
 
 	//Name of the game
-	private static final String name = "FishFight";
+	private static final String name = "SnowWar";
 
 	//Register command
 	private static final GameCommand command = new GameCommand(name);
@@ -72,9 +64,6 @@ public class FishFight extends Game {
 				.collect(Collectors.toList());
 	}
 
-	//Events will be handled by this class
-	private final FishFightEvents events = new FishFightEvents();
-
 	//List of possible spawns
 	private List<CustomLocation> spawns = new ArrayList<>();
 
@@ -83,6 +72,7 @@ public class FishFight extends Game {
 	 */
 	public FishFight() {
 		super(name);
+		registerEvents(new FishFightEvents());
 	}
 
 
@@ -117,8 +107,7 @@ public class FishFight extends Game {
 	 */
 	@Override
 	public void stopGame() {
-		Selector selector = Selector.selectors.get(name);
-		selector.nextGame(getId(), gameMap);
+		gameOver();
 	}
 
 	/**
@@ -143,28 +132,6 @@ public class FishFight extends Game {
 		//Stop the game if there arent any more players
 		if (activePlayers.size() <= 1) {
 			stopGame();
-		}
-	}
-
-	/**
-	 * Event listener
-	 *
-	 * @param event(Event) Event which is called and regards the game
-	 */
-	@Override
-	public void callEvent(Event event) {
-		if (event instanceof PlayerFishEvent) {
-			events.onFish((PlayerFishEvent) event);
-		} else if (event instanceof PlayerDropItemEvent) {
-			events.onDrop((PlayerDropItemEvent) event);
-		} else if (event instanceof EntityDamageByEntityEvent) {
-			events.onDamage((EntityDamageByEntityEvent) event);
-		} else if (event instanceof EntityRegainHealthEvent) {
-			events.onRegen((EntityRegainHealthEvent) event);
-		} else if (event instanceof FoodLevelChangeEvent) {
-			events.onFoodDepletion((FoodLevelChangeEvent) event);
-		} else if (event instanceof PlayerItemConsumeEvent) {
-			events.onConsumption((PlayerItemConsumeEvent) event);
 		}
 	}
 

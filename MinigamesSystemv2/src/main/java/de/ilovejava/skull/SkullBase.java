@@ -1,10 +1,10 @@
 package de.ilovejava.skull;
 
-import java.util.HashMap;
+import de.ilovejava.tdg.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import de.ilovejava.tdg.Skull;
+import java.util.HashMap;
 
 public class SkullBase {
 	HashMap<String, ItemStack> skulls = new HashMap<>();

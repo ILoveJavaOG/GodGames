@@ -1,15 +1,14 @@
 package de.ilovejava.vault;
 
-import java.util.List;
-import org.bukkit.OfflinePlayer;
-
-
 import de.ilovejava.user.User;
 import de.ilovejava.utils.Utils;
 import de.ilovejava.uuid.uuidfetcher;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.economy.EconomyResponse.ResponseType;
+import org.bukkit.OfflinePlayer;
+
+import java.util.List;
 
 public class VaultConnector implements Economy{
 

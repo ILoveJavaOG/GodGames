@@ -1,9 +1,8 @@
 package de.ilovejava.tdg;
 
+import de.ilovejava.utils.Utils;
 import org.bukkit.entity.Entity;
 import org.bukkit.metadata.FixedMetadataValue;
-
-import de.ilovejava.utils.Utils;
 
 public class Metadata {
 	

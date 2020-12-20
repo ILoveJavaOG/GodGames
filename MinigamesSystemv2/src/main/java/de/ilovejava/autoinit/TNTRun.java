@@ -1,10 +1,9 @@
 package de.ilovejava.autoinit;
 
-import java.io.File;
-
+import de.ilovejava.tntrun.TNT;
 import org.bukkit.Bukkit;
 
-import de.ilovejava.tntrun.TNT;
+import java.io.File;
 
 public class TNTRun {
 	public TNTRun() {

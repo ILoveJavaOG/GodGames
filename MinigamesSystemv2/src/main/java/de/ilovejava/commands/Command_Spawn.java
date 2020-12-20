@@ -1,13 +1,12 @@
 package de.ilovejava.commands;
 
+import de.ilovejava.shop.Shop;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import de.ilovejava.shop.Shop;
-import de.ilovejava.utils.Utils;
 
 public class Command_Spawn extends AbstartcCommands{
 

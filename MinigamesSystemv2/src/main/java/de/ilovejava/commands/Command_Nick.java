@@ -1,7 +1,7 @@
 package de.ilovejava.commands;
 
-import java.util.ArrayList;
-
+import com.mojang.authlib.GameProfile;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -12,9 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import com.mojang.authlib.GameProfile;
-
-import de.ilovejava.utils.Utils;
+import java.util.ArrayList;
 
 public class Command_Nick extends AbstartcCommands{
 

@@ -1,33 +1,19 @@
 package de.ilovejava.minigames.Games.IceScooter;
 
-import com.mojang.datafixers.util.Pair;
 import de.ilovejava.lobby.Lobby;
-import de.ilovejava.minigames.Events.BoatBlockCollisionEvent;
-import de.ilovejava.minigames.Events.BoatEntityCollisionEvent;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameCommand;
 import de.ilovejava.minigames.GameLogic.GameFactory;
 import de.ilovejava.minigames.GameLogic.GameOptions;
-import de.ilovejava.minigames.GameSelector.Selector;
-import de.ilovejava.minigames.MapTools.CheckPoint;
-import de.ilovejava.minigames.MapTools.CustomLocation;
-import de.ilovejava.minigames.MapTools.GameMap;
+import de.ilovejava.minigames.MapTools.*;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Class to represent the race mini game
@@ -65,9 +51,6 @@ public class IceScooterRace extends Game {
 		}
 	};
 
-	//Events will be handled by this class
-	private final IceScooterRaceEvents events = new IceScooterRaceEvents();
-
 	//Start location for all players
 	private CustomLocation startPosition;
 
@@ -78,7 +61,7 @@ public class IceScooterRace extends Game {
 	private final List<Boat> activeBoats = new ArrayList<>();
 
 	//Map of currently driving boats
-	private final HashMap<Boat, Pair<CheckPoint, CheckPoint>> state = new HashMap<>();
+	private final PositionMap state = new PositionMap();
 
 	//Map of laps for the player
 	private final HashMap<Player, Integer> rounds = new HashMap<>();
@@ -90,6 +73,7 @@ public class IceScooterRace extends Game {
 	 */
 	public IceScooterRace() {
 		super(name);
+		registerEvents(new IceScooterRaceEvents());
 	}
 
 	/**
@@ -145,9 +129,8 @@ public class IceScooterRace extends Game {
 		Boat boat = (Boat) player.getVehicle();
 		if (boat != null) {
 			boat.removePassenger(player);
-			int place = activeBoats.indexOf(boat);
-			activeBoats.remove(place);
-			adjustPlaces(place);
+			activeBoats.remove(boat);
+			adjustPlaces();
 		}
 	}
 
@@ -175,29 +158,22 @@ public class IceScooterRace extends Game {
 			Boat boat = allBoats.remove(random);
 			boat.addPassenger(playing);
 			activeBoats.add(boat);
-			state.put(boat, new Pair<>(checkPoints.get(0), checkPoints.get(0)));
+			Position position = new Position(boat, checkPoints.get(0));
+			state.add(position);
 			rounds.put(playing, 0);
 		}
+		state.sort();
 		//Task to update player position in the race
-		positions = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-			activeBoats.sort((Boat first, Boat second) -> {
-				//Order by checkpoint
-				if (state.get(first).getFirst().getNumber() > state.get(second).getFirst().getNumber()) {
-					return -1;
-				} else  if (state.get(first).getSecond().distanceSquared(first.getLocation()) > state.get(second).getSecond().distanceSquared(second.getLocation())) {
-					return -1;
-				}
-				return 1;
-			});
-			//Change level to position in race
-			adjustPlaces(0);
-		}, 0L, 1L);
+		positions = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), state::sort, 0L, 1L);
 	}
 
-	private void adjustPlaces(int left) {
-		for (int i = left; i < activeBoats.size(); i++) {
-			((Player) activeBoats.get(i).getPassengers().get(0)).setLevel(i + 1);
-		}
+	private void adjustPlaces() {
+		Map<UUID, Integer> positions = state.getLookup();
+		activeBoats.forEach((Boat driving) -> {
+			int place = positions.get(driving.getUniqueId());
+			Player driver = (Player) driving.getPassengers().get(0);
+			driver.setLevel(place + 1);
+		});
 	}
 	/**
 	 * Method to be called when the game is over
@@ -213,29 +189,7 @@ public class IceScooterRace extends Game {
 			watchingPlayers.add(player);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> player.teleport(startPosition.getLocation()), 1L);
 		}
-		Selector.selectors.get(name).nextGame(getId(), gameMap);
-	}
-
-	/**
-	 * Event listener
-	 *
-	 * @param event(Event) Event which is called and regards the game
-	 */
-	@Override
-	public void callEvent(Event event) {
-		if (event instanceof VehicleExitEvent) {
-			events.onExitVehicle((VehicleExitEvent) event);
-		} else if (event instanceof BoatBlockCollisionEvent) {
-			events.onBoatBlockCollision((BoatBlockCollisionEvent) event);
-		} else if (event instanceof BoatEntityCollisionEvent) {
-			events.onBoatEntityCollision((BoatEntityCollisionEvent) event);
-		} else if (event instanceof PlayerInteractEvent) {
-			events.onRightClick((PlayerInteractEvent) event);
-		} else if (event instanceof EntityDamageEvent) {
-			events.onDamage((EntityDamageEvent) event);
-		} else if (event instanceof VehicleMoveEvent) {
-			events.onMove((VehicleMoveEvent) event, state, checkPoints);
-		}
+		gameOver();
 	}
 
 	/**
@@ -249,12 +203,12 @@ public class IceScooterRace extends Game {
 		if (currentLap == maxLap) {
 			Boat boat = activeBoats.get(player.getLevel() - 1);
 			activeBoats.remove(boat);
+			state.remove(boat);
 			boat.removePassenger(player);
 			boat.remove();
 			activePlayers.remove(player);
 			watchingPlayers.add(player);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> player.teleport(startPosition.getLocation()), 1L);
-			adjustPlaces(player.getLevel() - 1);
 			if (activePlayers.size() == 1) {
 				stopGame();
 			}

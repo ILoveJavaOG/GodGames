@@ -1,14 +1,13 @@
 package de.ilovejava.tntrun;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-
 import de.ilovejava.Enums.ChatType;
 import de.ilovejava.Enums.PVPContainer;
 import de.ilovejava.tdg.TDG;
 import de.ilovejava.utils.Utils;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 public class TNTRunJoinEvent extends Event implements Cancellable{
 

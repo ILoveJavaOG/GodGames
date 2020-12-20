@@ -1,17 +1,20 @@
 package de.ilovejava.minigames.MapTools;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Class to represent a checkpoint
  */
-public class CheckPoint {
+public class CheckPoint implements Comparable<CheckPoint> {
 
 	//Edges for the checkpoint
 	private final CustomLocation first;
 	private final CustomLocation second;
 
+	@Getter
+	private final Integer number;
 	/**
 	 * Constructor for the checkpoint
 	 *
@@ -21,15 +24,7 @@ public class CheckPoint {
 	public CheckPoint(CustomLocation first, CustomLocation second) {
 		this.first = first;
 		this.second = second;
-	}
-
-	/**
-	 * Method to get the number of a checkpoint
-	 *
-	 * @return Number of the checkpoint
-	 */
-	public Integer getNumber() {
-		return first.getData("NUMBER", Integer.class);
+		this.number = first.getData("NUMBER", Integer.class);
 	}
 
 	private double square(double x) {
@@ -54,5 +49,10 @@ public class CheckPoint {
 		double projection =  ((P.getX() - A.getX()) * (B.getX() - A.getX()) + (P.getZ() - A.getZ()) * (B.getZ() - A.getZ())) / lengthS;
 		projection = Math.max(0, Math.min(1, projection));
 		return lengthSquared(P, new Location(P.getWorld(), A.getX() + projection * (B.getX() - A.getX()), 0, A.getZ() + projection * (B.getZ() - A.getZ())));
+	}
+
+	@Override
+	public int compareTo(@NotNull CheckPoint other) {
+		return number.compareTo(other.number);
 	}
 }

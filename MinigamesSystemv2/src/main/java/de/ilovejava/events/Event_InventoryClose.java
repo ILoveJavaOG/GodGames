@@ -1,11 +1,10 @@
 package de.ilovejava.events;
 
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-
-import de.ilovejava.utils.Utils;
 
 public class Event_InventoryClose implements Listener {
 	@SuppressWarnings("deprecation")

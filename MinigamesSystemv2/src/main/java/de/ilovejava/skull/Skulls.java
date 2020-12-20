@@ -1,9 +1,9 @@
 package de.ilovejava.skull;
 
+import de.ilovejava.utils.Utils;
+
 import java.sql.ResultSet;
 import java.util.HashMap;
-
-import de.ilovejava.utils.Utils;
 
 public class Skulls {
 	private HashMap<String, Boolean> skulls;

@@ -1,15 +1,11 @@
 package de.ilovejava.tntrun;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import de.ilovejava.Enums.ChatType;
+import de.ilovejava.crafttitle.API_CraftTitleApi;
+import de.ilovejava.events.Event_Join;
+import de.ilovejava.utils.Utils;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,11 +14,9 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import de.ilovejava.Enums.ChatType;
-import de.ilovejava.crafttitle.API_CraftTitleApi;
-import de.ilovejava.events.Event_Join;
-import de.ilovejava.utils.Utils;
-import net.md_5.bungee.api.ChatColor;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TNT implements TNTRun{
 

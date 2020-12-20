@@ -1,14 +1,13 @@
 package de.ilovejava.events;
 
+import de.ilovejava.Enums.ChatType;
+import de.ilovejava.Enums.PVPContainer;
+import de.ilovejava.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-
-import de.ilovejava.Enums.ChatType;
-import de.ilovejava.Enums.PVPContainer;
-import de.ilovejava.utils.Utils;
 
 public class Event_Damge implements Listener {
 	@EventHandler

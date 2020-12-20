@@ -2,14 +2,19 @@ package de.ilovejava.minigames.GameLogic;
 
 import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.Communication.Tracker;
+import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.MapTools.GameMap;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +22,7 @@ import java.util.Set;
 /**
  * Core class to represent a game
  */
-public abstract class Game implements Events {
+public abstract class Game {
 
 	//Map with all games
 	public static HashMap<Integer, Game> allGames = new HashMap<>();
@@ -56,6 +61,10 @@ public abstract class Game implements Events {
 	private final int defaultLoadingTime = 10;
 	//Default load time
 	private int loadingTime = defaultLoadingTime;
+
+	protected HashMap<Class<?>, Method> gameEvents = new HashMap<>();
+
+	protected Events eventHandler;
 
 	/**
 	 * Constructor to create a game
@@ -178,6 +187,50 @@ public abstract class Game implements Events {
 		}
 	}
 
+	protected void gameOver() {
+		Selector selector = Selector.selectors.get(name);
+		selector.nextGame(getId(), gameMap);
+	}
+
+	protected void registerEvents(Events eventHandler) {
+		this.eventHandler = eventHandler;
+		//Look for methods in event
+		Method[] foundEvents = this.eventHandler.getClass().getMethods();
+		for (Method method : foundEvents) {
+			//Check if method is public
+			if (Modifier.isPublic(method.getModifiers())) {
+				//Check if only param is of type Event
+				Class<?>[] parameters = method.getParameterTypes();
+				if (parameters.length == 1) {
+					Class<?> param = parameters[0];
+					if (Event.class.isAssignableFrom(param)) {
+						//Map class to method call
+						gameEvents.put(param, method);
+					}
+				}
+			}
+		}
+	}
+
+	public void callEvent(Event event) {
+		//Check if event exists
+		Class<?> eventType = event.getClass();
+		if (state == GameState.INGAME && gameEvents.containsKey(eventType)) {
+			try {
+				//Invoke the event
+				gameEvents.get(eventType).invoke(eventHandler, event);
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		} else {
+			//Just cancel all events
+			if (event instanceof Cancellable) {
+				Cancellable toCancel = (Cancellable) event;
+				System.out.println("CANCELING: " + event);
+				toCancel.setCancelled(true);
+			}
+		}
+	}
 	/**
 	 * Method to set the map for the game
 	 *
@@ -188,14 +241,34 @@ public abstract class Game implements Events {
 	}
 
 	/**
-	 * Event listener
-	 *
-	 * @param event(Event) Event which is called and regards the game
-	 */
-	public abstract void callEvent(Event event);
-
-	/**
 	 * Method to setup the game. Must be called by game itself
 	 */
 	protected abstract void setup();
+
+	/**
+	 * Method to be executed when a player joins the game
+	 * Active players will be updated beforehand
+	 *
+	 * @param player(Player) Joining player
+	 */
+	protected abstract void playerJoin(Player player);
+
+	/**
+	 * Method to be executed when a player leaves the game
+	 * Active players and watching players will be updated beforehand
+	 *
+	 * @param player(Player) Leaving player
+	 */
+	protected abstract void playerLeave(Player player);
+
+	/**
+	 * Method to be called when the game is starting.
+	 * Will be called after loading is done. Game state will be INGAME
+	 */
+	protected abstract void startGame();
+
+	/**
+	 * Method to be called when the game is over
+	 */
+	protected abstract void stopGame();
 }

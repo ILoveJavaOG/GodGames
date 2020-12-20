@@ -1,5 +1,8 @@
 package de.ilovejava.events;
 
+import de.ilovejava.lottochest.Lottochest;
+import de.ilovejava.utils.Utils;
+import de.ilovejava.uuid.uuidfetcher;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -9,10 +12,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import de.ilovejava.lottochest.Lottochest;
-import de.ilovejava.utils.Utils;
-import de.ilovejava.uuid.uuidfetcher;
 
 public class Event_InventoryClick implements Listener {
 	@EventHandler

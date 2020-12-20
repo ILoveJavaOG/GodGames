@@ -1,13 +1,10 @@
 package de.ilovejava.minigames.Games.IceScooter;
 import com.mojang.datafixers.util.Pair;
 import de.ilovejava.lobby.Lobby;
-import de.ilovejava.minigames.Events.BoatBlockCollisionEvent;
-import de.ilovejava.minigames.Events.BoatEntityCollisionEvent;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameCommand;
 import de.ilovejava.minigames.GameLogic.GameFactory;
 import de.ilovejava.minigames.GameLogic.GameOptions;
-import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.MapTools.CheckPoint;
 import de.ilovejava.minigames.MapTools.CustomLocation;
 import de.ilovejava.minigames.MapTools.GameMap;
@@ -15,10 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -60,9 +53,6 @@ public class IceScooterTimeTrial extends Game {
 		}
 	};
 
-	//Events will be handled by this class
-	private final IceScooterTimeTrialEvents events = new IceScooterTimeTrialEvents();
-
 	//Start location for all players
 	private CustomLocation startPosition;
 
@@ -85,6 +75,7 @@ public class IceScooterTimeTrial extends Game {
 	 */
 	public IceScooterTimeTrial() {
 		super(name);
+		registerEvents(new IceScooterTimeTrialEvents());
 	}
 
 	/**
@@ -179,27 +170,7 @@ public class IceScooterTimeTrial extends Game {
 	 */
 	@Override
 	public void stopGame() {
-		Selector.selectors.get(name).nextGame(getId(), gameMap);
-	}
-
-	/**
-	 * Event listener
-	 *
-	 * @param event(Event) Event which is called and regards the game
-	 */
-	@Override
-	public void callEvent(Event event) {
-		if (event instanceof VehicleExitEvent) {
-			events.onExitVehicle((VehicleExitEvent) event);
-		} else if (event instanceof BoatBlockCollisionEvent) {
-			events.onBoatBlockCollision((BoatBlockCollisionEvent) event);
-		} else if (event instanceof BoatEntityCollisionEvent) {
-			events.onBoatEntityCollision((BoatEntityCollisionEvent) event);
-		} else if (event instanceof PlayerInteractEvent) {
-			events.onRightClick((PlayerInteractEvent) event);
-		} else if (event instanceof VehicleMoveEvent) {
-			events.onMove((VehicleMoveEvent) event, state, checkPoints);
-		}
+		gameOver();
 	}
 
 	/**

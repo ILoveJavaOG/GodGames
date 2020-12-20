@@ -1,10 +1,9 @@
 package de.ilovejava.shop;
 
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
-
-import de.ilovejava.utils.Utils;
 
 public class Shop {
 	public Shop() {

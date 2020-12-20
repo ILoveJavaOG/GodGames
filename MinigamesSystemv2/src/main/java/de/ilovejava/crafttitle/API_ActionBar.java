@@ -1,18 +1,16 @@
 package de.ilovejava.crafttitle;
 
-import java.util.HashMap;
-
-import net.minecraft.server.v1_15_R1.IChatBaseComponent;
-import net.minecraft.server.v1_15_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_15_R1.ChatMessageType;
-import net.minecraft.server.v1_15_R1.PacketPlayOutChat;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import de.ilovejava.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_15_R1.ChatMessageType;
+import net.minecraft.server.v1_15_R1.IChatBaseComponent;
+import net.minecraft.server.v1_15_R1.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_15_R1.PacketPlayOutChat;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class API_ActionBar {
     

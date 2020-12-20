@@ -19,8 +19,6 @@ public class FishListener implements Listener {
 	@EventHandler
 	public void onPlayerFish(PlayerFishEvent event) {
 		Player player = event.getPlayer();
-		if (Tracker.isInGame(player)) {
-			Tracker.getGame(player).callEvent(event);
-		}
+		Tracker.redirectEvent(player, event);
 	}
 }

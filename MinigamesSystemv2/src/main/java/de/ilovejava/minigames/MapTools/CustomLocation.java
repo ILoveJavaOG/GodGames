@@ -86,4 +86,8 @@ public class CustomLocation {
 	public Object getData(String key) {
 		return data.get(key);
 	}
+
+	public boolean containsData(String key) {
+		return data.containsKey(key);
+	}
 }

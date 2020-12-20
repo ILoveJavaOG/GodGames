@@ -1,18 +1,6 @@
 package de.ilovejava.utils;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
-
-import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
-
 import com.mojang.authlib.GameProfile;
-
 import de.ilovejava.Enums.ChatType;
 import de.ilovejava.Enums.PVPContainer;
 import de.ilovejava.lobby.Lobby;
@@ -26,6 +14,16 @@ import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class Utils {
 	@Getter @Setter

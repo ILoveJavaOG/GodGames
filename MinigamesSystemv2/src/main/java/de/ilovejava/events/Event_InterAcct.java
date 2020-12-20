@@ -1,9 +1,10 @@
 package de.ilovejava.events;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import de.ilovejava.Enums.ChatType;
+import de.ilovejava.tdg.TDG;
+import de.ilovejava.user.User;
+import de.ilovejava.utils.Utils;
+import de.ilovejava.uuid.uuidfetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,11 +17,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import de.ilovejava.Enums.ChatType;
-import de.ilovejava.tdg.TDG;
-import de.ilovejava.user.User;
-import de.ilovejava.utils.Utils;
-import de.ilovejava.uuid.uuidfetcher;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Event_InterAcct implements Listener {
 	@SuppressWarnings("deprecation")

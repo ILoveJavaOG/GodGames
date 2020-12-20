@@ -1,8 +1,7 @@
 package de.ilovejava.events;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.ilovejava.skullCard.SkullCard;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -15,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import de.ilovejava.skullCard.SkullCard;
-import de.ilovejava.utils.Utils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event_InterActWithEntity implements Listener {
 	@EventHandler

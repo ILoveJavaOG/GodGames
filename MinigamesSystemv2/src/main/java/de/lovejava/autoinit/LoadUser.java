@@ -1,11 +1,10 @@
 package de.lovejava.autoinit;
 
-import java.sql.ResultSet;
-
-import org.bukkit.Bukkit;
-
 import de.ilovejava.user.User;
 import de.ilovejava.utils.Utils;
+import org.bukkit.Bukkit;
+
+import java.sql.ResultSet;
 
 public class LoadUser {
 

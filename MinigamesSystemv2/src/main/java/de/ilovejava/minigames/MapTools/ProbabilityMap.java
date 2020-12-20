@@ -18,6 +18,7 @@ public class ProbabilityMap {
 	@Getter
 	private final List<String> items;
 
+	//List of lower and upper bound probabilities
 	private final List<Pair<Double, Double>> probabilities;
 
 	/**
@@ -29,6 +30,7 @@ public class ProbabilityMap {
 	ProbabilityMap(List<String> items, List<Pair<Double, Double>> probabilities) {
 		this.items = items;
 		this.probabilities = probabilities;
+		setPlaces(1);
 	}
 
 	/**
@@ -60,5 +62,16 @@ public class ProbabilityMap {
 	 */
 	public double getProb(String item, int place) {
 		return mapped.get(item).get(place - 1);
+	}
+
+	/**
+	 * Method to retrieve probability of item for a given place
+	 *
+	 * @param item(String): Item to look at
+	 *
+	 * @return Probability for item at given place
+	 */
+	public double getProb(String item) {
+		return mapped.get(item).get(0);
 	}
 }

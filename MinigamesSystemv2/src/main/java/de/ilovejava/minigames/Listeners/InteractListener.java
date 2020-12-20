@@ -1,6 +1,7 @@
 package de.ilovejava.minigames.Listeners;
 
 import de.ilovejava.minigames.Communication.Tracker;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -20,10 +21,8 @@ public class InteractListener implements Listener {
 	 */
 	@EventHandler
 	public void onClick(@NotNull PlayerInteractEvent event) {
-		//Cancel clicks if player is in game and call event
-		if (Tracker.isInGame(event.getPlayer())) {
-			Tracker.getGame(event.getPlayer()).callEvent(event);
-		}
+		Player player = event.getPlayer();
+		Tracker.redirectEvent(player, event);
 	}
 
 	/**
@@ -33,9 +32,8 @@ public class InteractListener implements Listener {
 	 */
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent event) {
-		if (Tracker.isInGame(event.getPlayer())) {
-			Tracker.getGame(event.getPlayer()).callEvent(event);
-		}
+		Player player = event.getPlayer();
+		Tracker.redirectEvent(player, event);
 	}
 
 	/**
@@ -45,8 +43,7 @@ public class InteractListener implements Listener {
 	 */
 	@EventHandler
 	public void onConsumption(PlayerItemConsumeEvent event) {
-		if (Tracker.isInGame(event.getPlayer())) {
-			Tracker.getGame(event.getPlayer()).callEvent(event);
-		}
+		Player player = event.getPlayer();
+		Tracker.redirectEvent(player, event);
 	}
 }

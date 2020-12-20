@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class ItemBox {
 
+	private final int itemSlot;
+
 	//Task during the selection
 	private int selection;
 
@@ -83,6 +85,18 @@ public class ItemBox {
 	 * @param percentage(List): Probability for the items
 	 */
 	public ItemBox(Player holder, @NotNull List<? extends GameItem> possible, List<Double> percentage) {
+		this(holder, possible, percentage, 0);
+	}
+
+	/**
+	 * Constructor for the box
+	 *
+	 * @param holder(Player): Holder of the box
+	 * @param possible(List): List of possible items
+	 * @param percentage(List): Probability for the items
+	 */
+	public ItemBox(Player holder, @NotNull List<? extends GameItem> possible, List<Double> percentage, int itemSlot) {
+		this.itemSlot = itemSlot;
 		//Setup generator
 		for (int i = 0; i < possible.size(); i++) {
 			gen.addNumber(i, percentage.get(i));
@@ -103,11 +117,11 @@ public class ItemBox {
 		selection = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
 			//Select items from list
 			GameItem item = possible.get(iteration % possible.size());
-			holder.getInventory().setItem(0, item.getDisplay());
+			holder.getInventory().setItem(itemSlot, item.getDisplay());
 			iteration++;
 			//After 20 iterations set active item
 			if (iteration > 20) {
-				holder.getInventory().setItem(0, possible.get(selected).getDisplay());
+				holder.getInventory().setItem(itemSlot, possible.get(selected).getDisplay());
 				active = true;
 				Bukkit.getScheduler().cancelTask(selection);
 			}

@@ -4,6 +4,7 @@ import de.ilovejava.minigames.Communication.Tracker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
@@ -20,8 +21,9 @@ public class LeaveListener implements Listener {
 	 */
 	@EventHandler
 	public void onLeave(@NotNull PlayerQuitEvent leave) {
-		removeData(leave.getPlayer());
-		leave.getPlayer().setInvulnerable(false);
+		Player left = leave.getPlayer();
+		removeData(left);
+		resetPlayer(left);
 	}
 
 	/**
@@ -31,8 +33,30 @@ public class LeaveListener implements Listener {
 	 */
 	@EventHandler
 	public void onKick(@NotNull PlayerKickEvent kick) {
-		removeData(kick.getPlayer());
-		kick.getPlayer().setInvulnerable(false);
+		Player kicked = kick.getPlayer();
+		removeData(kicked);
+		resetPlayer(kicked);
+	}
+
+	/**
+	 * Event on player join
+	 *
+	 * @param joinEvent(PlayerKickEvent): Player join event
+	 */
+	@EventHandler
+	public void onKick(@NotNull PlayerJoinEvent joinEvent) {
+		Player joined = joinEvent.getPlayer();
+		removeData(joined);
+		resetPlayer(joined);
+	}
+
+	private void resetPlayer(Player player) {
+		player.setInvulnerable(false);
+		player.setGlowing(false);
+		player.setHealth(20.0);
+		player.setFoodLevel(20);
+		player.setExp(0.0f);
+		player.setLevel(0);
 	}
 
 	/**

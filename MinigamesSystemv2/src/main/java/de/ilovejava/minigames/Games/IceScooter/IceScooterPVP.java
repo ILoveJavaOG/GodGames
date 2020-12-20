@@ -1,22 +1,15 @@
 package de.ilovejava.minigames.Games.IceScooter;
 
 import de.ilovejava.lobby.Lobby;
-import de.ilovejava.minigames.Events.BoatBlockCollisionEvent;
-import de.ilovejava.minigames.Events.BoatEntityCollisionEvent;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameCommand;
 import de.ilovejava.minigames.GameLogic.GameFactory;
-import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.MapTools.CustomLocation;
 import de.ilovejava.minigames.MapTools.GameMap;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,9 +50,6 @@ public class IceScooterPVP extends Game {
 		}
 	};
 
-	//Events will be handled by this class
-	private final IceScooterPVPEvents events = new IceScooterPVPEvents();
-
 	//Start location for all players
 	private CustomLocation startPosition;
 
@@ -71,6 +61,7 @@ public class IceScooterPVP extends Game {
 	 */
 	public IceScooterPVP() {
 		super(name);
+		registerEvents(new IceScooterPVPEvents());
 	}
 
 	/**
@@ -156,27 +147,7 @@ public class IceScooterPVP extends Game {
 			watchingPlayers.add(player);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> player.teleport(startPosition.getLocation()), 1L);
 		}
-		Selector.selectors.get(name).nextGame(getId(), gameMap);
-	}
-
-	/**
-	 * Event listener
-	 *
-	 * @param event(Event) Event which is called and regards the game
-	 */
-	@Override
-	public void callEvent(Event event) {
-		if (event instanceof VehicleExitEvent) {
-			events.onExitVehicle((VehicleExitEvent) event);
-		} else if (event instanceof BoatBlockCollisionEvent) {
-			events.onBoatBlockCollision((BoatBlockCollisionEvent) event);
-		} else if (event instanceof BoatEntityCollisionEvent) {
-			events.onBoatEntityCollision((BoatEntityCollisionEvent) event);
-		} else if (event instanceof PlayerInteractEvent) {
-			events.onRightClick((PlayerInteractEvent) event);
-		} else if (event instanceof EntityDamageEvent) {
-			events.onDamage((EntityDamageEvent) event);
-		}
+		gameOver();
 	}
 
 	public void playerDie(Player player) {

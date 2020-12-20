@@ -1,8 +1,8 @@
 package de.ilovejava.tdg;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import org.bukkit.entity.Entity;
  
 public class Targeter {
  

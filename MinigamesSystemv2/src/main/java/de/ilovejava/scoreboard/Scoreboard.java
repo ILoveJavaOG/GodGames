@@ -1,8 +1,8 @@
 package de.ilovejava.scoreboard;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
+import de.ilovejava.Enums.ChatType;
+import de.ilovejava.utils.Utils;
+import de.ilovejava.uuid.uuidfetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,9 +10,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
 
-import de.ilovejava.Enums.ChatType;
-import de.ilovejava.utils.Utils;
-import de.ilovejava.uuid.uuidfetcher;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Scoreboard {
 	public Scoreboard(Player p) {

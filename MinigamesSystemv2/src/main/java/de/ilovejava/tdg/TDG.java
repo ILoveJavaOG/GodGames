@@ -1,8 +1,7 @@
 package de.ilovejava.tdg;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.ilovejava.tdg.EntityHider.Policy;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +14,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
-import de.ilovejava.tdg.EntityHider.Policy;
-import de.ilovejava.utils.Utils;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TDG {
 	

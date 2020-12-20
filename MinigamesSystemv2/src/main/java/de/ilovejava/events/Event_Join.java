@@ -1,5 +1,12 @@
 package de.ilovejava.events;
 
+import de.ilovejava.Enums.ChatType;
+import de.ilovejava.crafttitle.API_CraftTitleApi;
+import de.ilovejava.scoreboard.Scoreboard;
+import de.ilovejava.skull.Skulls;
+import de.ilovejava.user.User;
+import de.ilovejava.utils.Utils;
+import de.ilovejava.uuid.uuidfetcher;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -11,14 +18,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import de.ilovejava.Enums.ChatType;
-import de.ilovejava.crafttitle.API_CraftTitleApi;
-import de.ilovejava.scoreboard.Scoreboard;
-import de.ilovejava.skull.Skulls;
-import de.ilovejava.user.User;
-import de.ilovejava.utils.Utils;
-import de.ilovejava.uuid.uuidfetcher;
 
 public class Event_Join implements Listener {
 	@SuppressWarnings("deprecation")

@@ -2,6 +2,7 @@ package de.ilovejava.minigames.Games.FishFight;
 
 import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.Communication.Tracker;
+import de.ilovejava.minigames.GameLogic.Events;
 import de.ilovejava.minigames.Games.FishFight.Enchantments.FishEnchantment;
 import de.ilovejava.minigames.Games.FishFight.Items.FishFightItems;
 import de.ilovejava.minigames.Games.FishFight.Items.FishWeapon;
@@ -14,11 +15,8 @@ import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,7 +27,7 @@ import java.util.*;
 /**
  * Class to handle events during the fish fight
  */
-public class FishFightEvents {
+public class FishFightEvents implements Events {
 
 	//Map of currently catching players
 	private final HashMap<Player, FishingStatus> catching = new HashMap<>();
@@ -62,6 +60,10 @@ public class FishFightEvents {
 		//Hook throw
 		if (currentState == PlayerFishEvent.State.FISHING) {
 			//Start the auto bite after 2 seconds
+			Random random = new Random();
+			boolean positive = random.nextBoolean();
+			int extraDelay = random.nextInt(50);
+			int delay = 40 + (positive ? extraDelay : -extraDelay);
 			waiting = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
 				int autoFish = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
 					event.setCancelled(true);
@@ -72,7 +74,7 @@ public class FishFightEvents {
 					hook.setVelocity(new Vector(0, -0.4, 0));
 				}, 0L, 40L);
 				catching.put(player, new FishingStatus(autoFish, currentState));
-			}, 40L);
+			}, delay);
 		//Natural catch
 		} else if (currentState == PlayerFishEvent.State.CAUGHT_FISH || currentState == PlayerFishEvent.State.CAUGHT_ENTITY) {
 			//Spawn fish and remove natural catch
@@ -195,30 +197,5 @@ public class FishFightEvents {
 		}
 	}
 
-	/**
-	 * Event if a player loosed food
-	 *
-	 * @param event(FoodLevelChangeEvent): Event on food depletion
-	 */
-	public void onFoodDepletion(FoodLevelChangeEvent event) {
-		event.setCancelled(true);
-	}
 
-	/**
-	 * Event if a player regenerates health
-	 *
-	 * @param event(EntityRegainHealthEvent): Event on health regeneration
-	 */
-	public void onRegen(EntityRegainHealthEvent event) {
-		event.setCancelled(true);
-	}
-
-	/**
-	 * Event if player eats
-	 *
-	 * @param event(PlayerItemConsumeEvent): Event on food consumption
-	 */
-	public void onConsumption(PlayerItemConsumeEvent event) {
-		event.setCancelled(true);
-	}
 }

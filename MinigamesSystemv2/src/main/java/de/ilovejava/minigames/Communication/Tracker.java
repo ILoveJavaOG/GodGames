@@ -2,6 +2,7 @@ package de.ilovejava.minigames.Communication;
 
 import de.ilovejava.minigames.GameLogic.Game;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -53,6 +54,10 @@ public class Tracker {
 	 */
 	public static int getGameId(@NotNull Player player) {
 		return gameIds.get(player);
+	}
+
+	public static void redirectEvent(Player player, Event event) {
+		if (isInGame(player)) Tracker.getGame(player).callEvent(event);
 	}
 
 	/**

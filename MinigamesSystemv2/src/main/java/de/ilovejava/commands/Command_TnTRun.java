@@ -1,13 +1,12 @@
 package de.ilovejava.commands;
 
+import de.ilovejava.tntrun.TNT;
+import de.ilovejava.tntrun.TNTRunJoinEvent;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import de.ilovejava.tntrun.TNT;
-import de.ilovejava.tntrun.TNTRunJoinEvent;
-import de.ilovejava.utils.Utils;
 
 public class Command_TnTRun extends AbstartcCommands{
 

@@ -1,13 +1,13 @@
 package de.ilovejava.user;
 
+import de.ilovejava.skull.Skulls;
+import de.ilovejava.utils.Utils;
+import de.ilovejava.uuid.uuidfetcher;
+
 import java.sql.ResultSet;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-
-import de.ilovejava.skull.Skulls;
-import de.ilovejava.utils.Utils;
-import de.ilovejava.uuid.uuidfetcher;
 
 public class User implements de.ilovejava.interfaces.User{
 

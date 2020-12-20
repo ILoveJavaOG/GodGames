@@ -1,8 +1,6 @@
 package de.ilovejava.lottochest;
 
-import java.util.ArrayList;
-import java.util.Random;
-
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -11,7 +9,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import de.ilovejava.utils.Utils;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Lottochest {
 	boolean isgived = false;

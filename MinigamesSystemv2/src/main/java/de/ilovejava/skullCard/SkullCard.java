@@ -1,15 +1,14 @@
 package de.ilovejava.skullCard;
 
-import java.util.Random;
-
+import de.ilovejava.user.User;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import de.ilovejava.user.User;
-import de.ilovejava.utils.Utils;
+import java.util.Random;
 
 public class SkullCard {
 	private Player p;

@@ -1,8 +1,7 @@
 package de.ilovejava.mysql;
 
-import org.bukkit.Bukkit;
-
 import de.ilovejava.utils.Utils;
+import org.bukkit.Bukkit;
 
 public class InsertTypes {
 	public InsertTypes() {

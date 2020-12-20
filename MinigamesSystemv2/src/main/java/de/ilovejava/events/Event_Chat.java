@@ -1,13 +1,12 @@
 package de.ilovejava.events;
 
+import de.ilovejava.Enums.ChatType;
+import de.ilovejava.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import de.ilovejava.Enums.ChatType;
-import de.ilovejava.utils.Utils;
 
 public class Event_Chat implements Listener {
 	@EventHandler

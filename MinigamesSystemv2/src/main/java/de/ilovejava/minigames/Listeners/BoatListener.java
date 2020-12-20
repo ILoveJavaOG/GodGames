@@ -111,10 +111,7 @@ public class BoatListener implements Listener {
 			Entity passenger = vehicle.getPassengers().get(0);
 			if (passenger instanceof Player) {
 				Player player = (Player) passenger;
-				//Get the game and call the event
-				if (Tracker.isInGame(player)) {
-					Tracker.getGame(player).callEvent(event);
-				}
+				Tracker.redirectEvent(player, event);
 			}
 		}
 	}

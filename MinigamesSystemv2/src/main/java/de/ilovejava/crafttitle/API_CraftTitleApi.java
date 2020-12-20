@@ -1,14 +1,13 @@
 package de.ilovejava.crafttitle;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-
+import de.ilovejava.lobby.Lobby;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import de.ilovejava.lobby.Lobby;
-import net.md_5.bungee.api.ChatColor;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 public class API_CraftTitleApi implements Listener {
     @SuppressWarnings("unused")
