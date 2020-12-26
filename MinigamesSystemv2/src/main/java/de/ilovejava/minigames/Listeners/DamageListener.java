@@ -2,6 +2,7 @@ package de.ilovejava.minigames.Listeners;
 
 import de.ilovejava.minigames.Communication.Tracker;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,9 +41,7 @@ public class DamageListener implements Listener {
 		if (event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
 			//Get the game and call the event
-			if (Tracker.isInGame(player)) {
-				Tracker.getGame(player).callEvent(event);
-			}
+			Tracker.redirectEvent(player, event);
 		}
 	}
 
@@ -52,17 +51,23 @@ public class DamageListener implements Listener {
 	 * @param event(EntityDamageEvent): Damage event
 	 */
 	@EventHandler
-	public void onPlayerDamage(EntityDamageByEntityEvent event) {
-		if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-			Player damager = (Player) event.getDamager();
-			Player receiver = (Player) event.getEntity();
-			//Get the game and call the event
-			if (Tracker.isInGame(damager) && Tracker.isInGame(receiver)) {
-				if (Tracker.getGameId(damager) == Tracker.getGameId(receiver)) {
-					Tracker.getGame(damager).callEvent(event);
-				}
+	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+		if (Double.isInfinite(event.getDamage())){
+			event.setDamage(Double.POSITIVE_INFINITY);
+			if (event.getDamager() instanceof FallingBlock) {
+				Tracker.redirectEvent(event.getDamager().getUniqueId(), event);
+			} else if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+				Player damager = (Player) event.getDamager();
+				Player receiver = (Player) event.getEntity();
+				//Get the game and call the event
+				if (damager != receiver) Tracker.redirectEvent(damager, event);
 			}
 		}
+	}
+
+	@EventHandler
+	public void onEntityCompus(EntityCombustEvent event) {
+		Tracker.redirectEvent(event.getEntity().getUniqueId(), event);
 	}
 
 	/**
@@ -74,10 +79,7 @@ public class DamageListener implements Listener {
 	public void onPlayerRegen(EntityRegainHealthEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
-			//Get the game and call the event
-			if (Tracker.isInGame(player)) {
-				Tracker.getGame(player).callEvent(event);
-			}
+			Tracker.redirectEvent(player, event);
 		}
 	}
 

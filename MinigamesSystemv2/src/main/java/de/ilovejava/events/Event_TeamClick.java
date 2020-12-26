@@ -22,19 +22,19 @@ public class Event_TeamClick implements Listener {
 		
 		Player p = (Player) e.getWhoClicked();
 		
-		if(e.getView().getTitle().equalsIgnoreCase("§eTeam Arena")) {
+		if(e.getView().getTitle().equalsIgnoreCase("Â§eTeam Arena")) {
 			e.setCancelled(true);
 			switch(e.getCurrentItem().getItemMeta().getDisplayName()) {
-				case "§eUndercover Modus":
+				case "Â§eUndercover Modus":
 					GameProfile gp = ((CraftPlayer)p).getHandle().getProfile();
 					if(Utils.getProfielUUIDS().containsKey(gp)) {
 						NickSystem.unnickPlayer(p);
-						p.sendMessage(Utils.getPrefix() + "§bDu hast nun wieder §edeinen§b Namen");
+						p.sendMessage(Utils.getPrefix() + "Â§bDu hast nun wieder Â§edeinenÂ§b Namen");
 					}else {
 						Random rnd = new Random();
 						String name = Utils.getNames().get(rnd.nextInt(Utils.getNames().size()));
 						NickSystem.nickPlayer(p, name);
-						p.sendMessage(Utils.getPrefix() + "§bDu hast nun den Namen: §e" + name);
+						p.sendMessage(Utils.getPrefix() + "Â§bDu hast nun den Namen: Â§e" + name);
 					}
 					updateInv(e.getInventory(), p);
 					break;

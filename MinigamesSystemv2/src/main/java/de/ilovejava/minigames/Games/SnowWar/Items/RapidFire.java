@@ -6,12 +6,15 @@ import de.ilovejava.minigames.Items.GameItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+/**
+ * Class to represent a the rapid fire game item
+ */
 public class RapidFire extends GameItem {
 
 	/**
 	 * Constructor for the the game
 	 *
-	 * @param holder
+	 * @param holder(Player): Player for which rapid fire will be enabled
 	 */
 	public RapidFire(Player holder) {
 		super(holder, Material.MAGMA_CREAM, "RAPIDFIRE", 1, 4);
@@ -22,6 +25,7 @@ public class RapidFire extends GameItem {
 	 */
 	@Override
 	protected void useItem() {
+		//Get the game and redirect state
 		SnowWar war = (SnowWar) Tracker.getGame(holder);
 		war.enableRapidFire(holder);
 	}

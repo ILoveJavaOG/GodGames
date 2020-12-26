@@ -60,11 +60,6 @@ public class ItemMetaBuilder {
 		return this;
 	}
 
-	public ItemMetaBuilder setCustomModelData(Integer data) {
-		this.meta.setCustomModelData(data);
-		return this;
-	}
-
 	public ItemMetaBuilder setDisplayName(String name) {
 		this.meta.setDisplayName(name);
 		return this;

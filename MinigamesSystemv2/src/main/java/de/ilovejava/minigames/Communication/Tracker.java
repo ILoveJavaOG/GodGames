@@ -1,11 +1,13 @@
 package de.ilovejava.minigames.Communication;
 
 import de.ilovejava.minigames.GameLogic.Game;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class to keep track of players and games
@@ -13,7 +15,9 @@ import java.util.HashMap;
 public class Tracker {
 
 	//Game associated to player
-	private static final HashMap<Player, Integer> gameIds = new HashMap<>();
+	private static final ConcurrentHashMap<Player, Integer> gameIds = new ConcurrentHashMap<>();
+
+	private static final ConcurrentHashMap<UUID, Player> entityConnections = new ConcurrentHashMap<>();
 
 	/**
 	 * Function to check if a player is currently playing a mini game
@@ -22,7 +26,7 @@ public class Tracker {
 	 *
 	 * @return True if player is in a game, False if not
 	 */
-	public static boolean isInGame(@NotNull Player player) {
+	public static boolean isInGame(Player player) {
 		return gameIds.containsKey(player);
 	}
 
@@ -60,6 +64,14 @@ public class Tracker {
 		if (isInGame(player)) Tracker.getGame(player).callEvent(event);
 	}
 
+	public static void redirectEvent(UUID entity, Event event) {
+		if (entityConnections.containsKey(entity)) redirectEvent(entityConnections.get(entity), event);
+	}
+
+	public static void bindEntity(Entity entity, Player owner) {
+		entityConnections.put(entity.getUniqueId(), owner);
+	}
+
 	/**
 	 * Function to get the game for the given player
 	 *
@@ -69,5 +81,9 @@ public class Tracker {
 	 */
 	public static Game getGame(Player player) {
 		return Game.allGames.get(getGameId(player));
+	}
+
+	public static Player consume(Entity entity) {
+		return entityConnections.remove(entity.getUniqueId());
 	}
 }

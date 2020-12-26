@@ -16,7 +16,7 @@ public class TNTRun {
 				tnt.load();
 				i ++;
 			}
-			Bukkit.getConsoleSender().sendMessage("§bTNTRun Arenen geladen: §e" + i);
+			Bukkit.getConsoleSender().sendMessage("Â§bTNTRun Arenen geladen: Â§e" + i);
 		}
 	}
 }

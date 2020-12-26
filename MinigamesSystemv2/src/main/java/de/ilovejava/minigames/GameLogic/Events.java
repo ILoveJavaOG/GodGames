@@ -1,15 +1,14 @@
 package de.ilovejava.minigames.GameLogic;
 
-
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Interface to make sure any game has events called by Game
@@ -22,7 +21,7 @@ public interface Events {
 	 *
 	 * @param event(PlayerDropItemEvent): Event on item drop
 	 */
-	default void onDrop(PlayerDropItemEvent event) {
+	default void onPlayerDropItem(PlayerDropItemEvent event) {
 		event.setCancelled(true);
 	}
 
@@ -71,7 +70,7 @@ public interface Events {
 		event.setCancelled(true);
 	}
 
-	default void onBlockPlace(@NotNull BlockPlaceEvent event) {
+	default void onBlockPlace(BlockPlaceEvent event) {
 		event.setCancelled(true);
 	}
 
@@ -80,5 +79,9 @@ public interface Events {
 		if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
 			event.setCancelled(true);
 		}
+	}
+
+	default void onEntityCombust(EntityCombustEvent event) {
+		event.setCancelled(true);
 	}
 }

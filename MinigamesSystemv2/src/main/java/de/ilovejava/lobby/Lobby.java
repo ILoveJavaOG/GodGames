@@ -153,7 +153,7 @@ public class Lobby extends JavaPlugin{
 				}
 			}
 		}
-		Bukkit.getConsoleSender().sendMessage("§b" + i + "Entitys gelöscht!");
+		Bukkit.getConsoleSender().sendMessage("Â§b" + i + "Entitys gelÂ§scht!");
 	}
 	
 	private void loadCommands() {
@@ -223,7 +223,7 @@ public class Lobby extends JavaPlugin{
 		Utils.setMySQLPassword(cfg.getString("Config.MySQL.Password"));
 		Utils.setMySQLDatabase(cfg.getString("Config.MySQL.Database"));
 		Utils.setMySQlPort(cfg.getInt("Config.MySQL.port"));
-		Utils.setPrefix("§b§o§lArdnarun§8: §f");
+		Utils.setPrefix("Â§bÂ§oÂ§lArdnarunÂ§8: Â§f");
 		
 		if(cfg.isSet("Config.Spawn.X")) {
 			Double x = cfg.getDouble("Config.Spawn.X");
@@ -233,7 +233,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.Spawn.Pitch");
 			String world = cfg.getString("Config.Spawn.World");
 			Utils.setSpawn(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.VS.X")) {
 			Double x = cfg.getDouble("Config.VS.X");
@@ -243,7 +243,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.VS.Pitch");
 			String world = cfg.getString("Config.VS.World");
 			Utils.setVs(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein 1vs1 spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein 1vs1 spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.BW.X")) {
 			Double x = cfg.getDouble("Config.BW.X");
@@ -253,7 +253,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.BW.Pitch");
 			String world = cfg.getString("Config.BW.World");
 			Utils.setBedWars(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein BedWars spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein BedWars spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.Void.X")) {
 			Double x = cfg.getDouble("Config.Void.X");
@@ -263,7 +263,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.Void.Pitch");
 			String world = cfg.getString("Config.Void.World");
 			Utils.setVoid(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Void Run spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Void Run spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.Ice.X")) {
 			Double x = cfg.getDouble("Config.Ice.X");
@@ -273,7 +273,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.Ice.Pitch");
 			String world = cfg.getString("Config.Ice.World");
 			Utils.setIce(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Ice spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Ice spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.Fisch.X")) {
 			Double x = cfg.getDouble("Config.Fisch.X");
@@ -283,7 +283,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.Fisch.Pitch");
 			String world = cfg.getString("Config.Fisch.World");
 			Utils.setFisch(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Fisch spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Fisch spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.Schleim.X")) {
 			Double x = cfg.getDouble("Config.Schleim.X");
@@ -293,7 +293,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.Schleim.Pitch");
 			String world = cfg.getString("Config.Schleim.World");
 			Utils.setSchleim(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Schleim spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Schleim spawn gesetzt werden!");}
 		
 		if(cfg.isSet("Config.Schatz.X")) {
 			Double x = cfg.getDouble("Config.Schatz.X");
@@ -303,7 +303,7 @@ public class Lobby extends JavaPlugin{
 			Float pitch = (float) cfg.getDouble("Config.Schatz.Pitch");
 			String world = cfg.getString("Config.Schatz.World");
 			Utils.setSchatz(new Location(Bukkit.getWorld(world), x, y, z,yaw,pitch));
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Schatz spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Schatz spawn gesetzt werden!");}
 		if(cfg.isSet("Config.Shop.X")) {
 			Double x = cfg.getDouble("Config.Shop.X");
 			Double y = cfg.getDouble("Config.Shop.Y");

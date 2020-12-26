@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +44,17 @@ public class InteractListener implements Listener {
 	 */
 	@EventHandler
 	public void onConsumption(PlayerItemConsumeEvent event) {
+		Player player = event.getPlayer();
+		Tracker.redirectEvent(player, event);
+	}
+
+	/**
+	 * Event on interaction
+	 *
+	 * @param event(PlayerInteractAtEntityEvent): Player interact with entity event
+	 */
+	@EventHandler
+	public void onEntityInteract(PlayerInteractAtEntityEvent event) {
 		Player player = event.getPlayer();
 		Tracker.redirectEvent(player, event);
 	}

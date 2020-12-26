@@ -32,11 +32,11 @@ public class Event_InterAcct implements Listener {
 				if(!e.getPlayer().getItemInHand().getType().equals(Material.AIR)) {
 					if(!e.getPlayer().getItemInHand().hasItemMeta()) {if(!e.getPlayer().hasPermission("GG.InterAcct")) {e.setCancelled(true);}}
 					String name = e.getPlayer().getItemInHand().getItemMeta().getDisplayName();
-					if(name.equals("§e§o§lSpiel wählen§8(§cRechtklick§8)")) {
+					if(name.equals("Â§eÂ§oÂ§lSpiel wÂ§hlenÂ§8(Â§cRechtklickÂ§8)")) {
 						if(Utils.getInstance().pmenu.get(e.getPlayer()) == null || !Utils.getInstance().pmenu.containsKey(e.getPlayer())) {
 							openGUI(e.getPlayer());
 						}
-					}else if(name.equals("§6§o§lSammlerköpfe")) {
+					}else if(name.equals("Â§6Â§oÂ§lSammlerkÂ§pfe")) {
 						openLegSkulls(e.getPlayer());;
 					}
 				}else {
@@ -54,13 +54,13 @@ public class Event_InterAcct implements Listener {
 	
 	private void openLegSkulls(Player p) {
 		String uuid = uuidfetcher.getUUID(p).toString();
-		Inventory inv = Bukkit.createInventory(null, 27, "§6§o§lSammlerköpfe");
+		Inventory inv = Bukkit.createInventory(null, 27, "Â§6Â§oÂ§lSammlerkÂ§pfe");
 		User user = Utils.getUser().get(uuid);
 		HashMap<String, Boolean> skulls= user.skulls().getSkulls();
 
 		ItemStack i = new ItemStack(Material.BARRIER);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("§cVerschlossen!");
+		im.setDisplayName("Â§cVerschlossen!");
 		List<String> lore = new ArrayList<String>();
 		int timer = 1;
 		
@@ -136,14 +136,14 @@ public class Event_InterAcct implements Listener {
 			loc = Utils.getInstance().lastLoc.get(p);
 		}
 		
-		gui.addIcon(p, Utils.setPosition(loc, 1, 1, 4, 2, 2, 4), "§b1VS1", new ItemStack(Material.DIAMOND_SWORD), true, true, 2);
-		gui.addIcon(p, Utils.setPosition(loc, 2, 1, 4, 2, 2, 4), "§eBedWars", new ItemStack(Material.GOLDEN_SWORD), true, true, 2);
-		gui.addIcon(p, Utils.setPosition(loc, 3, 1, 4, 2, 2, 4), "§6Void-Run", new ItemStack(Material.SAND), 2);
-		gui.addIcon(p, Utils.setPosition(loc, 4, 1, 4, 2, 2, 4), "§aIce Scooter", new ItemStack(Material.ICE), 2);
-		gui.addIcon(p, Utils.setPosition(loc, 5, 1, 4, 2, 2, 4), "§5Fischeschlacht", new ItemStack(Material.COD), true, 2);
-		gui.addIcon(p, Utils.setPosition(loc, 1, 2, 4, 2, 2, 4), "§9Schleimervalley", new ItemStack(Material.TNT), 3);
-		gui.addIcon(p, Utils.setPosition(loc, 2, 2, 4, 2, 2, 4), "§3Schatzkiste", new ItemStack(Material.ENDER_CHEST), 3);
-		gui.addIcon(p, Utils.setPosition(loc, 5, 2, 4, 2, 2, 4), "§cSchließen", "http://textures.minecraft.net/texture/5a6787ba32564e7c2f3a0ce64498ecbb23b89845e5a66b5cec7736f729ed37", 3);
+		gui.addIcon(p, Utils.setPosition(loc, 1, 1, 4, 2, 2, 4), "Â§b1VS1", new ItemStack(Material.DIAMOND_SWORD), true, true, 2);
+		gui.addIcon(p, Utils.setPosition(loc, 2, 1, 4, 2, 2, 4), "Â§eBedWars", new ItemStack(Material.GOLDEN_SWORD), true, true, 2);
+		gui.addIcon(p, Utils.setPosition(loc, 3, 1, 4, 2, 2, 4), "Â§6Void-Run", new ItemStack(Material.SAND), 2);
+		gui.addIcon(p, Utils.setPosition(loc, 4, 1, 4, 2, 2, 4), "Â§aIce Scooter", new ItemStack(Material.ICE), 2);
+		gui.addIcon(p, Utils.setPosition(loc, 5, 1, 4, 2, 2, 4), "Â§5Fischeschlacht", new ItemStack(Material.COD), true, 2);
+		gui.addIcon(p, Utils.setPosition(loc, 1, 2, 4, 2, 2, 4), "Â§9Schleimervalley", new ItemStack(Material.TNT), 3);
+		gui.addIcon(p, Utils.setPosition(loc, 2, 2, 4, 2, 2, 4), "Â§3Schatzkiste", new ItemStack(Material.ENDER_CHEST), 3);
+		gui.addIcon(p, Utils.setPosition(loc, 5, 2, 4, 2, 2, 4), "Â§cSchlieÂ§en", "http://textures.minecraft.net/texture/5a6787ba32564e7c2f3a0ce64498ecbb23b89845e5a66b5cec7736f729ed37", 3);
 		Utils.getInstance().pmenu.put(p, gui);
 	}
 }

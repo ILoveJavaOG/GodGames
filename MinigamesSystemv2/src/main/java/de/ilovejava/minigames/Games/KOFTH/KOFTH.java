@@ -37,7 +37,7 @@ public class KOFTH extends Game {
 		@Contract(pure = true)
 		@Override
 		public String getTitle() {
-			return "ง2KOFTH";
+			return "ยง2KOFTH";
 		}
 
 		@NotNull

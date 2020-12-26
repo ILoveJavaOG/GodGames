@@ -40,7 +40,7 @@ public class IceScooterTimeTrial extends Game {
 		@Contract(pure = true)
 		@Override
 		public String getTitle() {
-			return "ง2IceScooterTimeTrial";
+			return "ยง2IceScooterTimeTrial";
 		}
 
 		@NotNull

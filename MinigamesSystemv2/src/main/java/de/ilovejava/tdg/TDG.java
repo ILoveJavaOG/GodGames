@@ -45,7 +45,7 @@ public class TDG {
         }
 		ArmorStand a = p.getWorld().spawn(loc, ArmorStand.class);
 		a.setVisible(false);
-		a.setCustomName(name.replace("&", "ง"));
+		a.setCustomName(name.replace("&", "ยง"));
 		a.setCustomNameVisible(true);
 		a.setHelmet(item);
 		a.setArms(true);
@@ -114,7 +114,7 @@ public class TDG {
         }
 		ArmorStand a = p.getWorld().spawn(loc, ArmorStand.class);
 		a.setVisible(false);
-		a.setCustomName(name.replace("&", "ง"));
+		a.setCustomName(name.replace("&", "ยง"));
 		a.setCustomNameVisible(true);
 		a.setCollidable(false);
 		if (texture.contains("textures.minecraft.net")) {
@@ -198,10 +198,10 @@ public class TDG {
 		locs.setDirection(v2);
 		ArmorStand a2 = p.getWorld().spawn(locs, ArmorStand.class);
 		a.setVisible(false);
-		a.setCustomName(name.replace("&", "ง"));
+		a.setCustomName(name.replace("&", "ยง"));
 		a.setCustomNameVisible(true);
 		a2.setVisible(false);
-		a2.setCustomName(name.replace("&", "ง"));
+		a2.setCustomName(name.replace("&", "ยง"));
 		a2.setRightArmPose(new EulerAngle(4.7, 4.8, 6.3));
 		a2.setItemInHand(item);
 		a.setArms(true);
@@ -290,10 +290,10 @@ public class TDG {
 		Location locs = utils.getLeftSide(a.getLocation().add(0.0, -0.3, 0.0), 0.4);
 		ArmorStand a2 = p.getWorld().spawn(locs, ArmorStand.class);
 		a.setVisible(false);
-		a.setCustomName(name.replace("&", "ง"));
+		a.setCustomName(name.replace("&", "ยง"));
 		a.setCustomNameVisible(true);
 		a2.setVisible(false);
-		a2.setCustomName(name.replace("&", "ง"));
+		a2.setCustomName(name.replace("&", "ยง"));
 		a2.setRightArmPose(new EulerAngle(-1.1, 1.7, 1.4));
 		a2.setItemInHand(item);
 		a.setArms(true);

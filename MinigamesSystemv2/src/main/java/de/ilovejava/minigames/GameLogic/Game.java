@@ -6,9 +6,9 @@ import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.MapTools.GameMap;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
@@ -164,7 +164,7 @@ public abstract class Game {
 	 */
 	private void sendLoading(Sound sound) {
 		activePlayers.forEach(player -> {
-			player.sendMessage("§aDas Spiel restartet in §e" + loadingTime + " Sekunden!");
+			player.sendMessage(ChatColor.GREEN + "Das Spiel restartet in " + ChatColor.YELLOW + loadingTime + ChatColor.GREEN + " Sekunden!");
 			player.playSound(player.getLocation(), sound, 1, 1);
 		});
 	}
@@ -188,6 +188,8 @@ public abstract class Game {
 	}
 
 	protected void gameOver() {
+		activePlayers.forEach(Tracker::unregisterPlayer);
+		watchingPlayers.forEach(Tracker::unregisterPlayer);
 		Selector selector = Selector.selectors.get(name);
 		selector.nextGame(getId(), gameMap);
 	}
@@ -221,13 +223,6 @@ public abstract class Game {
 				gameEvents.get(eventType).invoke(eventHandler, event);
 			} catch (IllegalAccessException | InvocationTargetException e) {
 				e.printStackTrace();
-			}
-		} else {
-			//Just cancel all events
-			if (event instanceof Cancellable) {
-				Cancellable toCancel = (Cancellable) event;
-				System.out.println("CANCELING: " + event);
-				toCancel.setCancelled(true);
 			}
 		}
 	}

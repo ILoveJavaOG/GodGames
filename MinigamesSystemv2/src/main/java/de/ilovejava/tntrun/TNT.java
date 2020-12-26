@@ -159,7 +159,7 @@ public class TNT implements TNTRun{
 			
 			@Override
 			public void run() {
-				if(state == GameState.RESET) {Bukkit.getScheduler().cancelTask(timer);; System.out.println("wird gelöscht!"); return;}
+				if(state == GameState.RESET) {Bukkit.getScheduler().cancelTask(timer);; System.out.println("wird gelÂ§scht!"); return;}
 				for(Player p : player) {
 					Location tnt = p.getLocation();
 					tnt.setY(tnt.getY()-2);
@@ -178,8 +178,8 @@ public class TNT implements TNTRun{
 			p.teleport(specLoc);
 			p.setGameMode(GameMode.ADVENTURE);
 			outofGame.add(p);
-			sendMessage("§eDer Spieler §6" + p.getName() + "§e ist ausgeschieden!");
-			p.sendMessage(Utils.getPrefix() + "§cDu bist ausgeschieden!");
+			sendMessage("Â§eDer Spieler Â§6" + p.getName() + "Â§e ist ausgeschieden!");
+			p.sendMessage(Utils.getPrefix() + "Â§cDu bist ausgeschieden!");
 		}
 	}
 	
@@ -284,24 +284,24 @@ public class TNT implements TNTRun{
 				
 				switch(state) {
 					case WAIT:
-						if(player.size() < min) {if(wait > 60) {sendMessage("§6Warte auf Spieler: §e" + player.size()  + "§6/§e" + min); wait = 0;}else {wait++;} return;}
+						if(player.size() < min) {if(wait > 60) {sendMessage("Â§6Warte auf Spieler: Â§e" + player.size()  + "Â§6/Â§e" + min); wait = 0;}else {wait++;} return;}
 						setState(GameState.LOBBY);
 						time = 20;
 						break;
 					case LOBBY:
 						time--;
 						setTimeXP(time);
-						if(player.size() < min) {time = 120; state = GameState.WAIT; sendMessage("§cEs sind zu wenig Spieler online!");}
-						if(time == 100) {sendMessage("§aDas Spiel startet in 100 Sekunden!"); playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP); return;}
-						if(time == 60) {sendMessage("§aDas Spiel startet in §e60 §aSekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 30) {sendMessage("§aDas Spiel startet in §e30§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 20) {sendMessage("§aDas Spiel startet in §e20§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 10) {sendMessage("§aDas Spiel startet in §e10§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 5) {sendMessage("§aDas Spiel startet in §e5§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 4) {sendMessage("§aDas Spiel startet in §e4§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 3) {sendMessage("§aDas Spiel startet in §e3§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 2) {sendMessage("§aDas Spiel startet in §e2§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
-						if(time == 1) {sendMessage("§aDas Spiel startet in §e1§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(player.size() < min) {time = 120; state = GameState.WAIT; sendMessage("Â§cEs sind zu wenig Spieler online!");}
+						if(time == 100) {sendMessage("Â§aDas Spiel startet in 100 Sekunden!"); playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP); return;}
+						if(time == 60) {sendMessage("Â§aDas Spiel startet in Â§e60 Â§aSekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 30) {sendMessage("Â§aDas Spiel startet in Â§e30Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 20) {sendMessage("Â§aDas Spiel startet in Â§e20Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 10) {sendMessage("Â§aDas Spiel startet in Â§e10Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 5) {sendMessage("Â§aDas Spiel startet in Â§e5Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 4) {sendMessage("Â§aDas Spiel startet in Â§e4Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 3) {sendMessage("Â§aDas Spiel startet in Â§e3Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 2) {sendMessage("Â§aDas Spiel startet in Â§e2Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
+						if(time == 1) {sendMessage("Â§aDas Spiel startet in Â§e1Â§a Sekunden!"); playSound(Sound.ENTITY_PLAYER_LEVELUP); return;}
 						if(time <= 0) {time = 25; state = GameState.INGAME; teleportPlayerToSpawn(); setNewScoreBoard();}
 						break;
 					case INGAME:
@@ -311,7 +311,7 @@ public class TNT implements TNTRun{
 						if(time == 100) {state = GameState.RESET;}
 						if(player.size() == 1) {
 							if(isStarted) {
-								API_CraftTitleApi.sendFullTitle(getWinner(), 50, 50, 50, "§eGewonnen", "§bDu hast Spiel gewonnen!");
+								API_CraftTitleApi.sendFullTitle(getWinner(), 50, 50, 50, "Â§eGewonnen", "Â§bDu hast Spiel gewonnen!");
 								state = GameState.RESET;
 								time = 30;
 							}else {
@@ -320,26 +320,26 @@ public class TNT implements TNTRun{
 								teleportTOGameLobby();
 							}
 						}
-						if(time == 15) {sendMessage("§aDas Spiel startet in §e15 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
-						if(time == 10) {sendMessage("§aDas Spiel startet in §e10 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
-						if(time == 5) {sendMessage("§aDas Spiel startet in §e5 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
-						if(time == 4) {sendMessage("§aDas Spiel startet in §e4 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
-						if(time == 3) {sendMessage("§aDas Spiel startet in §e3 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
-						if(time == 2) {sendMessage("§aDas Spiel startet in §e2 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
-						if(time == 1) {sendMessage("§aDas Spiel startet in §e1 §aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 15) {sendMessage("Â§aDas Spiel startet in Â§e15 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 10) {sendMessage("Â§aDas Spiel startet in Â§e10 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 5) {sendMessage("Â§aDas Spiel startet in Â§e5 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 4) {sendMessage("Â§aDas Spiel startet in Â§e4 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 3) {sendMessage("Â§aDas Spiel startet in Â§e3 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 2) {sendMessage("Â§aDas Spiel startet in Â§e2 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
+						if(time == 1) {sendMessage("Â§aDas Spiel startet in Â§e1 Â§aSekunden!");playSound(Sound.ENTITY_PLAYER_LEVELUP);return;}
 						if(time == 0) {getBlockToRemove();time = 7200; isStarted = true;}
 						break;
 					case RESET:
 						time--;
 						setTimeXP(time);
-						if(time == 20) {sendMessage("§aDas Spiel restartet in §e20 Sekunden!");}
-						if(time == 15) {sendMessage("§aDas Spiel restartet in §e15 Sekunden!");}
-						if(time == 10) {sendMessage("§aDas Spiel restartet in §e10 Sekunden!");}
-						if(time == 5) {sendMessage("§aDas Spiel restartet in §e5 Sekunden!");}
-						if(time == 4) {sendMessage("§aDas Spiel restartet in §e4 Sekunden!");}
-						if(time == 3) {sendMessage("§aDas Spiel restartet in §e3 Sekunden!");}
-						if(time == 2) {sendMessage("§aDas Spiel restartet in §e2 Sekunden!");}
-						if(time == 1) {sendMessage("§aDas Spiel restartet in §e1 Sekunden!");}
+						if(time == 20) {sendMessage("Â§aDas Spiel restartet in Â§e20 Sekunden!");}
+						if(time == 15) {sendMessage("Â§aDas Spiel restartet in Â§e15 Sekunden!");}
+						if(time == 10) {sendMessage("Â§aDas Spiel restartet in Â§e10 Sekunden!");}
+						if(time == 5) {sendMessage("Â§aDas Spiel restartet in Â§e5 Sekunden!");}
+						if(time == 4) {sendMessage("Â§aDas Spiel restartet in Â§e4 Sekunden!");}
+						if(time == 3) {sendMessage("Â§aDas Spiel restartet in Â§e3 Sekunden!");}
+						if(time == 2) {sendMessage("Â§aDas Spiel restartet in Â§e2 Sekunden!");}
+						if(time == 1) {sendMessage("Â§aDas Spiel restartet in Â§e1 Sekunden!");}
 						if(time == 0) {
 							canPlay = false;
 							isStandBy =  true;
@@ -361,29 +361,29 @@ public class TNT implements TNTRun{
 		Objective obj = board.registerNewObjective("sss", "eee");
 		
 		Team over = board.registerNewTeam("Over");
-		over.setPrefix("§4");
-		over.setSuffix("§f0");
+		over.setPrefix("Â§4");
+		over.setSuffix("Â§f0");
 		over.addEntry(ChatColor.BLACK.toString());
 		
 		Team self = board.registerNewTeam("Self");
-		self.setPrefix("§c");
-		self.setSuffix("§f"+player.size());
+		self.setPrefix("Â§c");
+		self.setSuffix("Â§f"+player.size());
 		self.addEntry(ChatColor.BOLD.toString());
 		
 		Team under = board.registerNewTeam("Under");
-		under.setPrefix("§4");
-		under.setSuffix("§f0");
+		under.setPrefix("Â§4");
+		under.setSuffix("Â§f0");
 		under.addEntry(ChatColor.BLUE.toString());
 		
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		obj.setDisplayName("§6TNTRun");
-		obj.getScore("§6Spieler über dir").setScore(16);
+		obj.setDisplayName("Â§6TNTRun");
+		obj.getScore("Â§6Spieler Â§ber dir").setScore(16);
 		obj.getScore(ChatColor.BLACK.toString()).setScore(15);
 		obj.getScore(" ").setScore(14);
-		obj.getScore("§6Spieler neben dir").setScore(13);
+		obj.getScore("Â§6Spieler neben dir").setScore(13);
 		obj.getScore(ChatColor.BOLD.toString()).setScore(12);
 		obj.getScore("  ").setScore(11);
-		obj.getScore("§6Spieler unter dir").setScore(10);
+		obj.getScore("Â§6Spieler unter dir").setScore(10);
 		obj.getScore(ChatColor.BLUE.toString()).setScore(9);
 		for(Player p : player) {
 			p.setScoreboard(board);
@@ -396,9 +396,9 @@ public class TNT implements TNTRun{
 				int over = getUpperPlayer(p);
 				int under = getLowerPlayer(p);
 				int remove = player.size()-under-over-1;
-				p.getScoreboard().getTeam("Over").setSuffix("§f"+over);
-				p.getScoreboard().getTeam("Self").setSuffix("§f"+remove);
-				p.getScoreboard().getTeam("Under").setSuffix("§f"+under);
+				p.getScoreboard().getTeam("Over").setSuffix("Â§f"+over);
+				p.getScoreboard().getTeam("Self").setSuffix("Â§f"+remove);
+				p.getScoreboard().getTeam("Under").setSuffix("Â§f"+under);
 			}
 		}
 	}

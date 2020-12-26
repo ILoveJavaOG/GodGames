@@ -24,39 +24,39 @@ public class Event_InventoryClick implements Listener {
 		String item = e.getCurrentItem().getItemMeta().getDisplayName();
 		String uuid = uuidfetcher.getUUID(p).toString();
 		switch(inv) {
-			case "§e§o§lShop":
+			case "Â§eÂ§oÂ§lShop":
 				e.setCancelled(true);
 				switch(item) {
-					case "§e§o§lSammlerköpfe Karte":
+					case "Â§eÂ§oÂ§lSammlerkÂ§pfe Karte":
 						if(Utils.getEco().getBalance(p) >= 60) {
 							Utils.getEco().withdrawPlayer(p, 60);
 							openSkullShop(e.getInventory(), p);
-						}else {p.closeInventory(); p.sendMessage(Utils.getPrefix() + "§cDu hast nicht genügend Arden!");}
+						}else {p.closeInventory(); p.sendMessage(Utils.getPrefix() + "Â§cDu hast nicht genÂ§gend Arden!");}
 						break;
-					case "§c???????":
+					case "Â§c???????":
 						if(Utils.getSkullcards().containsKey(p)) {
 							Utils.getSkullcards().get(p).showWin(e.getInventory(), e.getSlot(), uuid);
 						}else {p.closeInventory();}
 						break;
-					case "§6Lotto Chest":
+					case "Â§6Lotto Chest":
 						if(!Utils.getWaitLottochest().contains(p)) {
 							new Lottochest(p);
-						}else {p.sendMessage(Utils.getPrefix() + "§cBitte warte noch etwas!");}
+						}else {p.sendMessage(Utils.getPrefix() + "Â§cBitte warte noch etwas!");}
 						break;
 				}
 				break;
-			case "§6§o§lSammlerköpfe":
+			case "Â§6Â§oÂ§lSammlerkÂ§pfe":
 				e.setCancelled(true);
 				break;
-			case "§5LottoChest":
+			case "Â§5LottoChest":
 				e.setCancelled(true);
-					if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§e???????")) {
+					if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("Â§e???????")) {
 						if(Utils.getLottoCards().containsKey(p)) {
 							Lottochest lt = Utils.getLottoCards().get(p);
 							if(!lt.isChestEnd()) {
 								ItemStack it = new ItemStack(Material.EMERALD);
 								ItemMeta im = it.getItemMeta();
-								im.setDisplayName("§e" + lt.getPrice());
+								im.setDisplayName("Â§e" + lt.getPrice());
 								it.setItemMeta(im);
 								e.getInventory().setItem(e.getSlot(), it);
 								p.playSound(p.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
@@ -72,7 +72,7 @@ public class Event_InventoryClick implements Listener {
 		inv.clear();
 		ItemStack i = new ItemStack(Material.GOLD_INGOT);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("§c???????");
+		im.setDisplayName("Â§c???????");
 		i.setItemMeta(im);
 		inv.setItem(12, i);
 		inv.setItem(13, i);

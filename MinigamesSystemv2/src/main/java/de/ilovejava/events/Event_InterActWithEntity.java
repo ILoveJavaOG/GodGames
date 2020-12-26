@@ -34,29 +34,29 @@ public class Event_InterActWithEntity implements Listener {
 		
 		List<String> Lore = new ArrayList<String>();
 		
-		Inventory inv = Bukkit.createInventory(null, 27, "§e§o§lShop");
+		Inventory inv = Bukkit.createInventory(null, 27, "Â§eÂ§oÂ§lShop");
 		ItemStack i = Utils.getTimeSkull();
 		SkullMeta sm = (SkullMeta) i.getItemMeta();
-		sm.setDisplayName("§e§o§lSammlerköpfe Karte");
-		Lore.add("§bGewinn: 1 Arden bis 5000 Arden");
-		Lore.add("§bPreis: 60 Arden");
+		sm.setDisplayName("Â§eÂ§oÂ§lSammlerkÂ§pfe Karte");
+		Lore.add("Â§bGewinn: 1 Arden bis 5000 Arden");
+		Lore.add("Â§bPreis: 60 Arden");
 		sm.setLore(Lore);
 		i.setItemMeta(sm);
 		inv.setItem(11, i);
 		
 		i = new ItemStack(Material.ENDER_CHEST);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("§6Lotto Chest");
+		im.setDisplayName("Â§6Lotto Chest");
 		i.setItemMeta(im);
 		inv.setItem(13, i);
 		
 		Lore.clear();
-		Lore.add("§Versuch dein Glück und verdoppel deine Arden!");
-		Lore.add("§bPreis: 75 Arden");
-		Lore.add("§bGewinn: 1-7000 Arden");
+		Lore.add("Â§Versuch dein GlÂ§ck und verdoppel deine Arden!");
+		Lore.add("Â§bPreis: 75 Arden");
+		Lore.add("Â§bGewinn: 1-7000 Arden");
 		i = new ItemStack(Material.EMERALD);
 		im = i.getItemMeta();
-		im.setDisplayName("§a§o§lDeine Arden verdoppeln");
+		im.setDisplayName("Â§aÂ§oÂ§lDeine Arden verdoppeln");
 		i.setItemMeta(im);
 		inv.setItem(15, i);
 		

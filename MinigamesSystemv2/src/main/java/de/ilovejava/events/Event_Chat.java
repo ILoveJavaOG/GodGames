@@ -33,15 +33,15 @@ public class Event_Chat implements Listener {
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			if(Utils.getTypes().get(p).equals(ChatType.LOBBY)) {
 				if(send.hasPermission("GG.Admin")) {
-					p.sendMessage("งc"+sender+"ง8>>งf " +message);
+					p.sendMessage("ยงc"+sender+"ยง8>>ยงf " +message);
 				}else if(send.hasPermission("GG.Build")) {
-					p.sendMessage("งe"+sender+"ง8>>งf " +message);
+					p.sendMessage("ยงe"+sender+"ยง8>>ยงf " +message);
 				}else if(send.hasPermission("GG.Support")) {
-					p.sendMessage("ง6"+sender+"ง8>>งf " +message);
+					p.sendMessage("ยง6"+sender+"ยง8>>ยงf " +message);
 				}else if(send.hasPermission("GG.Team")){
-					p.sendMessage("ง9"+sender+"ง8>>งf " +message);
+					p.sendMessage("ยง9"+sender+"ยง8>>ยงf " +message);
 				}else {
-					p.sendMessage("งa"+sender+"ง8>>งf " +message);
+					p.sendMessage("ยงa"+sender+"ยง8>>ยงf " +message);
 				}
 			}
 		}

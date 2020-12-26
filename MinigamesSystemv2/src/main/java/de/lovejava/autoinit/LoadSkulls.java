@@ -18,6 +18,6 @@ public class LoadSkulls {
 			}
 			rs.close();
 		}catch(Exception e) {e.printStackTrace();}
-		Bukkit.getConsoleSender().sendMessage("§b"+i+" Köpf/e wurde/n geladen");
+		Bukkit.getConsoleSender().sendMessage("Â§b"+i+" KÂ§pf/e wurde/n geladen");
 	}
 }

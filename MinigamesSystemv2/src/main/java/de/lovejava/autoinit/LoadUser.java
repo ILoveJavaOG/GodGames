@@ -14,7 +14,7 @@ public class LoadUser {
 		try {
 			rs = Utils.getMysql().query("SELECT * FROM User");
 		} catch (NullPointerException e) {
-			Bukkit.getConsoleSender().sendMessage("ง3Could not load MYSQL");
+			Bukkit.getConsoleSender().sendMessage("ยง3Could not load MYSQL");
 		}
 		try {
 			while(rs.next()) {
@@ -27,6 +27,6 @@ public class LoadUser {
 			System.out.println("Exception occurred while loading user from database");
 			e.printStackTrace();
 		}
-		Bukkit.getConsoleSender().sendMessage("งb" + i + " User wurde/n geladen!");
+		Bukkit.getConsoleSender().sendMessage("ยงb" + i + " User wurde/n geladen!");
 	}
 }

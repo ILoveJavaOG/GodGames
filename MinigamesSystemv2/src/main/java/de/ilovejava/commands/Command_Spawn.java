@@ -22,7 +22,7 @@ public class Command_Spawn extends AbstartcCommands{
 				if (Utils.getSpawn() != null) {
 					p.teleport(Utils.getSpawn());
 				} else {
-					p.sendMessage(Utils.getPrefix() + "§cAchtung, der Spawn ist zurzeit nicht aktiv!");
+					p.sendMessage(Utils.getPrefix() + "Â§cAchtung, der Spawn ist zurzeit nicht aktiv!");
 				}
 			} else if(args.length == 1) {
 				FileConfiguration cfg;
@@ -40,7 +40,7 @@ public class Command_Spawn extends AbstartcCommands{
 							cfg.set("Config.Spawn.World", loc.getWorld().getName());
 							Utils.getInstance().saveConfig();
 							Utils.setSpawn(p.getLocation());
-							p.sendMessage(Utils.getPrefix() + "§bDer Spawn wurde gesetzt!");
+							p.sendMessage(Utils.getPrefix() + "Â§bDer Spawn wurde gesetzt!");
 						}
 						return true;
 					case "1vs1":
@@ -55,7 +55,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.VS.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setVs(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer 1VS1 Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer 1VS1 Spawn wurde gesetzt!");
 						return true;
 					case "bedwars":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -69,7 +69,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.BW.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setBedWars(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer BedWars Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer BedWars Spawn wurde gesetzt!");
 						return true;
 					case "void":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -83,7 +83,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.Void.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setVoid(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer Void Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer Void Spawn wurde gesetzt!");
 						return true;
 					case "ice":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -97,7 +97,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.Ice.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setIce(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer Ice Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer Ice Spawn wurde gesetzt!");
 						return true;
 					case "fisch":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -111,7 +111,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.Fisch.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setFisch(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer Fisch Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer Fisch Spawn wurde gesetzt!");
 						return true;
 					case "schleim":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -125,7 +125,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.Schleim.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setSchleim(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer Schleim Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer Schleim Spawn wurde gesetzt!");
 						return true;
 					case "schatz":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -139,7 +139,7 @@ public class Command_Spawn extends AbstartcCommands{
 						cfg.set("Config.Schatz.World", loc.getWorld().getName());
 						Utils.getInstance().saveConfig();
 						Utils.setSchatz(loc);
-						p.sendMessage(Utils.getPrefix() + "§bDer Schatz Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer Schatz Spawn wurde gesetzt!");
 						return true;
 					case "schatzshop":
 						if(!p.hasPermission("GG.Spawn")) {return true;}
@@ -154,7 +154,7 @@ public class Command_Spawn extends AbstartcCommands{
 						Utils.getInstance().saveConfig();
 						Utils.setShop(loc);
 						new Shop();
-						p.sendMessage(Utils.getPrefix() + "§bDer Shop Spawn wurde gesetzt!");
+						p.sendMessage(Utils.getPrefix() + "Â§bDer Shop Spawn wurde gesetzt!");
 						break;
 				}
 			}

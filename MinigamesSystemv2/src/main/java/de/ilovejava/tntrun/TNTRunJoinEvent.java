@@ -43,7 +43,7 @@ public class TNTRunJoinEvent extends Event implements Cancellable{
     
     public void sendJoinMessage() {
     	if(!cancelled) {
-    		tnt.sendMessage("§6" + p.getName() + "§e hat das Spiel betreten!");
+    		tnt.sendMessage("Â§6" + p.getName() + "Â§e hat das Spiel betreten!");
     		Utils.getTypes().put(p, ChatType.INGAME);
     		Utils.getPvpStats().put(p, PVPContainer.PVPNONFOOD);
     		p.getInventory().clear();
@@ -57,7 +57,7 @@ public class TNTRunJoinEvent extends Event implements Cancellable{
     }
     
     public void sendNotJoin() {
-    	p.sendMessage(Utils.getPrefix() + "§cLeider ist das Spiel nicht mehr öffentlich!");
+    	p.sendMessage(Utils.getPrefix() + "Â§cLeider ist das Spiel nicht mehr Â§ffentlich!");
     }
     
     public boolean canJoin() {

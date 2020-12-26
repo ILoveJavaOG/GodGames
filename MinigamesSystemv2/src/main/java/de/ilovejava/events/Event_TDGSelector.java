@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
 public class Event_TDGSelector implements Listener {
 	@EventHandler
 	public void onInterAcct(PlayerInteractEvent e) {
@@ -19,28 +20,28 @@ public class Event_TDGSelector implements Listener {
 					String name = en.getName();
 					TDG tdg = Utils.getInstance().pmenu.get(e.getPlayer());
 					switch(name) {
-						case "§b1VS1":
+						case "Â§b1VS1":
 
 							break;
-						case "§eBedWars":
+						case "Â§eBedWars":
 							
 							break;
-						case "§6Void-Run":
+						case "Â§6Void-Run":
 							new TNTRUN_SelectorInventory(e.getPlayer());
 							break;
-						case "§aIce Scooter":
+						case "Â§aIce Scooter":
 							
 							break;
-						case "§5Fischeschlacht":
+						case "Â§5Fischeschlacht":
 							
 							break;
-						case "§9Schleimervalley":
+						case "Â§9Schleimervalley":
 							
 							break;
-						case "§3Schatzkiste":
+						case "Â§3Schatzkiste":
 							
 							break;
-						case "§cSchließen":
+						case "Â§cSchlieÂ§en":
 							tdg.closeMenu(e.getPlayer());
 							break;
 						default:

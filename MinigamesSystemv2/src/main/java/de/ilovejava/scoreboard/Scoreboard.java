@@ -20,28 +20,28 @@ public class Scoreboard {
 		Objective obj = b.registerNewObjective("ggg","ccc");
 		
 		Team money = b.registerNewTeam("Money");
-		money.setPrefix("§e");
-		money.setSuffix("§e"+Utils.getMoneyAmmount(Utils.User.get(uuid).Arden()));
+		money.setPrefix("Â§e");
+		money.setSuffix("Â§e"+Utils.getMoneyAmmount(Utils.User.get(uuid).Arden()));
 		money.addEntry(ChatColor.BLACK.toString());
 		
 		Team KD = b.registerNewTeam("KD");
-		KD.setPrefix("§e");
-		KD.setSuffix("§e"+Utils.getUser().get(uuid).KD());
+		KD.setPrefix("Â§e");
+		KD.setSuffix("Â§e"+Utils.getUser().get(uuid).KD());
 		KD.addEntry(ChatColor.BOLD.toString());
 		
-		obj.setDisplayName("§6GodGames");
+		obj.setDisplayName("Â§6GodGames");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		obj.getScore("§bServer").setScore(16);
-		obj.getScore("§eGodGames").setScore(15);
+		obj.getScore("Â§bServer").setScore(16);
+		obj.getScore("Â§eGodGames").setScore(15);
 		obj.getScore(" ").setScore(14);
-		obj.getScore("§bArden").setScore(13);
+		obj.getScore("Â§bArden").setScore(13);
 		obj.getScore(ChatColor.BLACK.toString()).setScore(12);
 		obj.getScore("  ").setScore(11);
-		obj.getScore("§bK/D").setScore(10);
+		obj.getScore("Â§bK/D").setScore(10);
 		obj.getScore(ChatColor.BOLD.toString()).setScore(9);
 		obj.getScore("   ").setScore(8);
-		obj.getScore("§bTeamspeak").setScore(7);
-		obj.getScore("§eArdnarun.com").setScore(6);
+		obj.getScore("Â§bTeamspeak").setScore(7);
+		obj.getScore("Â§eArdnarun.com").setScore(6);
 		p.setScoreboard(b);
 	}
 	
@@ -54,8 +54,8 @@ public class Scoreboard {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					String uuid = uuidfetcher.getUUID(p).toString();
 					if(Utils.getTypes().get(p).equals(ChatType.LOBBY)) {
-						p.getScoreboard().getTeam("Money").setSuffix("§e"+Utils.getMoneyAmmount(Utils.User.get(uuid).Arden()));
-						p.getScoreboard().getTeam("KD").setSuffix("§e"+Utils.getUser().get(uuid).KD());
+						p.getScoreboard().getTeam("Money").setSuffix("Â§e"+Utils.getMoneyAmmount(Utils.User.get(uuid).Arden()));
+						p.getScoreboard().getTeam("KD").setSuffix("Â§e"+Utils.getUser().get(uuid).KD());
 					}
 				}
 			}

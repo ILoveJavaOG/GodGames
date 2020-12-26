@@ -1,17 +1,13 @@
 package de.ilovejava.minigames.Listeners;
 
 import de.ilovejava.minigames.Communication.Tracker;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FireworkExplodeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.metadata.MetadataValue;
-
-import java.util.List;
-import java.util.UUID;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class ProjectileListener implements Listener {
 
@@ -23,7 +19,6 @@ public class ProjectileListener implements Listener {
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent event) {
 		Player shooter = (Player) event.getEntity().getShooter();
-		assert shooter != null;
 		Tracker.redirectEvent(shooter, event);
 	}
 
@@ -34,9 +29,8 @@ public class ProjectileListener implements Listener {
 	 */
 	@EventHandler
 	public void onLaunch(ProjectileLaunchEvent event) {
-		Player shooter = (Player) event.getEntity().getShooter();
-		assert shooter != null;
-		Tracker.redirectEvent(shooter, event);
+		ProjectileSource source = event.getEntity().getShooter();
+		if (source instanceof Player) Tracker.redirectEvent((Player) source, event);
 	}
 
 	/**
@@ -46,11 +40,6 @@ public class ProjectileListener implements Listener {
 	 */
 	@EventHandler
 	public void onLaunch(FireworkExplodeEvent event) {
-		List<MetadataValue> data = event.getEntity().getMetadata("UUID");
-		if (data.size() == 1) {
-			UUID uuid = UUID.fromString(data.get(0).asString());
-			Player thrower = Bukkit.getPlayer(uuid);
-			Tracker.redirectEvent(thrower, event);
-		}
+		Tracker.redirectEvent(event.getEntity().getUniqueId(), event);
 	}
 }

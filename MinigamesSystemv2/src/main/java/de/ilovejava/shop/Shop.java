@@ -9,11 +9,11 @@ public class Shop {
 	public Shop() {
 		if(Utils.getShop() != null) {
 			Villager v = (Villager) Utils.getShop().getWorld().spawnEntity(Utils.getShop(), EntityType.VILLAGER);
-			v.setCustomName("§6§o§lSchatz Shop");
+			v.setCustomName("Â§6Â§oÂ§lSchatz Shop");
 			v.setCustomNameVisible(true);
 			v.setAI(false);
 			v.setHealth(20.0);
 			v.setInvulnerable(true);
-		}else {Bukkit.getConsoleSender().sendMessage("§cAchtung, es muss ein Shop Spawn gesetzt werden!");}
+		}else {Bukkit.getConsoleSender().sendMessage("Â§cAchtung, es muss ein Shop Spawn gesetzt werden!");}
 	}
 }

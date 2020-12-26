@@ -16,7 +16,7 @@ public class TNTRUN_SelectorInventory {
 	Inventory inv;
 	public TNTRUN_SelectorInventory(Player p) {
 		this.p = p;
-		this.inv = Bukkit.createInventory(null, 54, "§eVoid-Run");
+		this.inv = Bukkit.createInventory(null, 54, "Â§eVoid-Run");
 		this.buildInventory();
 	}
 	
@@ -24,7 +24,7 @@ public class TNTRUN_SelectorInventory {
 		if(Utils.getTNTReady().size() == 0) {
 			ItemStack i = new ItemStack(Material.BARRIER);
 			ItemMeta im = i.getItemMeta();
-			im.setDisplayName("§cKein Spiel vorhanden!");
+			im.setDisplayName("Â§cKein Spiel vorhanden!");
 			i.setItemMeta(im);
 			this.inv.setItem(22, i);
 		} else {
@@ -32,11 +32,11 @@ public class TNTRUN_SelectorInventory {
 				TNT tnt = Utils.getTNTReady().get(key);
 				ItemStack i = new ItemStack(Material.SAND);
 				ItemMeta im = i.getItemMeta();
-				im.setDisplayName("§b"+tnt.mapName());
+				im.setDisplayName("Â§b"+tnt.mapName());
 				ArrayList<String> Lore = new ArrayList<String>();
-				Lore.add("§6Spieler: " + tnt.player().size());
-				Lore.add("§6Min. Spieler: " + tnt.Min_Player());
-				Lore.add("§6Max. Spieler: " + tnt.Max_Player());
+				Lore.add("Â§6Spieler: " + tnt.player().size());
+				Lore.add("Â§6Min. Spieler: " + tnt.Min_Player());
+				Lore.add("Â§6Max. Spieler: " + tnt.Max_Player());
 				im.setLore(Lore);
 				i.setItemMeta(im);
 				inv.addItem(Utils.setCustomNBTTag(i, "arena", key));

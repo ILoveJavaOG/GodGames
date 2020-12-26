@@ -27,27 +27,27 @@ public class Command_Nick extends AbstartcCommands{
 		if (p.hasPermission("MSG.Team")) {
 			p.openInventory(getInv(p));
 		} else {
-			p.sendMessage(Utils.getPrefix() + "§cAchtung, du darfst das nicht!");
+			p.sendMessage(Utils.getPrefix() + "Â§cAchtung, du darfst das nicht!");
 		}
 		return true;
 	}
 
 	public static Inventory getInv(Player p) {
-		Inventory inv = Bukkit.createInventory(null, 54, "§eTeam Arena");
+		Inventory inv = Bukkit.createInventory(null, 54, "Â§eTeam Arena");
 		
 		ArrayList<String> lore = new ArrayList<>();
 
 		GameProfile gp = ((CraftPlayer)p).getHandle().getProfile();
 		
 		if (Utils.getProfielUUIDS().containsKey(gp)) {
-			lore.add("§eAktiv: §aJa");
+			lore.add("Â§eAktiv: Â§aJa");
 		} else {
-			lore.add("§eAktiv: §cNein");
+			lore.add("Â§eAktiv: Â§cNein");
 		}
 		
 		ItemStack i = new ItemStack(Material.DIAMOND);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("§eUndercover Modus");
+		im.setDisplayName("Â§eUndercover Modus");
 		im.setLore(lore);
 		i.setItemMeta(im);
 		inv.setItem(19, i);
@@ -55,37 +55,37 @@ public class Command_Nick extends AbstartcCommands{
 		
 		i = new ItemStack(Material.EMERALD);
 		im = i.getItemMeta();
-		im.setDisplayName("§eChat Ingnore");
+		im.setDisplayName("Â§eChat Ingnore");
 		i.setItemMeta(im);
 		inv.setItem(20, i);
 		
 		i = new ItemStack(Material.GOLD_INGOT);
 		im = i.getItemMeta();
-		im.setDisplayName("§eSpec Modus");
+		im.setDisplayName("Â§eSpec Modus");
 		i.setItemMeta(im);
 		inv.setItem(21, i);
 		
 		i = new ItemStack(Material.ANVIL);
 		im = i.getItemMeta();
-		im.setDisplayName("§eTeam Chat");
+		im.setDisplayName("Â§eTeam Chat");
 		i.setItemMeta(im);
 		inv.setItem(22, i);
 		
 		i = new ItemStack(Material.ENDER_CHEST);
 		im = i.getItemMeta();
-		im.setDisplayName("§eTeam Liste");
+		im.setDisplayName("Â§eTeam Liste");
 		i.setItemMeta(im);
 		inv.setItem(23, i);
 		
 		i = new ItemStack(Material.DIAMOND_PICKAXE);
 		im = i.getItemMeta();
-		im.setDisplayName("§eSpieler Info abfragen!");
+		im.setDisplayName("Â§eSpieler Info abfragen!");
 		i.setItemMeta(im);
 		inv.setItem(24, i);
 		
 		i = new ItemStack(Material.BARRIER);
 		im = i.getItemMeta();
-		im.setDisplayName("§eSchließen");
+		im.setDisplayName("Â§eSchlieÂ§en");
 		i.setItemMeta(im);
 		inv.setItem(25, i);
 		

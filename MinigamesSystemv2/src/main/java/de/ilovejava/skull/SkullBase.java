@@ -14,7 +14,7 @@ public class SkullBase {
 		for(String key : name) {
 			ItemStack i = Skull.getSkull(getTexture(key));
 			SkullMeta sk = (SkullMeta) i.getItemMeta();
-			sk.setDisplayName("§c"+key);
+			sk.setDisplayName("Â§c"+key);
 			i.setItemMeta(sk);
 			skulls.put(key, i);
 		}

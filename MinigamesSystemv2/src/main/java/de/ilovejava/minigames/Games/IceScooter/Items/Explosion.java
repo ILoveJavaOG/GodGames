@@ -35,6 +35,7 @@ public class Explosion extends GameItem {
 		//Make player invulnerable to avoid damage to self
 		holder.setInvulnerable(true);
 		//Create explosion and particles
+
 		holder.getWorld().createExplosion(holder.getLocation(), 5, false, false);
 		holder.getWorld().spawnParticle(Particle.FALLING_LAVA, holder.getLocation(), 200, 3, 3, 3);
 		//Reset state of player

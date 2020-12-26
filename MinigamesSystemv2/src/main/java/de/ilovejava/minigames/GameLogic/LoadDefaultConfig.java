@@ -23,7 +23,7 @@ public class LoadDefaultConfig {
 		if (!f.exists()) {
 			if (!f.getParentFile().exists()) {
 				if (!f.getParentFile().mkdir()) {
-					Bukkit.getConsoleSender().sendMessage("ง3Could not create folder: 'Minigames' in 'plugins'");
+					Bukkit.getConsoleSender().sendMessage("ยง3Could not create folder: 'Minigames' in 'plugins'");
 					return;
 				}
 			}
@@ -50,9 +50,9 @@ public class LoadDefaultConfig {
 			config.options().header(header);
 			try {
 				config.save(f);
-				Bukkit.getConsoleSender().sendMessage("ง2Created ExampleConfig.yml");
+				Bukkit.getConsoleSender().sendMessage("ยง2Created ExampleConfig.yml");
 			} catch (IOException e) {
-				Bukkit.getConsoleSender().sendMessage("ง3Could not save ExampleConfig.yml");
+				Bukkit.getConsoleSender().sendMessage("ยง3Could not save ExampleConfig.yml");
 			}
 		}
 		Bukkit.getConsoleSender().sendMessage("Registering events");
@@ -66,6 +66,8 @@ public class LoadDefaultConfig {
 		Bukkit.getServer().getPluginManager().registerEvents(new BlockListener(), Lobby.getPlugin());
 		Bukkit.getServer().getPluginManager().registerEvents(new ProjectileListener(), Lobby.getPlugin());
 		Bukkit.getServer().getPluginManager().registerEvents(new TeleportListener(), Lobby.getPlugin());
+		Bukkit.getServer().getPluginManager().registerEvents(new SpawnListener(), Lobby.getPlugin());
+		Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(), Lobby.getPlugin());
 		MapLoader.loadMaps();
 		//new Selector(IceScooterRace.factory);
 		//new Selector(IceScooterPVP.factory);

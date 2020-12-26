@@ -30,10 +30,10 @@ public class Event_Join implements Listener {
 			e.getPlayer().sendMessage("");
 		}
 		
-		e.getPlayer().sendMessage("§bWillkommen §e" + e.getPlayer().getName() + "§b auf dem GodGames Server von Ardnarun.com");
-		e.getPlayer().sendMessage("§bDas Ardnarun.com Server Team wünscht dir viel Spaß!");
+		e.getPlayer().sendMessage("Â§bWillkommen Â§e" + e.getPlayer().getName() + "Â§b auf dem GodGames Server von Ardnarun.com");
+		e.getPlayer().sendMessage("Â§bDas Ardnarun.com Server Team wÂ§nscht dir viel SpaÂ§!");
 		
-		API_CraftTitleApi.sendFullTitle(e.getPlayer(), 40, 40, 40, "§bWillkommen", "§6" + e.getPlayer().getName());
+		API_CraftTitleApi.sendFullTitle(e.getPlayer(), 40, 40, 40, "Â§bWillkommen", "Â§6" + e.getPlayer().getName());
 		
 		checkUser(uuid);
 		checkSkulls(uuid);
@@ -57,21 +57,21 @@ public class Event_Join implements Listener {
 		
 		ItemStack i = new ItemStack(Material.CLOCK);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("§e§o§lSpiel wählen§8(§cRechtklick§8)");
+		im.setDisplayName("Â§eÂ§oÂ§lSpiel wÂ§hlenÂ§8(Â§cRechtklickÂ§8)");
 		i.setItemMeta(im);
 		
 		p.getInventory().setItem(4, i);
 		
 		i = Utils.getTimeSkull();
 		SkullMeta sm = (SkullMeta) i.getItemMeta();
-		sm.setDisplayName("§6§o§lSammlerköpfe");
+		sm.setDisplayName("Â§6Â§oÂ§lSammlerkÂ§pfe");
 		i.setItemMeta(sm);
 		
 		p.getInventory().setItem(2, i);
 		
 		i = new ItemStack(Material.NETHER_STAR);
 		im = i.getItemMeta();
-		im.setDisplayName("§b§o§lSpieler verstecken");
+		im.setDisplayName("Â§bÂ§oÂ§lSpieler verstecken");
 		i.setItemMeta(im);
 		p.getInventory().setItem(6, i);
 	}

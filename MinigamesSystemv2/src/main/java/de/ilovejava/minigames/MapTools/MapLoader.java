@@ -28,26 +28,28 @@ public class MapLoader {
 		File gameFolder = new File("plugins/Minigames/");
 		if (!gameFolder.exists()) {
 			if (!gameFolder.mkdir()) {
-				Bukkit.getConsoleSender().sendMessage("ง3Could not create: " + gameFolder.getPath());
+				Bukkit.getConsoleSender().sendMessage("ยง3Could not create: " + gameFolder.getPath());
 			}
 		}
 		for (File game : gameFolder.listFiles()) {
 			if (game.isDirectory()) {
-				Bukkit.getConsoleSender().sendMessage("ง4Loadings maps for game: " + game);
+				Bukkit.getConsoleSender().sendMessage("ยง4Loadings maps for game: " + game);
 				File[] maps = game.listFiles();
 				int validMaps = 0;
 				List<GameMap> all = new ArrayList<>();
 				for (File map : maps) {
-					try {
-						all.add(parseMap(map));
-						validMaps++;
-					} catch (ParserException e) {
-						Bukkit.getConsoleSender().sendMessage("ง3Could not load map: " + map.getName());
-						e.printStackTrace();
+					if (map.isFile()) {
+						try {
+							all.add(parseMap(map));
+							validMaps++;
+						} catch (ParserException e) {
+							Bukkit.getConsoleSender().sendMessage("ยง3Could not load map: " + map.getName());
+							e.printStackTrace();
+						}
 					}
 				}
 				allMaps.put(game.getName(), all);
-				Bukkit.getConsoleSender().sendMessage("ง4" + validMaps + " found");
+				Bukkit.getConsoleSender().sendMessage("ยง4" + validMaps + " found");
 			}
 		}
 	}
@@ -77,11 +79,11 @@ public class MapLoader {
 		//Check if parsed map exists and is valid
 		String world = mapConfig.getString("World");
 		if (world == null) {
-			throw new ParserException("ง3No specified world in: " + mapFile.getPath());
+			throw new ParserException("ยง3No specified world in: " + mapFile.getPath());
 		} else {
 			loadedWorld = Bukkit.getWorld(world);
 			if (loadedWorld == null) {
-				throw new ParserException("ง3Could not find world: " + world + " which is specified in " + mapFile.getPath());
+				throw new ParserException("ยง3Could not find world: " + world + " which is specified in " + mapFile.getPath());
 			}
 		}
 		//Load locations
@@ -89,7 +91,7 @@ public class MapLoader {
 		List<CustomLocation> allLocations = new ArrayList<>();
 		//Check if section for locations exists
 		if (locations == null) {
-			throw new ParserException("ง3No locations are specified in: " + mapFile.getPath());
+			throw new ParserException("ยง3No locations are specified in: " + mapFile.getPath());
 		} else {
 			//Iterate over the locations
 			Map<String, Object> locationMap = locations.getValues(false);
@@ -103,9 +105,9 @@ public class MapLoader {
 						throw new ParserException("Could not retrieve " + coordinates + " coordinate from " + locationName + " in " + mapFile.getPath());
 					}
 				}
-				int x = section.getInt("x");
-				int y = section.getInt("y");
-				int z = section.getInt("z");
+				double x = section.getDouble("x");
+				double y = section.getDouble("y");
+				double z = section.getDouble("z");
 				//Remove x,y and z so remaining data is optional data
 				Map<String, Object> extraData = section.getValues(false);
 				extraData.remove("x");

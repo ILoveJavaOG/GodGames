@@ -20,9 +20,9 @@ public class TNTRunLeaveEvent extends Event implements Cancellable{
     public void Leave() {
     	if(!cancelled) {
     		TNT tnt = getTNTRUnGame();
-    		tnt.sendMessage("§6" + p.getName() + "§e hat das Spiel verlassen!");
+    		tnt.sendMessage("Â§6" + p.getName() + "Â§e hat das Spiel verlassen!");
     		remove();
-    		p.sendMessage(Utils.getPrefix() + "§cAchtung, du hast das Laufende Spiel verlassen!");
+    		p.sendMessage(Utils.getPrefix() + "Â§cAchtung, du hast das Laufende Spiel verlassen!");
     		Utils.getTypes().put(p, ChatType.LOBBY);
     	}
     }

@@ -27,9 +27,9 @@ public class API_MySQL{
 	public void connect() {
              try {
                      con = DriverManager.getConnection("jdbc:mysql://" + HOST + ":"+PORT+"/" + DATABASE + "?autoReconnect=true", USER, PASSWORD);
-                     Bukkit.getConsoleSender().sendMessage("§bDie MySQL Verbindung wurde erstellt!");
+                     Bukkit.getConsoleSender().sendMessage("Â§bDie MySQL Verbindung wurde erstellt!");
              } catch (SQLException e) {
-            	 Bukkit.getConsoleSender().sendMessage("§cDie MySQL Verbingung wurde nicht erstellt!");
+            	 Bukkit.getConsoleSender().sendMessage("Â§cDie MySQL Verbingung wurde nicht erstellt!");
             	 e.printStackTrace();
              }
      }

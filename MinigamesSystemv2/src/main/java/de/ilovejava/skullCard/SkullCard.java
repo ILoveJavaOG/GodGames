@@ -112,15 +112,15 @@ public class SkullCard {
 		if(slot == 12) {
 			inv.setItem(3, this.win);
 			inv.setItem(21, this.win);
-			name = skull.getItemMeta().getDisplayName().replace("§c", "");
+			name = skull.getItemMeta().getDisplayName().replace("Â§c", "");
 		}else if(slot == 13) {
 			inv.setItem(4, this.win);
 			inv.setItem(22, this.win);
-			name = skull1.getItemMeta().getDisplayName().replace("§c", "");
+			name = skull1.getItemMeta().getDisplayName().replace("Â§c", "");
 		}else if(slot == 14) {
 			inv.setItem(5, this.win);
 			inv.setItem(23, this.win);
-			name = skull2.getItemMeta().getDisplayName().replace("§c", "");
+			name = skull2.getItemMeta().getDisplayName().replace("Â§c", "");
 		}
 		
 		inv.setItem(12, skull);
@@ -133,7 +133,7 @@ public class SkullCard {
 			s.skulls().updateSkull(name, true);
 			s.skulls().getSkulls().put(name, true);
 		}else {
-			p.sendMessage(Utils.getPrefix() + "§bDa du diesen Kopf leider schon besitzt bekommst du §e20§b Arden zurück!");
+			p.sendMessage(Utils.getPrefix() + "Â§bDa du diesen Kopf leider schon besitzt bekommst du Â§e20Â§b Arden zurÂ§ck!");
 			Utils.getEco().depositPlayer(p, 20.0);
 		}
 	}

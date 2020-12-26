@@ -25,7 +25,7 @@ public class Lottochest {
 	
 	public Lottochest(Player p) {
 		this.p = p;
-		this.inv =Bukkit.createInventory(null, 54, "§5LottoChest");
+		this.inv =Bukkit.createInventory(null, 54, "Â§5LottoChest");
 		this.loadPrices();
 	}
 	
@@ -64,7 +64,7 @@ public class Lottochest {
 	public void setUpInventory() {
 		ItemStack it = new ItemStack(Material.CHEST);
 		ItemMeta im = it.getItemMeta();
-		im.setDisplayName("§e???????");
+		im.setDisplayName("Â§e???????");
 		it.setItemMeta(im);
 		for(int i = 0; i < 54; i++) {
 			this.inv.setItem(i, it);
@@ -116,12 +116,12 @@ public class Lottochest {
 		
 		ItemStack normal = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
 		ItemMeta inormal = normal.getItemMeta();
-		inormal.setDisplayName("§aNormal");
+		inormal.setDisplayName("Â§aNormal");
 		normal.setItemMeta(inormal);
 		
 		ItemStack wertvoll = new ItemStack(Material.RED_STAINED_GLASS_PANE);
 		ItemMeta iwert = wertvoll.getItemMeta();
-		iwert.setDisplayName("§cWertvoll");
+		iwert.setDisplayName("Â§cWertvoll");
 		wertvoll.setItemMeta(iwert);
 		
 		if(prices.get(0) > 1000) {
@@ -132,7 +132,7 @@ public class Lottochest {
 			inv.setItem(29, normal);
 		}
 		
-		im.setDisplayName("§e"+prices.get(0));
+		im.setDisplayName("Â§e"+prices.get(0));
 		i.setItemMeta(im);
 		inv.setItem(20, i);
 		
@@ -144,7 +144,7 @@ public class Lottochest {
 			inv.setItem(30, normal);
 		}
 		
-		im.setDisplayName("§e"+prices.get(1));
+		im.setDisplayName("Â§e"+prices.get(1));
 		i.setItemMeta(im);
 		inv.setItem(21, i);
 		
@@ -156,7 +156,7 @@ public class Lottochest {
 			inv.setItem(31, normal);
 		}
 		
-		im.setDisplayName("§e"+prices.get(2));
+		im.setDisplayName("Â§e"+prices.get(2));
 		i.setItemMeta(im);
 		inv.setItem(22, i);
 		
@@ -168,7 +168,7 @@ public class Lottochest {
 			inv.setItem(32, normal);
 		}
 		
-		im.setDisplayName("§e"+prices.get(3));
+		im.setDisplayName("Â§e"+prices.get(3));
 		i.setItemMeta(im);
 		inv.setItem(23, i);
 		
@@ -180,14 +180,14 @@ public class Lottochest {
 			inv.setItem(33, normal);
 		}
 		
-		im.setDisplayName("§e"+prices.get(4));
+		im.setDisplayName("Â§e"+prices.get(4));
 		i.setItemMeta(im);
 		inv.setItem(24, i);
 		
 		ItemStack all = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
 		ItemMeta iall = all.getItemMeta();
 		int al = prices.get(0) + prices.get(1)+prices.get(2)+prices.get(3)+prices.get(4);
-		iall.setDisplayName("§6" + al);
+		iall.setDisplayName("Â§6" + al);
 		all.setItemMeta(iall);
 		inv.setItem(4, all);
 		
