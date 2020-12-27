@@ -61,11 +61,20 @@ public class Tracker {
 	}
 
 	public static void redirectEvent(Player player, Event event) {
-		if (isInGame(player)) Tracker.getGame(player).callEvent(event);
+		try {
+			if (isInGame(player)) Tracker.getGame(player).callEvent(event);
+		} catch (NullPointerException exception) {
+			//This happens if player is null
+		}
 	}
 
-	public static void redirectEvent(UUID entity, Event event) {
-		if (entityConnections.containsKey(entity)) redirectEvent(entityConnections.get(entity), event);
+	public static void redirectEvent(Entity entity, Event event) {
+		try {
+			if (entityConnections.containsKey(entity.getUniqueId())) redirectEvent(entityConnections.get(entity.getUniqueId()), event);
+		} catch (NullPointerException exception) {
+			//This happens if entity is null
+		}
+
 	}
 
 	public static void bindEntity(Entity entity, Player owner) {

@@ -1,9 +1,9 @@
 package de.ilovejava.minigames.Listeners;
 
+import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
 import de.ilovejava.minigames.Events.BoatBlockCollisionEvent;
 import de.ilovejava.minigames.Events.BoatEntityCollisionEvent;
-import de.ilovejava.minigames.GameLogic.Game;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Boat;
@@ -72,6 +72,7 @@ public class BoatListener implements Listener {
 	 *
 	 * @param event(VehicleMoveEvent): Move event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onBoatMove(@NotNull VehicleMoveEvent event) {
 		Vehicle moving = event.getVehicle();
@@ -83,18 +84,8 @@ public class BoatListener implements Listener {
 			if (passenger instanceof Player) {
 				Player player = (Player) passenger;
 				//Check the game and call events
-				if (Tracker.isInGame(player)) {
-					Game game = Tracker.getGame(player);
-					collidingEntities(boat).forEach(entity -> {
-						BoatEntityCollisionEvent entityCollisionEvent = new BoatEntityCollisionEvent(boat, player, entity);
-						game.callEvent(entityCollisionEvent);
-					});
-					collidingBlocks(boat).forEach(block -> {
-						BoatBlockCollisionEvent blockCollisionEvent = new BoatBlockCollisionEvent(boat, player, block);
-						game.callEvent(blockCollisionEvent);
-					});
-					game.callEvent(event);
-				}
+				collidingEntities(boat).forEach(entity -> Tracker.redirectEvent(player, new BoatEntityCollisionEvent(boat, player, entity)));
+				collidingBlocks(boat).forEach(block -> Tracker.redirectEvent(player, new BoatBlockCollisionEvent(boat, player, block)));
 			}
 		}
 	}

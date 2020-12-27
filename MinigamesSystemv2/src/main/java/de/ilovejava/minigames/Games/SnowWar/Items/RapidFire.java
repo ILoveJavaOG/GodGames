@@ -1,9 +1,11 @@
 package de.ilovejava.minigames.Games.SnowWar.Items;
 
+import de.ilovejava.ItemStackBuilder.ItemStackBuilder;
 import de.ilovejava.minigames.Communication.Tracker;
 import de.ilovejava.minigames.Games.SnowWar.SnowWar;
 import de.ilovejava.minigames.Items.GameItem;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 /**
@@ -17,7 +19,18 @@ public class RapidFire extends GameItem {
 	 * @param holder(Player): Player for which rapid fire will be enabled
 	 */
 	public RapidFire(Player holder) {
-		super(holder, Material.MAGMA_CREAM, "RAPIDFIRE", 1, 4);
+		super(holder, Material.COOKED_CHICKEN, "RAPIDFIRE", 1, 3);
+		this.display = new ItemStackBuilder(Material.COOKED_CHICKEN)
+				.getMetaDataBuilder()
+				.setDisplayName("&r&4Warme Weinachtsgans")
+				.setLore("&r&fEine warme Gans",
+						"&r&f(Not sponsored by Endstille)",
+						"&r&f",
+						"&r&fIss die ganz um dich aufzuwärmen.",
+						"&r&fWenn dir warm ist verlierst du",
+						"&r&fkeine Schneebälle beim werfen")
+				.build()
+				.build();
 	}
 
 	/**
@@ -28,5 +41,6 @@ public class RapidFire extends GameItem {
 		//Get the game and redirect state
 		SnowWar war = (SnowWar) Tracker.getGame(holder);
 		war.enableRapidFire(holder);
+		holder.playSound(holder.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1f, 0.1f);
 	}
 }

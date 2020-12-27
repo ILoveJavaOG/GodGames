@@ -36,7 +36,7 @@ public class PlayerStats {
 	 * Overloaded constructor call.
 	 * Initialises hits and streak with 0
 	 * @see PlayerStats(int, int int)
-	 * 
+	 *
 	 * @param team(int): Team of the player
 	 */
 	public PlayerStats(int team) {

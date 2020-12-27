@@ -134,7 +134,8 @@
     </dependencies>
 
     <properties>
-        <jar.finalName>Organizer</jar.finalName>
+        <jar.finalName>MiniGames</jar.finalName>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>

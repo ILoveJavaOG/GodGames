@@ -1,6 +1,7 @@
 package de.ilovejava.ItemStackBuilder;
 
 import com.google.common.collect.Multimap;
+import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
@@ -11,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ItemMetaBuilder {
@@ -61,7 +61,7 @@ public class ItemMetaBuilder {
 	}
 
 	public ItemMetaBuilder setDisplayName(String name) {
-		this.meta.setDisplayName(name);
+		this.meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
 		return this;
 	}
 
@@ -76,7 +76,11 @@ public class ItemMetaBuilder {
 	}
 
 	public ItemMetaBuilder setLore(String... lore) {
-		this.meta.setLore(new ArrayList<>(Arrays.asList(lore)));
+		ArrayList<String> translatedLore = new ArrayList<>();
+		for (String line : lore) {
+			translatedLore.add(ChatColor.translateAlternateColorCodes('&', line));
+		}
+		this.meta.setLore(translatedLore);
 		return this;
 	}
 

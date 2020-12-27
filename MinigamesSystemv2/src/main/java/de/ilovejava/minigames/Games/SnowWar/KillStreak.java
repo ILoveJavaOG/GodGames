@@ -13,30 +13,35 @@ import org.bukkit.inventory.ItemStack;
 public enum KillStreak {
 
 	//Sonar item
-	SONAR(new ItemStackBuilder(Material.ENDER_EYE)
+	SONAR(new ItemStackBuilder(Material.WRITTEN_BOOK)
 			.getMetaDataBuilder()
-			.setDisplayName("Sonar")
-			.setLore("Deckt andere Spieler auf")
+			.setDisplayName("&r&fSanta's Liste")
+			.setLore("&r&fEine Liste mit Namen",
+					 "&r&f",
+					 "&r&fZeigt dir wer alles",
+					 "&r&funnartig war")
 			.addEnchant(Enchantment.DURABILITY, 1, true)
 			.addItemFlags(ItemFlag.HIDE_ENCHANTS)
 			.build().build()),
 	//Supply drop item
-	SUPPLYDROP(new ItemStackBuilder(Material.FIREWORK_ROCKET)
+	SUPPLYDROP(new ItemStackBuilder(Material.PAPER)
 			.getMetaDataBuilder()
-			.setDisplayName("Supply Drop")
-			.setLore("Rechtsklick zum aktivieren", "Wirft Supply Drop auf geklickte Stelle")
+			.setDisplayName("&r&7Wunschzettel")
+			.setLore("&r&fDein Wunschzettel",
+					 "&r&f",
+					 "&r&fSchicke deinen Wunschzettel",
+					 "&r&fzum Weinachtsmann")
 			.addEnchant(Enchantment.DURABILITY, 1, true)
 			.addItemFlags(ItemFlag.HIDE_ENCHANTS)
 			.build().build()),
 	//Bomber item
-	BOMBER(new ItemStackBuilder(Material.ENDER_PEARL)
+	BOMBER(new ItemStackBuilder(Material.COCOA_BEANS)
 			.getMetaDataBuilder()
-			.setDisplayName("Bomber")
+			.setDisplayName("&r&8Rentier Futter")
+			.setLore("&r&fWerfe das Futter auf den Boden.",
+					 "&r&fDas Futter lockt die Rentiere an.")
 			.addEnchant(Enchantment.DURABILITY, 1, true)
 			.addItemFlags(ItemFlag.HIDE_ENCHANTS)
-			.setLore("Werfe um einen Bombardierung zu rufen",
-					 "Zentrum der Bombadierung ist",
-					 "Am Aufschlagsort")
 			.build().build());
 
 	//Display inside the inventory

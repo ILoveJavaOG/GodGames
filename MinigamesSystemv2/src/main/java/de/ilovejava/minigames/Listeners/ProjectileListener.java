@@ -1,5 +1,6 @@
 package de.ilovejava.minigames.Listeners;
 
+import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,7 @@ public class ProjectileListener implements Listener {
 	 *
 	 * @param event(ProjectileHitEvent): ProjectileHitEvent event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent event) {
 		Player shooter = (Player) event.getEntity().getShooter();
@@ -27,6 +29,7 @@ public class ProjectileListener implements Listener {
 	 *
 	 * @param event(ProjectileLaunchEvent): Projectile launch event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onLaunch(ProjectileLaunchEvent event) {
 		ProjectileSource source = event.getEntity().getShooter();
@@ -38,8 +41,9 @@ public class ProjectileListener implements Listener {
 	 *
 	 * @param event(FireworkExplodeEvent): Firework explode event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onLaunch(FireworkExplodeEvent event) {
-		Tracker.redirectEvent(event.getEntity().getUniqueId(), event);
+		Tracker.redirectEvent(event.getEntity(), event);
 	}
 }

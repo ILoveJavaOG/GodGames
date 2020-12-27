@@ -76,9 +76,6 @@ public interface Events {
 
 	default void onPlayerTeleport(PlayerTeleportEvent event) {
 		event.setCancelled(true);
-		if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
-			event.setCancelled(true);
-		}
 	}
 
 	default void onEntityCombust(EntityCombustEvent event) {

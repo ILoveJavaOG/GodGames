@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +47,7 @@ public abstract class Game {
 
 	//Map of the game
 	@Getter
-	protected GameMap gameMap;
+	public GameMap gameMap;
 
 	//State of the game
 	@Getter
@@ -223,6 +224,10 @@ public abstract class Game {
 				gameEvents.get(eventType).invoke(eventHandler, event);
 			} catch (IllegalAccessException | InvocationTargetException e) {
 				e.printStackTrace();
+			}
+		} else {
+			if (event instanceof Cancellable) {
+				((Cancellable) event).setCancelled(true);
 			}
 		}
 	}

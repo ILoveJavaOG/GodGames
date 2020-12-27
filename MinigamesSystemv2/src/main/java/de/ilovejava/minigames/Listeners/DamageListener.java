@@ -1,5 +1,6 @@
 package de.ilovejava.minigames.Listeners;
 
+import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -14,6 +15,7 @@ import org.bukkit.event.entity.*;
 public class DamageListener implements Listener {
 
 
+	@IsUsed
 	public void onEntityDamageByBlock(EntityDamageByBlockEvent event) {
 		Entity damaged = event.getEntity();
 		if (damaged instanceof  Player) {
@@ -26,6 +28,7 @@ public class DamageListener implements Listener {
 	 *
 	 * @param event(EntityExplodeEvent): Explosion event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onTNTExplosion(EntityExplodeEvent event) {
 		event.setCancelled(true);
@@ -36,6 +39,7 @@ public class DamageListener implements Listener {
 	 *
 	 * @param event(EntityDamageEvent): Damage event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onPlayerDamage(EntityDamageEvent event) {
 		if (event.getEntity() instanceof Player) {
@@ -50,12 +54,13 @@ public class DamageListener implements Listener {
 	 *
 	 * @param event(EntityDamageEvent): Damage event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
 		if (Double.isInfinite(event.getDamage())){
 			event.setDamage(Double.POSITIVE_INFINITY);
 			if (event.getDamager() instanceof FallingBlock) {
-				Tracker.redirectEvent(event.getDamager().getUniqueId(), event);
+				Tracker.redirectEvent(event.getDamager(), event);
 			} else if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
 				Player damager = (Player) event.getDamager();
 				Player receiver = (Player) event.getEntity();
@@ -65,9 +70,10 @@ public class DamageListener implements Listener {
 		}
 	}
 
+	@IsUsed
 	@EventHandler
-	public void onEntityCompus(EntityCombustEvent event) {
-		Tracker.redirectEvent(event.getEntity().getUniqueId(), event);
+	public void onEntityCombust(EntityCombustEvent event) {
+		Tracker.redirectEvent(event.getEntity(), event);
 	}
 
 	/**
@@ -75,6 +81,7 @@ public class DamageListener implements Listener {
 	 *
 	 * @param event(EntityDamageEvent): Damage event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onPlayerRegen(EntityRegainHealthEvent event) {
 		if (event.getEntity() instanceof Player) {
@@ -88,6 +95,7 @@ public class DamageListener implements Listener {
 	 *
 	 * @param event(EntityDamageEvent): Damage event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onFoodDepletion(FoodLevelChangeEvent event) {
 		if (event.getEntity() instanceof Player) {

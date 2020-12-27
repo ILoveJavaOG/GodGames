@@ -1,7 +1,7 @@
 package de.ilovejava.minigames.Listeners;
 
+import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -20,10 +20,10 @@ public class InteractListener implements Listener {
 	 *
 	 * @param event(PlayerInteractEvent): Interact event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onClick(@NotNull PlayerInteractEvent event) {
-		Player player = event.getPlayer();
-		Tracker.redirectEvent(player, event);
+		Tracker.redirectEvent(event.getPlayer(), event);
 	}
 
 	/**
@@ -31,10 +31,10 @@ public class InteractListener implements Listener {
 	 *
 	 * @param event(PlayerDropItemEvent): Drop event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent event) {
-		Player player = event.getPlayer();
-		Tracker.redirectEvent(player, event);
+		Tracker.redirectEvent(event.getPlayer(), event);
 	}
 
 	/**
@@ -42,10 +42,10 @@ public class InteractListener implements Listener {
 	 *
 	 * @param event(PlayerItemConsumeEvent): Consume event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onConsumption(PlayerItemConsumeEvent event) {
-		Player player = event.getPlayer();
-		Tracker.redirectEvent(player, event);
+		Tracker.redirectEvent(event.getPlayer(), event);
 	}
 
 	/**
@@ -53,9 +53,9 @@ public class InteractListener implements Listener {
 	 *
 	 * @param event(PlayerInteractAtEntityEvent): Player interact with entity event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onEntityInteract(PlayerInteractAtEntityEvent event) {
-		Player player = event.getPlayer();
-		Tracker.redirectEvent(player, event);
+		Tracker.redirectEvent(event.getPlayer(), event);
 	}
 }

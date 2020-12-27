@@ -18,7 +18,7 @@ public abstract class GameItem implements Listener {
 	//Display of the item in the inventory
 	protected ItemStack display;
 
-	private int itemSlot;
+	private final int itemSlot;
 
 	/**
 	 * Constructor for the the game

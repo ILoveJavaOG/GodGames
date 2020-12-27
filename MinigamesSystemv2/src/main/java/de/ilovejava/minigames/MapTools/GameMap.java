@@ -76,4 +76,36 @@ public class GameMap {
 	public Object getOption(String key) {
 		return options.get(key);
 	}
-}
+
+	public <E extends Enum<E> & Options> Object getOption(E key) {
+		return options.get(key.name());
+	}
+
+	public <T, E extends Enum<E> & Options> T getOption(E key, Class<T> castTo) {
+		return castTo.cast(options.getOrDefault(key.name(), key.getDefaultValue()));
+	}
+
+	public Integer getIntOption(String key) {
+		return (Integer) options.get(key);
+	}
+
+	public <E extends Enum<E> & Options> Integer getIntOption(E key) {
+		return (Integer) options.getOrDefault(key.name(), key.getDefaultValue());
+	}
+
+	public Double getDoubleOption(String key) {
+		return (Double) options.get(key);
+	}
+
+	public <E extends Enum<E> & Options> Double getDoubleOption(E key) {
+		return (Double) options.getOrDefault(key.name(), key.getDefaultValue());
+	}
+
+	public String getStringOption(String key) {
+		return (String) options.get(key);
+	}
+
+	public <E extends Enum<E> & Options> String getStringOption(E key) {
+		return (String) options.getOrDefault(key.name(), key.getDefaultValue());
+	}
+ }

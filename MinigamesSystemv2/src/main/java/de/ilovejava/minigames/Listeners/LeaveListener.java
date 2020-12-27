@@ -1,5 +1,6 @@
 package de.ilovejava.minigames.Listeners;
 
+import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,7 @@ public class LeaveListener implements Listener {
 	 *
 	 * @param leave(PlayerQuitEvent): Leave event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onLeave(@NotNull PlayerQuitEvent leave) {
 		Player left = leave.getPlayer();
@@ -31,6 +33,7 @@ public class LeaveListener implements Listener {
 	 *
 	 * @param kick(PlayerKickEvent): Kick event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onKick(@NotNull PlayerKickEvent kick) {
 		Player kicked = kick.getPlayer();
@@ -43,12 +46,14 @@ public class LeaveListener implements Listener {
 	 *
 	 * @param joinEvent(PlayerKickEvent): Player join event
 	 */
+	@IsUsed
 	@EventHandler
 	public void onKick(@NotNull PlayerJoinEvent joinEvent) {
 		Player joined = joinEvent.getPlayer();
 		removeData(joined);
 		resetPlayer(joined);
 	}
+
 
 	private void resetPlayer(Player player) {
 		player.setInvulnerable(false);

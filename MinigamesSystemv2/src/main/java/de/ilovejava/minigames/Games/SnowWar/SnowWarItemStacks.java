@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,32 +26,43 @@ public class SnowWarItemStacks {
 	//Snowball item
 	protected static final ItemStack fastBall = new ItemStackBuilder(Material.SNOWBALL)
 			.getMetaDataBuilder()
-			.setDisplayName("Fast Ball")
+			.setDisplayName("&r&9Schneeball")
+			.setLore("&r&fDie perfekte Kugel",
+					 "&r&f",
+					 "&r&fDer Wunsch diesen Ball,",
+					 "&r&fjemandem voll in die",
+					 "&r&fFresse zu werfen,",
+					 "&r&fbreitet sich in dir aus")
 			.build().build();
 
 	//====================Placeholders====================//
 	protected static final ItemStack sonarItemPlaceHolder = new ItemStackBuilder(Material.BARRIER)
 			.getMetaDataBuilder()
-			.setDisplayName("§2Sonar")
-			.setLore("Toete 1 Spieler um diese Streak freizuschalten")
+			.setDisplayName("&r&fSanta's Liste")
+			.setLore("&r&fTreffe Spieler, um die",
+					 "&r&fListe zu erhalten")
 			.build().build();
 
 	protected static final ItemStack supplyDropItemPlaceHolder = new ItemStackBuilder(Material.BARRIER)
 			.getMetaDataBuilder()
-			.setDisplayName("§2SupplyDrop")
-			.setLore("Toete 2 Spieler um diese Streak freizuschalten")
+			.setDisplayName("&r&7Wunschzettel")
+			.setLore("&r&fTreffe Spieler, damit",
+					 "&r&fdein Wunsch in",
+					 "&r&fErfüllung gehen kann")
 			.build().build();
 
 	protected static final ItemStack bomberItemPlaceHolder = new ItemStackBuilder(Material.BARRIER)
 			.getMetaDataBuilder()
-			.setDisplayName("§2Bomber")
-			.setLore("Toete 3 Spieler um diese Streak freizuschalten")
+			.setDisplayName("&r&8Rentier Futter")
+			.setLore("&r&fTreffe Spieler, um",
+			 		 "&r&fdas Futter zu erhalten")
 			.build().build();
 
 	protected static final ItemStack presentPlaceHolder = new ItemStackBuilder(Material.BARRIER)
 			.getMetaDataBuilder()
-			.setDisplayName("§2Geschenk")
-			.setLore("Sammle Geschenke!")
+			.setDisplayName("&r&6Geschenk")
+			.setLore("&r&fSammle Geschenke!",
+					 "&r&f(Definitiv kein Diebstahl)")
 			.build().build();
 	//====================Placeholders====================//
 
@@ -61,10 +73,9 @@ public class SnowWarItemStacks {
 		//Tree
 		ItemStack shield = new ItemStack(Material.SHIELD);
 		ItemMeta meta = shield.getItemMeta();
+
 		BlockStateMeta bmeta = (BlockStateMeta) meta;
 		assert bmeta != null;
-		Banner tree = tree(bmeta);
-		tree.update();
 		designs[0] = tree(bmeta);
 		designs[1] = present(bmeta);
 		designs[2] = present2(bmeta);
@@ -141,7 +152,8 @@ public class SnowWarItemStacks {
 	//Gloves
 	protected static final ItemStack gloves = new ItemStackBuilder(Material.LEATHER_BOOTS)
 			.getMetaDataBuilder()
-			.setDisplayName("§2Warme Handschuhe")
+			.setDisplayName("&r&5Warme Handschuhe")
+			.setLore("&r&fHalten deine Hände warm")
 			.build().build();
 
 	//======================Armor=======================//
@@ -151,7 +163,10 @@ public class SnowWarItemStacks {
 		Random random = new Random();
 		ItemStack[] armor = new ItemStack[4];
 		for (int i = 0; i < 4; i++) {
-			ItemStack piece = new ItemStack(armorTypes[i]);
+			ItemStack piece = new ItemStackBuilder(armorTypes[i])
+					.getMetaDataBuilder()
+					.setLore("&r&fVon Oma gestrickt")
+					.build().build();
 			LeatherArmorMeta meta = (LeatherArmorMeta) piece.getItemMeta();
 			assert meta != null;
 			meta.setColor(Color.fromBGR(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
@@ -170,11 +185,60 @@ public class SnowWarItemStacks {
 		for (int i = 0; i < 5; i++) {
 			shovels[i] = new ItemStackBuilder(shovelTypes[i])
 					.getMetaDataBuilder()
-					.setDisplayName("§2 Schaufel")
-					.setLore("LOL")
+					.setDisplayName("&r&4Schneeschaufel")
+					.setLore("&r&fEine Schaufel für Schnee...",
+							 "&r&f",
+							 "&r&fKann mehr als nur",
+							 "&r&fSchnee schaufeln")
 					.build()
 					.build();
 		}
 	}
 	//=====================Shovels======================//
+
+	//===================Consumables====================//
+	public static final ItemStack Cookie = new ItemStackBuilder(Material.COOKIE)
+			.getMetaDataBuilder()
+			.setDisplayName("&r&6Keks")
+			.setLore("&r&fFür den Weihnachtsmann",
+					 "&r&f",
+					 "&r&fRiecht gut.",
+					 "&r&f+5 Gewicht",
+					 "&r&f+5 Schlechtes Gewissen")
+			.build().build();
+
+	public static final ItemStack Milk = new ItemStackBuilder(Material.MILK_BUCKET)
+			.getMetaDataBuilder()
+			.setDisplayName("&r&6Milch")
+			.setLore("&r&fFür den Weihnachtsmann",
+					 "&r&f",
+					 "&r&fSieht köstlich aus.",
+					 "&r&fDu bist",
+					 "&r&fLaktose intolerant")
+			.build().build();
+
+	public static final ItemStack Wine = new ItemStackBuilder(Material.POTION)
+			.getMetaDataBuilder()
+			.setDisplayName("&r&6Glühwein")
+			.setLore("&r&fRiecht köstlich",
+					 "&r&f",
+					 "&r&fwww.kmdd.de",
+			         "&r&fSpaaaaaß.",
+					 "&r&fZieh ab das Teil")
+			.build().build();
+
+	static {
+		PotionMeta meta = (PotionMeta) Wine.getItemMeta();
+		assert meta != null;
+		meta.setColor(Color.RED);
+		Wine.setItemMeta(meta);
+	}
+
+	private static final ItemStack[] consumables = {Cookie, Milk, Wine};
+
+	public static ItemStack getConsumable() {
+		return consumables[new Random().nextInt(consumables.length)];
+	}
+
+	//===================Consumables====================//
 }
