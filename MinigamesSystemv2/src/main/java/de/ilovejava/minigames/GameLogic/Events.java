@@ -6,6 +6,7 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -76,6 +77,10 @@ public interface Events {
 
 	default void onPlayerTeleport(PlayerTeleportEvent event) {
 		event.setCancelled(true);
+	}
+
+	default void onCraft(PrepareItemCraftEvent event) {
+
 	}
 
 	default void onEntityCombust(EntityCombustEvent event) {

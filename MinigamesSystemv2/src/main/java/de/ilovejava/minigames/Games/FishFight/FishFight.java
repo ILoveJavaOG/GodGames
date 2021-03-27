@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class FishFight extends Game {
 
 	//Name of the game
-	private static final String name = "SnowWar";
+	private static final String name = "FastFight";
 
 	//Register command
 	private static final GameCommand command = new GameCommand(name);
@@ -60,7 +60,7 @@ public class FishFight extends Game {
 	@Override
 	protected void setup() {
 		spawns = gameMap.getLocations().stream()
-				.filter((CustomLocation loc) -> loc.getData("SPAWN") != null)
+				.filter((CustomLocation loc) -> loc.getOption("SPAWN") != null)
 				.collect(Collectors.toList());
 	}
 

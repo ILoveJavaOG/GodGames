@@ -2,12 +2,12 @@ package de.ilovejava.crafttitle;
 
 import de.ilovejava.utils.Utils;
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_15_R1.ChatMessageType;
-import net.minecraft.server.v1_15_R1.IChatBaseComponent;
-import net.minecraft.server.v1_15_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_15_R1.PacketPlayOutChat;
+import net.minecraft.server.v1_16_R2.ChatMessageType;
+import net.minecraft.server.v1_16_R2.IChatBaseComponent;
+import net.minecraft.server.v1_16_R2.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_16_R2.PacketPlayOutChat;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class API_ActionBar {
                     String s = ChatColor.translateAlternateColorCodes('&', NachrichtNeu);
                       IChatBaseComponent icbc = ChatSerializer.a("{\"text\": \"" + s +
                         "\"}");
-                      PacketPlayOutChat bar = new PacketPlayOutChat(icbc,ChatMessageType.GAME_INFO);
+                      PacketPlayOutChat bar = new PacketPlayOutChat(icbc,ChatMessageType.GAME_INFO, PLAYER.getUniqueId());
                       ((CraftPlayer)PLAYER).getHandle().playerConnection.sendPacket(bar);
             }
            
@@ -31,7 +31,7 @@ public class API_ActionBar {
                      String s = ChatColor.translateAlternateColorCodes('&', NachrichtNeu);
                         IChatBaseComponent icbc = ChatSerializer.a("{\"text\": \"" + s +
                           "\"}");
-                        PacketPlayOutChat bar = new PacketPlayOutChat(icbc,ChatMessageType.GAME_INFO);
+                        PacketPlayOutChat bar = new PacketPlayOutChat(icbc,ChatMessageType.GAME_INFO, PLAYER.getUniqueId());
                         ((CraftPlayer)PLAYER).getHandle().playerConnection.sendPacket(bar);
 
                         if (!COUNT.containsKey(PLAYER.getName())){
@@ -51,6 +51,5 @@ public class API_ActionBar {
 
     private static void wait(final Player PLAYER, final String MESSAGE,final Integer ZEIT){
             Bukkit.getScheduler().runTaskLater(Utils.getInstance(), () -> sendActionBarTime(PLAYER,MESSAGE,ZEIT), 10);
-                         
     }
 }

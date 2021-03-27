@@ -29,6 +29,8 @@ public class MapLoader {
 		if (!gameFolder.exists()) {
 			if (!gameFolder.mkdir()) {
 				Bukkit.getConsoleSender().sendMessage("§3Could not create: " + gameFolder.getPath());
+			} else {
+				Bukkit.getConsoleSender().sendMessage("§3Created: " + gameFolder.getPath());
 			}
 		}
 		for (File game : gameFolder.listFiles()) {

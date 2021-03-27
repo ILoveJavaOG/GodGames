@@ -3,8 +3,7 @@ package de.ilovejava.minigames.MapTools;
 import com.mojang.datafixers.util.Pair;
 import lombok.Getter;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.Map;
 /**
  * Class to represent a map for a given game
  */
-public class GameMap {
+public class GameMap implements Optionable {
 
 	//World the map is set in
 	@Getter
@@ -52,17 +51,8 @@ public class GameMap {
 		this.probabilities = items;
 	}
 
-	/**
-	 * Method to retrieve option from the map
-	 *
-	 * @param key(DefaultOptions) Key to look at
-	 * @param castTo(T) CLass to cast to
-	 *
-	 * @return Object at key casted to T. May be null
-	 */
-	@Nullable
-	public <T> T getOption(String key, @NotNull Class<T> castTo) {
-		return castTo.cast(options.get(key));
+	public GameMap(GameMap map) {
+		this(map.mapName, map.world, map.options, map.locations, map.probabilities);
 	}
 
 	/**
@@ -72,40 +62,15 @@ public class GameMap {
 	 *
 	 * @return Object at key. May be null
 	 */
+	@Override
 	@Nullable
 	public Object getOption(String key) {
 		return options.get(key);
 	}
 
+	@Override
+	@Nullable
 	public <E extends Enum<E> & Options> Object getOption(E key) {
 		return options.get(key.name());
-	}
-
-	public <T, E extends Enum<E> & Options> T getOption(E key, Class<T> castTo) {
-		return castTo.cast(options.getOrDefault(key.name(), key.getDefaultValue()));
-	}
-
-	public Integer getIntOption(String key) {
-		return (Integer) options.get(key);
-	}
-
-	public <E extends Enum<E> & Options> Integer getIntOption(E key) {
-		return (Integer) options.getOrDefault(key.name(), key.getDefaultValue());
-	}
-
-	public Double getDoubleOption(String key) {
-		return (Double) options.get(key);
-	}
-
-	public <E extends Enum<E> & Options> Double getDoubleOption(E key) {
-		return (Double) options.getOrDefault(key.name(), key.getDefaultValue());
-	}
-
-	public String getStringOption(String key) {
-		return (String) options.get(key);
-	}
-
-	public <E extends Enum<E> & Options> String getStringOption(E key) {
-		return (String) options.getOrDefault(key.name(), key.getDefaultValue());
 	}
  }

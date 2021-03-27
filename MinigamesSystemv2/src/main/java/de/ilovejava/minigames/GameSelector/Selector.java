@@ -69,12 +69,12 @@ public class Selector implements InventoryHolder {
 		ItemStack display = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
 		ItemMeta meta = display.getItemMeta();
 		if (meta != null) {
-			meta.setDisplayName(map.getOption(GameOptions.TITLE.name(), String.class));
+			meta.setDisplayName(map.getStringOption(GameOptions.TITLE.name()));
 			List<String> lore = new ArrayList<>();
 			lore.add("State: Waiting");
 			lore.add("Current Players: 0");
-			lore.add("Minimum Players: " + map.getOption(GameOptions.MINPLAYERS.name(), Integer.class));
-			lore.add("Maximum Players: " + map.getOption(GameOptions.MAXPLAYERS.name(), Integer.class));
+			lore.add("Minimum Players: " + map.getIntOption(GameOptions.MINPLAYERS.name()));
+			lore.add("Maximum Players: " + map.getIntOption(GameOptions.MAXPLAYERS.name()));
 			meta.setLore(lore);
 			meta.addItemFlags();
 		}

@@ -20,7 +20,10 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -33,7 +36,7 @@ public class FishFightEvents implements Events {
 	private final HashMap<Player, FishingStatus> catching = new HashMap<>();
 
 	//Task to start auto bite
-	private int waiting;
+	private @NotNull BukkitTask waiting;
 
 	/**
 	 * Utility method to stop auto bite task
@@ -64,17 +67,23 @@ public class FishFightEvents implements Events {
 			boolean positive = random.nextBoolean();
 			int extraDelay = random.nextInt(50);
 			int delay = 40 + (positive ? extraDelay : -extraDelay);
-			waiting = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-				int autoFish = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-					event.setCancelled(true);
-					//Last state will now be bite
-					catching.get(player).setLastState(PlayerFishEvent.State.BITE);
-					Bukkit.getServer().getPluginManager().callEvent(new PlayerFishEvent(player, null, hook, PlayerFishEvent.State.BITE));
-					//Make hook dip under the water
-					hook.setVelocity(new Vector(0, -0.4, 0));
-				}, 0L, 40L);
-				catching.put(player, new FishingStatus(autoFish, currentState));
-			}, delay);
+			waiting = new BukkitRunnable() {
+				@Override
+				public void run() {
+					BukkitTask autoFish = new BukkitRunnable() {
+						@Override
+						public void run() {
+							event.setCancelled(true);
+							//Last state will now be bite
+							catching.get(player).setLastState(PlayerFishEvent.State.BITE);
+							Bukkit.getServer().getPluginManager().callEvent(new PlayerFishEvent(player, null, hook, PlayerFishEvent.State.BITE));
+							//Make hook dip under the water
+							hook.setVelocity(new Vector(0, -0.4, 0));
+						}
+					}.runTaskTimerAsynchronously(Lobby.getPlugin(), 0L, 40L);
+					catching.put(player, new FishingStatus(autoFish, currentState));
+				}
+			}.runTaskLater(Lobby.getPlugin(), delay);
 		//Natural catch
 		} else if (currentState == PlayerFishEvent.State.CAUGHT_FISH || currentState == PlayerFishEvent.State.CAUGHT_ENTITY) {
 			//Spawn fish and remove natural catch
@@ -100,11 +109,11 @@ public class FishFightEvents implements Events {
 				}
 			}
 			//Stop auto bite because rod is reeled in
-			Bukkit.getScheduler().cancelTask(waiting);
+			waiting.cancel();
 		//Miss catch or on ground
 		} else if (currentState != PlayerFishEvent.State.BITE) {
 			stopFishing(player);
-			Bukkit.getScheduler().cancelTask(waiting);
+			waiting.cancel();
 		}
 	}
 

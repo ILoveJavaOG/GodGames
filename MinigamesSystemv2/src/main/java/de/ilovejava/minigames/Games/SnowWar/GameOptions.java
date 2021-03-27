@@ -1,8 +1,9 @@
-package de.ilovejava.minigames.Games.SnowWar.HelperClasses;
+package de.ilovejava.minigames.Games.SnowWar;
 
 import de.ilovejava.minigames.MapTools.Options;
 
 public enum GameOptions implements Options {
+
 	TIME_BUILDING("Zeit bis das Bauen beginnt (in Sekunden)", 300),
 	NUM_TEAMS("Anzahl der Teams für die Map", 2),
 	DELAY_SNOWMAN("Zeit bis Scheemänner erneut gesetzt werden (in Sekunden)", 30),

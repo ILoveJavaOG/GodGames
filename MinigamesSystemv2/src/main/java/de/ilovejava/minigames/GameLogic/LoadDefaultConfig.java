@@ -3,7 +3,7 @@ package de.ilovejava.minigames.GameLogic;
 import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.GameSelector.Selector;
 import de.ilovejava.minigames.GameSelector.SelectorEvents;
-import de.ilovejava.minigames.Games.SnowWar.SnowWar;
+import de.ilovejava.minigames.Games.FireBall.FireBall;
 import de.ilovejava.minigames.Listeners.*;
 import de.ilovejava.minigames.MapTools.MapLoader;
 import org.bukkit.Bukkit;
@@ -73,6 +73,6 @@ public class LoadDefaultConfig {
 		//new Selector(IceScooterPVP.factory);
 		//new Selector(IceScooterTimeTrial.factory);
 		//new Selector(FishFight.factory);
-		new Selector(SnowWar.factory);
+		new Selector(FireBall.factory);
 	}
 }

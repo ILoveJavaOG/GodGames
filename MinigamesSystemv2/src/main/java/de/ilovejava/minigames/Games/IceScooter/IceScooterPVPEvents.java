@@ -8,6 +8,8 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 public class IceScooterPVPEvents implements IceScooterEvents, Events {
@@ -35,10 +37,15 @@ public class IceScooterPVPEvents implements IceScooterEvents, Events {
 				//Create particles
 				boat.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, boat.getLocation(), 10, 1.5, 1.5, 1.5);
 				//Stop boat
-				int breakTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> boat.setVelocity(stop), 1L, 1L);
+				BukkitTask task = new BukkitRunnable() {
+					@Override
+					public void run() {
+						boat.setVelocity(stop);
+					}
+				}.runTaskTimer(Lobby.getPlugin(), 1L, 1L);
 				//Reset state and stop task
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-					Bukkit.getScheduler().cancelTask(breakTask);
+					task.cancel();
 					player.setInvulnerable(false);
 				}, 21L);
 			}

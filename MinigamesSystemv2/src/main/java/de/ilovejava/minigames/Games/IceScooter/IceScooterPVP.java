@@ -116,7 +116,7 @@ public class IceScooterPVP extends Game {
 		World world = gameMap.getWorld();
 		//Spawn boats at given locations
 		gameMap.getLocations().stream()
-				.filter(location -> location.getData("BOAT") != null)
+				.filter(location -> location.getOption("BOAT") != null)
 				.limit(activePlayers.size())
 				.forEach(boatLocation -> allBoats.add(world.spawn(boatLocation.getLocation(), Boat.class)));
 		//Make boats take no damage

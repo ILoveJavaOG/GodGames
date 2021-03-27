@@ -3,6 +3,7 @@ package de.ilovejava.minigames.Games.SnowWar.Items;
 import de.ilovejava.ItemStackBuilder.ItemStackBuilder;
 import de.ilovejava.minigames.Communication.Tracker;
 import de.ilovejava.minigames.Games.SnowWar.SnowWar;
+import de.ilovejava.minigames.Games.SnowWar.SnowWarEvents;
 import de.ilovejava.minigames.Items.GameItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -40,7 +41,7 @@ public class RapidFire extends GameItem {
 	protected void useItem() {
 		//Get the game and redirect state
 		SnowWar war = (SnowWar) Tracker.getGame(holder);
-		war.enableRapidFire(holder);
+		((SnowWarEvents) war.getEventHandler()).enableRapidFire(holder);
 		holder.playSound(holder.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1f, 0.1f);
 	}
 }

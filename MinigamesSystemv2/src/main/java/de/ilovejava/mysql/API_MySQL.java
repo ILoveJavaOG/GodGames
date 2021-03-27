@@ -77,7 +77,7 @@ public class API_MySQL{
                      rs = st.executeQuery(qry);
              } catch (SQLException e) {
                      connect();
-                     System.err.println(e);
+                     e.printStackTrace(System.err);
              }
              return rs;
      }
@@ -85,7 +85,7 @@ public class API_MySQL{
      public boolean isConnect() {
     	 try {
 			return con.isClosed();
-		} catch (SQLException e) {}
+		} catch (SQLException ignored) {}
     	return false;
      }
 }

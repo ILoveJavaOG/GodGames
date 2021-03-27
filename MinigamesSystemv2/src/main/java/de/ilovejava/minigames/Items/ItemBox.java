@@ -1,8 +1,8 @@
 package de.ilovejava.minigames.Items;
 
 import de.ilovejava.lobby.Lobby;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -14,9 +14,6 @@ import java.util.List;
 public class ItemBox {
 
 	private final int itemSlot;
-
-	//Task during the selection
-	private int selection;
 
 	//State of the item
 	private boolean active = false;
@@ -114,18 +111,21 @@ public class ItemBox {
 		//Determine which items should be selected
 		selected = gen.getDistributedRandomNumber();
 		//Selection process
-		selection = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-			//Select items from list
-			GameItem item = possible.get(iteration % possible.size());
-			holder.getInventory().setItem(itemSlot, item.getDisplay());
-			iteration++;
-			//After 20 iterations set active item
-			if (iteration > 20) {
-				holder.getInventory().setItem(itemSlot, possible.get(selected).getDisplay());
-				active = true;
-				Bukkit.getScheduler().cancelTask(selection);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				//Select items from list
+				GameItem item = possible.get(iteration % possible.size());
+				holder.getInventory().setItem(itemSlot, item.getDisplay());
+				iteration++;
+				//After 20 iterations set active item
+				if (iteration > 20) {
+					holder.getInventory().setItem(itemSlot, possible.get(selected).getDisplay());
+					active = true;
+					cancel();
+				}
 			}
-		}, 0, 5L);
+		}.runTaskTimer(Lobby.getPlugin(), 0, 5L);
 	}
 
 	/**

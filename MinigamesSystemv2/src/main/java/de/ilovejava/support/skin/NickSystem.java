@@ -5,13 +5,13 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import de.ilovejava.utils.Utils;
 import de.ilovejava.uuid.uuidfetcher;
-import net.minecraft.server.v1_15_R1.*;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
+import net.minecraft.server.v1_16_R2.*;
+import net.minecraft.server.v1_16_R2.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_15_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -41,21 +41,10 @@ public class NickSystem {
 			Field f = profile.getClass().getDeclaredField("name");
 			f.setAccessible(true);
 			f.set(profile, nickname);
-			
-		}catch(NoSuchFieldException e){
-			e.printStackTrace();
-		}catch(SecurityException e){
-			e.printStackTrace();
-		}catch(IllegalArgumentException e){
-			e.printStackTrace();
-		}catch(IllegalAccessException e){
-			e.printStackTrace();
-		}catch(NoSuchMethodException e){
-			e.printStackTrace();
-		}catch(InvocationTargetException e){
+		} catch(NoSuchFieldException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | SecurityException e){
 			e.printStackTrace();
 		}
-		
+
 		MinecraftServer nmsServer = ((CraftServer)Bukkit.getServer()).getServer();
 		WorldServer nmsWelt = ((CraftWorld)Bukkit.getWorlds().get(0)).getHandle();
 		

@@ -1,6 +1,7 @@
 package de.ilovejava.minigames.Games.IceScooter;
 
 import de.ilovejava.lobby.Lobby;
+import de.ilovejava.minigames.Communication.RunnableWrapper;
 import de.ilovejava.minigames.GameLogic.Game;
 import de.ilovejava.minigames.GameLogic.GameCommand;
 import de.ilovejava.minigames.GameLogic.GameFactory;
@@ -10,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -66,7 +68,7 @@ public class IceScooterRace extends Game {
 	//Map of laps for the player
 	private final HashMap<Player, Integer> rounds = new HashMap<>();
 
-	private int positions;
+	private BukkitTask positions;
 
 	/**
 	 * Constructor for the game
@@ -90,7 +92,7 @@ public class IceScooterRace extends Game {
 			//Checkpoints
 			} else if (location.getName().contains("CHECKPOINT")) {
 				//Retrieve number of checkpoint
-				Integer number = location.getData("NUMBER", Integer.class);
+				Integer number = location.getIntOption("NUMBER");
 				//Check if another edge of the checkpoint has been found
 				if (cps.containsKey(number)) {
 					CustomLocation first = cps.get(number);
@@ -144,7 +146,7 @@ public class IceScooterRace extends Game {
 		World world = gameMap.getWorld();
 		//Spawn boats at given locations
 		gameMap.getLocations().stream()
-				.filter(location -> location.getData("BOAT") != null)
+				.filter(location -> location.getOption("BOAT") != null)
 				.limit(activePlayers.size())
 				.forEach(boatLocation -> allBoats.add(world.spawn(boatLocation.getLocation(), Boat.class)));
 		//Make boats take no damage
@@ -164,7 +166,7 @@ public class IceScooterRace extends Game {
 		}
 		state.sort();
 		//Task to update player position in the race
-		positions = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), state::sort, 0L, 1L);
+		positions = new RunnableWrapper(state::sort).runTaskTimerAsynchronously(0L, 1L);
 	}
 
 	private void adjustPlaces() {
@@ -180,7 +182,7 @@ public class IceScooterRace extends Game {
 	 */
 	@Override
 	public void stopGame() {
-		Bukkit.getScheduler().cancelTask(positions);
+		positions.cancel();
 		if (activePlayers.size() == 1) {
 			Boat boat = activeBoats.remove(0);
 			Player player = (Player) boat.getPassengers().get(0);
@@ -199,7 +201,7 @@ public class IceScooterRace extends Game {
 	 */
 	public void newLap(Player player) {
 		int currentLap = rounds.get(player);
-		int maxLap = gameMap.getOption(GameOptions.MAXLAP.name(), Integer.class);
+		int maxLap = gameMap.getIntOption(GameOptions.MAXLAP);
 		if (currentLap == maxLap) {
 			Boat boat = activeBoats.get(player.getLevel() - 1);
 			activeBoats.remove(boat);

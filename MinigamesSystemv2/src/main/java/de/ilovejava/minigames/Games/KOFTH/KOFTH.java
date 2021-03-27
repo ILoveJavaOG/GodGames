@@ -8,10 +8,13 @@ import de.ilovejava.minigames.MapTools.CustomLocation;
 import de.ilovejava.minigames.MapTools.GameMap;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -50,7 +53,7 @@ public class KOFTH extends Game {
 		}
 	};
 
-	private int heightChecker;
+	private @NotNull BukkitTask heightChecker;
 
 	/**
 	 * Method to setup the game. Must be called by game itself
@@ -58,7 +61,7 @@ public class KOFTH extends Game {
 	@Override
 	protected void setup() {
 		spawns = gameMap.getLocations().stream()
-				.filter((CustomLocation loc) -> loc.getData("SPAWN") != null)
+				.filter((CustomLocation loc) -> loc.getOption("SPAWN") != null)
 				.collect(Collectors.toList());
 	}
 
@@ -71,6 +74,7 @@ public class KOFTH extends Game {
 	public KOFTH() {
 		super(name);
 		registerEvents(new KOFTHEvents());
+		heightChecker = null;
 	}
 
 
@@ -94,11 +98,15 @@ public class KOFTH extends Game {
 			CustomLocation spawnPoint = spawns.remove(random);
 			playing.teleport(spawnPoint.getLocation());
 		}
-		heightChecker = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-			Optional<Player> lowest = activePlayers.stream()
-					.min(Comparator.comparingDouble(player -> player.getLocation().getY()));
-			lowest.ifPresent(this::playerKill);
-		}, 5*20L, 0L);
+		Consumer<Player> kill = this::playerKill;
+		heightChecker = new BukkitRunnable() {
+			@Override
+			public void run() {
+				Optional<Player> lowest = activePlayers.stream()
+						.min(Comparator.comparingDouble(player -> player.getLocation().getY()));
+				lowest.ifPresent(kill);
+			}
+		}.runTaskTimerAsynchronously(Lobby.getPlugin(), 0L, 5*20L);
 	}
 
 	/**
@@ -106,7 +114,7 @@ public class KOFTH extends Game {
 	 */
 	@Override
 	public void stopGame() {
-		Bukkit.getScheduler().cancelTask(heightChecker);
+		heightChecker.cancel();
 		gameOver();
 	}
 

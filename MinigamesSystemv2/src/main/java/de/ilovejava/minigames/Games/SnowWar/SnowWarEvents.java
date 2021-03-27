@@ -16,7 +16,6 @@ import de.ilovejava.lobby.Lobby;
 import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
 import de.ilovejava.minigames.GameLogic.Events;
-import de.ilovejava.minigames.Games.SnowWar.HelperClasses.GameOptions;
 import de.ilovejava.minigames.Games.SnowWar.HelperClasses.SnowManStatus;
 import de.ilovejava.minigames.Games.SnowWar.Items.SnowWarItems;
 import de.ilovejava.minigames.Items.GameItem;
@@ -43,6 +42,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -71,6 +72,7 @@ public class SnowWarEvents implements Events {
 	//=================================Communication================================//
 
 	//===================================Tracking==================================//
+
 	//Current edit sessions for the supply drops
 	protected final Set<EditSession> oldSessions = Sets.newConcurrentHashSet();
 
@@ -78,7 +80,7 @@ public class SnowWarEvents implements Events {
 	protected final Set<Location> buildBlocks = Sets.newConcurrentHashSet();
 
 	//Map which contains projectiles which should have trails
-	protected final ConcurrentHashMap<Projectile, Integer> particleTrails = new ConcurrentHashMap<>();
+	protected final ConcurrentHashMap<Projectile, BukkitTask> particleTrails = new ConcurrentHashMap<Projectile, BukkitTask>();
 
 	//Active players with rapid fire
 	private final Set<Player> rapidFire = Sets.newConcurrentHashSet();
@@ -90,7 +92,7 @@ public class SnowWarEvents implements Events {
 	/**
 	 * Constructor for the event class
 	 *
-	 * @param snowWar(SnowWar): The SnowWar instance which is using this class
+	 * @param snowWar(FastFight): The FastFight instance which is using this class
 	 */
 	public SnowWarEvents(SnowWar snowWar) {
 		this.snowWar = snowWar;
@@ -112,6 +114,19 @@ public class SnowWarEvents implements Events {
 				20L*snowWar.gameMap.getIntOption(GameOptions.RAPID_FIRE_DURATION));
 	}
 
+	public void clear() {
+		buildBlocks.forEach((location -> location.getBlock().setType(Material.AIR, true)));
+		buildBlocks.clear();
+		oldSessions.forEach(session -> session.undo(session));
+		oldSessions.clear();
+		//Remove particle trails
+		for (Map.Entry<Projectile, BukkitTask> task : particleTrails.entrySet()) {
+			task.getValue().cancel();
+			task.getKey().remove();
+		}
+		particleTrails.clear();
+	}
+
 	//==============================Game Communication=============================//
 
 	//=================================Kill Streak================================//
@@ -128,24 +143,27 @@ public class SnowWarEvents implements Events {
 		//Load the tree
 		loadTree(requester, dropSpot);
 		Random random = new Random();
-		int drop = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-			//Drop items
-			int numDropsSnowBall = random.nextInt(snowWar.gameMap.getIntOption(GameOptions.NUM_DROP_SNOWBALL_SUPPLY_DROP));
-			int numDropsSnow = random.nextInt(snowWar.gameMap.getIntOption(GameOptions.NUM_DROP_SNOWBLOCK_SUPPLY_DROP));
-			int xDir = random.nextInt(4) - 3;
-			int zDir = random.nextInt(4) - 3;
-			Location targetLocation = dropSpot.clone().add(xDir, 0, zDir);
-			for (int i = 0; i < numDropsSnowBall; i++) {
-				world.dropItem(targetLocation, fastBall);
+		BukkitTask drop = new BukkitRunnable() {
+			@Override
+			public void run() {
+				//Drop items
+				int numDropsSnowBall = random.nextInt(snowWar.gameMap.getIntOption(GameOptions.NUM_DROP_SNOWBALL_SUPPLY_DROP));
+				int numDropsSnow = random.nextInt(snowWar.gameMap.getIntOption(GameOptions.NUM_DROP_SNOWBLOCK_SUPPLY_DROP));
+				int xDir = random.nextInt(4) - 3;
+				int zDir = random.nextInt(4) - 3;
+				Location targetLocation = dropSpot.clone().add(xDir, 0, zDir);
+				for (int i = 0; i < numDropsSnowBall; i++) {
+					world.dropItem(targetLocation, fastBall);
+				}
+				for (int i = 0; i < numDropsSnow; i++) {
+					world.dropItem(targetLocation, new ItemStack(Material.SNOW_BLOCK));
+				}
 			}
-			for (int i = 0; i < numDropsSnow; i++) {
-				world.dropItem(targetLocation, new ItemStack(Material.SNOW_BLOCK));
-			}
-		}, 20L, 5L);
+		}.runTaskTimerAsynchronously(Lobby.getPlugin(), 20L, 5L);
 		//Drop a random shovel
 		world.dropItem(dropSpot, SnowWarItemStacks.shovels[random.nextInt(SnowWarItemStacks.shovels.length)]);
 		//Stop dropping items
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> Bukkit.getScheduler().cancelTask(drop), 20L + 5L * snowWar.gameMap.getIntOption(GameOptions.NUM_ITERATIONS_SUPPLY_DROP));
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), drop::cancel, 20L + 5L * snowWar.gameMap.getIntOption(GameOptions.NUM_ITERATIONS_SUPPLY_DROP));
 	}
 
 	/**
@@ -200,15 +218,16 @@ public class SnowWarEvents implements Events {
 			}
 			//Valid streak activation
 			if (validSelection) {
+				StreakManager manager = snowWar.getStreaks();
 				switch (streak) {
 					case SONAR:
-						snowWar.activateSonar(user);
+						manager.activateSonar(user, snowWar.getActivePlayers(), snowWar.getGameMap().getIntOption(GameOptions.TIME_SONAR));
 						break;
 					case BOMBER:
-						snowWar.activateBomber(user);
+						manager.activateBomber(user);
 						break;
 					case SUPPLYDROP:
-						snowWar.activateSupplyDrop(user, clicked != null ? clicked.getLocation() : user.getLocation());
+						manager.activateSupplyDrop(user, clicked != null ? clicked.getLocation() : user.getLocation());
 						break;
 					default:
 						break;
@@ -301,22 +320,25 @@ public class SnowWarEvents implements Events {
 				}, 20L*3);
 			}, 0L);
 			//Task while bombing
-			AtomicInteger bombingTask = new AtomicInteger(
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-						//Spawn bombs
-						for (Arrow arrow : formation) {
-							Location dropSpot = arrow.getLocation();
-							FallingBlock snowball = world.spawnFallingBlock(dropSpot, Bukkit.createBlockData(Material.SNOW_BLOCK));
-							snowball.setHurtEntities(false);
-							snowball.setDropItem(false);
-							//Bind snowball
-							Tracker.bindEntity(snowball, event.getPlayer());
+			BukkitTask bombingTask =
+					new BukkitRunnable() {
+						@Override
+						public void run() {
+							//Spawn bombs
+							for (Arrow arrow : formation) {
+								Location dropSpot = arrow.getLocation();
+								FallingBlock snowball = world.spawnFallingBlock(dropSpot, Bukkit.createBlockData(Material.SNOW_BLOCK));
+								snowball.setHurtEntities(false);
+								snowball.setDropItem(false);
+								//Bind snowball
+								Tracker.bindEntity(snowball, event.getPlayer());
+							}
 						}
-					},20L*3, 5*20L)
-			);
+					}.runTaskTimerAsynchronously(Lobby.getPlugin(), 20L*3, 20L*5);
+
 			//Stop bombing and remove entities
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-				Bukkit.getScheduler().cancelTask(bombingTask.get());
+				bombingTask.cancel();
 				for (Arrow arrow : formation) {
 					for (Entity passenger : arrow.getPassengers()) {
 						arrow.removePassenger(passenger);
@@ -325,7 +347,7 @@ public class SnowWarEvents implements Events {
 					}
 					arrow.remove();
 				}
-			}, 20L*(3 + 5*snowWar.gameMap.getIntOption(GameOptions.BOMBER_DROPS)));
+			}, 20L*(3 + 5L *snowWar.gameMap.getIntOption(GameOptions.BOMBER_DROPS)));
 		}
 	}
 
@@ -345,12 +367,9 @@ public class SnowWarEvents implements Events {
 		if ((5 <= raw && raw <= 8) || 36 <= raw && raw <= 39) {
 			event.setCancelled(true);
 		} else {
+			if (event.getSlotType() == InventoryType.SlotType.RESULT) return;
 			Player dropper = (Player) event.getWhoClicked();
 			int slot = event.getSlot();
-			if (slot < 0) {
-				event.setCancelled(true);
-				return;
-			}
 			//Inventory stuff
 			Inventory inventory = event.getInventory();
 			ItemStack[] contents = inventory.getContents();
@@ -358,7 +377,7 @@ public class SnowWarEvents implements Events {
 			boolean isCrafting = (event.getSlotType() == InventoryType.SlotType.CRAFTING);
 			//Item at target slot
 			ItemStack item = isCrafting? contents[slot] : dropper.getInventory().getItem(slot);
-			if (item != null) {
+			if (item != null && slot >= 0) {
 				InventoryAction action = event.getAction();
 				//Checks if items should be dropped
 				boolean oneSlot = (action == InventoryAction.DROP_ONE_SLOT);
@@ -451,17 +470,18 @@ public class SnowWarEvents implements Events {
 		//Snowball which hit
 		if (projectile instanceof Snowball) {
 			//Remove projectile
-			int task = particleTrails.remove(projectile);
+			BukkitTask task = particleTrails.remove(projectile);
 			projectile.remove();
-			Bukkit.getScheduler().cancelTask(task);
+			task.cancel();
 			Entity hitEntity = hitEvent.getHitEntity();
 			ProjectileSource shooter = projectile.getShooter();
 			if (hitEntity instanceof Player && shooter instanceof Player) {
 				Player source = (Player) shooter;
 				Player hit = (Player) hitEntity;
 				//Get the teams
-				int sourceTeam = snowWar.playerData.get(source).getTeam();
-				int killerTeam = snowWar.playerData.get(hit).getTeam();
+				StreakManager manager = snowWar.getStreaks();
+				int sourceTeam = manager.playerData.get(source).getTeam();
+				int killerTeam = manager.playerData.get(hit).getTeam();
 				//Mark hits
 				if (sourceTeam != killerTeam) {
 					//Player is blocking
@@ -471,7 +491,7 @@ public class SnowWarEvents implements Events {
 					} else {
 						snowWar.playerHit(hit, source);
 						hit.playSound(hit.getLocation(), Sound.ITEM_AXE_STRIP, 1.0f, 1.0f);
-						snowWar.increaseHit(source);
+						snowWar.getStreaks().increaseHit(source);
 						source.playSound(source.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
 					}
 				}
@@ -546,6 +566,8 @@ public class SnowWarEvents implements Events {
 	 * @param damaged(Player): Player who recieves the damage
 	 */
 	private void onPlayerAttack(Player damager, Player damaged) {
+		StreakManager manager = snowWar.getStreaks();
+		if (manager.playerData.get(damager).getTeam() != manager.playerData.get(damaged).getTeam()) return;
 		ItemStack handItem = damager.getInventory().getItemInMainHand();
 		Material itemType = handItem.getType();
 		//Check if item in hand is shovel
@@ -564,9 +586,6 @@ public class SnowWarEvents implements Events {
 			snowWar.playerHit(damaged, damager);
 			snowWar.playerHit(damaged, damager);
 		}
-		//Mark hit
-		damager.playSound(damager.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1f, 0.8f);
-		snowWar.increaseHit(damager);
 	}
 
 	/**
@@ -576,7 +595,8 @@ public class SnowWarEvents implements Events {
 	 * @param source(Entity): Source of the explosion
 	 */
 	private void onExplosion(Player damaged, Entity source) {
-		int playerTeam = snowWar.playerData.get(damaged).getTeam();
+		StreakManager manager = snowWar.getStreaks();
+		int playerTeam = manager.playerData.get(damaged).getTeam();
 		Player damager;
 		int damagerTeam;
 		//Get who damaged
@@ -588,10 +608,10 @@ public class SnowWarEvents implements Events {
 			return;
 		}
 		//Mark as hit
-		damagerTeam = snowWar.playerData.get(damager).getTeam();
+		damagerTeam = manager.playerData.get(damager).getTeam();
 		if (playerTeam != damagerTeam) {
 			snowWar.playerHit(damaged, damager);
-			snowWar.increaseHit(damager);
+			snowWar.getStreaks().increaseHit(damager);
 		}
 	}
 
@@ -629,18 +649,21 @@ public class SnowWarEvents implements Events {
 	private void onLaunch(Projectile projectile) {
 		AtomicInteger counter = new AtomicInteger(0);
 		//Task to create trail
-		int trailTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> {
-			//Stop trails after time
-			if (counter.incrementAndGet() > 160) {
-				int task = particleTrails.get(projectile);
-				particleTrails.remove(projectile);
-				projectile.remove();
-				Bukkit.getScheduler().cancelTask(task);
-			} else {
-				//Create particle
-				projectile.getWorld().spawnParticle(Particle.SNOWBALL, projectile.getLocation(), 5);
+		BukkitTask trailTask = new BukkitRunnable() {
+			@Override
+			public void run() {
+				//Stop trails after time
+				if (counter.incrementAndGet() > 160) {
+					BukkitTask task = particleTrails.get(projectile);
+					particleTrails.remove(projectile);
+					projectile.remove();
+					task.cancel();
+				} else {
+					//Create particle
+					projectile.getWorld().spawnParticle(Particle.SNOWBALL, projectile.getLocation(), 5);
+				}
 			}
-		}, 0L, 5L);
+		}.runTaskTimerAsynchronously(Lobby.getPlugin(), 0L, 5L);
 		particleTrails.put(projectile, trailTask);
 	}
 
@@ -678,8 +701,9 @@ public class SnowWarEvents implements Events {
 	private void takeSnowball(Player taker, Entity interacted) {
 		Location snowBallSpot = interacted.getLocation();
 		//Check if spot is still taken
-		for (int team = 0; team < snowWar.takenSnowballSpots.size(); team++) {
-			ConcurrentHashMap<Location, SnowManStatus> taken = snowWar.takenSnowballSpots.get(team);
+		SnowWarMap map = (SnowWarMap) snowWar.gameMap;
+		for (int team = 0; team < map.takenSnowballSpots.size(); team++) {
+			ConcurrentHashMap<Location, SnowManStatus> taken = map.takenSnowballSpots.get(team);
 			if (taken.containsKey(snowBallSpot)) {
 				//Increment count and give player item
 				int currentCount = taken.get(snowBallSpot).getCount().incrementAndGet();
@@ -693,7 +717,7 @@ public class SnowWarEvents implements Events {
 					int finalTeam = team;
 					Bukkit.getScheduler().scheduleSyncDelayedTask(
 							Lobby.getPlugin(),
-							() -> snowWar.freeSnowBallSpots.get(finalTeam).add(snowBallSpot),
+							() -> map.freeSnowBallSpots.get(finalTeam).add(snowBallSpot),
 							20L*snowWar.gameMap.getIntOption(GameOptions.SNOWMAN_COOLDOWN));
 				}
 			}
@@ -753,7 +777,7 @@ public class SnowWarEvents implements Events {
 		Block broken = event.getBlock();
 		Location breakLocation = broken.getLocation();
 		//Check if present is broken
-		if (snowWar.takenPresentSpots.contains(breakLocation)) {
+		if (((SnowWarMap) snowWar.gameMap).takenPresentSpots.contains(breakLocation)) {
 			event.setCancelled(true);
 			breakPresent(breakLocation, breaker);
 		} else {
@@ -768,12 +792,13 @@ public class SnowWarEvents implements Events {
 	 * @param breaker(Player): Player who broke the block
 	 */
 	private void breakPresent(Location breakLocation, Player breaker) {
-		snowWar.takenPresentSpots.remove(breakLocation);
+		SnowWarMap map = (SnowWarMap) snowWar.gameMap;
+		map.takenPresentSpots.remove(breakLocation);
 		breakLocation.getBlock().setType(Material.AIR, true);
 		//Add location back to free spots
 		Bukkit.getScheduler().scheduleSyncDelayedTask(
 				Lobby.getPlugin(),
-				() -> snowWar.freePresentSpots.add(breakLocation),
+				() -> map.freePresentSpots.add(breakLocation),
 				(20L*snowWar.gameMap.getIntOption(GameOptions.PRESENT_COOLDOWN)));
 		//Check if player already has an active item
 		if (!ItemBox.hasBox(breaker)) {
@@ -894,7 +919,7 @@ public class SnowWarEvents implements Events {
 		World world = loader.getWorld();
 		//Add needed offset
 		Location shifted = dropSpot.clone().add(-7, 9, 1);
-		File myTreeFile = new File("plugins/Minigames/SnowWar/Schematics/ChristmasTree.schem");
+		File myTreeFile = new File("plugins/Minigames/FastFight/Schematics/ChristmasTree.schem");
 		ClipboardFormat format = ClipboardFormats.findByFile(myTreeFile);
 		try {
 			assert format != null;

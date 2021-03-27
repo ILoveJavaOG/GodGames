@@ -24,7 +24,7 @@ public class CheckPoint implements Comparable<CheckPoint> {
 	public CheckPoint(CustomLocation first, CustomLocation second) {
 		this.first = first;
 		this.second = second;
-		this.number = first.getData("NUMBER", Integer.class);
+		this.number = first.getIntOption("NUMBER");
 	}
 
 	private double square(double x) {

@@ -43,17 +43,15 @@ public class Anvil extends GameItem {
 			FallingBlock anvil = loc.getWorld().spawnFallingBlock(loc.add(0, 3, 0), Bukkit.createBlockData(Material.ANVIL));
 			anvil.setGravity(false);
 			//After 1 seconds drop anvil down
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> anvil.setGravity(true), 20L);
+			//Remove anvil after 3 seconds
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-				anvil.setGravity(true);
-				//Remove anvil after 3 seconds
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-					if (anvil.isOnGround()) {
-						anvil.getLocation().getBlock().setType(Material.AIR);
-					} else  {
-						anvil.remove();
-					}
-				}, 60L);
-			}, 20L);
+				if (anvil.isOnGround()) {
+					anvil.getLocation().getBlock().setType(Material.AIR);
+				} else  {
+					anvil.remove();
+				}
+			}, 80L);
 		}
 	}
 }

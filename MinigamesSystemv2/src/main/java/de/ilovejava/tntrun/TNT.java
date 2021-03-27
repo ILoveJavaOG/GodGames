@@ -155,19 +155,15 @@ public class TNT implements TNTRun{
 	}
 	
 	public void getBlockToRemove() {
-		timer = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getInstance(), new Runnable() {
-			
-			@Override
-			public void run() {
-				if(state == GameState.RESET) {Bukkit.getScheduler().cancelTask(timer);; System.out.println("wird gel§scht!"); return;}
-				for(Player p : player) {
-					Location tnt = p.getLocation();
-					tnt.setY(tnt.getY()-2);
-					Location sand = p.getLocation();
-					sand.setY(sand.getY()-1);
-					destroyBlocks(tnt, sand);
-					if(p.getLocation().getY() <= 0.0) {removePlayerFromGame(p);}
-				}
+		timer = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getInstance(), () -> {
+			if(state == GameState.RESET) {Bukkit.getScheduler().cancelTask(timer);; System.out.println("wird gel§scht!"); return;}
+			for(Player p : player) {
+				Location tnt = p.getLocation();
+				tnt.setY(tnt.getY()-2);
+				Location sand = p.getLocation();
+				sand.setY(sand.getY()-1);
+				destroyBlocks(tnt, sand);
+				if(p.getLocation().getY() <= 0.0) {removePlayerFromGame(p);}
 			}
 		}, 0, 1L);
 	}

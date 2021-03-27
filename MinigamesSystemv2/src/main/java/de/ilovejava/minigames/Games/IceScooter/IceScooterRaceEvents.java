@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -39,10 +41,15 @@ public class IceScooterRaceEvents implements IceScooterEvents, Events {
 			//Create particles
 			boat.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, boat.getLocation(), 10, 1.5, 1.5, 1.5);
 			//Stop boat
-			int rotation = Bukkit.getScheduler().scheduleSyncRepeatingTask(Lobby.getPlugin(), () -> boat.setVelocity(stop), 1L, 1L);
+			BukkitTask rotation = new BukkitRunnable() {
+				@Override
+				public void run() {
+					boat.setVelocity(stop);
+				}
+			}.runTaskTimerAsynchronously(Lobby.getPlugin(), 1L, 1L);
 			//Reset state and stop task
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Lobby.getPlugin(), () -> {
-				Bukkit.getScheduler().cancelTask(rotation);
+				rotation.cancel();
 				player.setInvulnerable(false);
 			}, 21L);
 		}

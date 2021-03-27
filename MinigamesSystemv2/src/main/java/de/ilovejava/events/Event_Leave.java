@@ -6,7 +6,7 @@ import de.ilovejava.user.User;
 import de.ilovejava.utils.Utils;
 import de.ilovejava.uuid.uuidfetcher;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

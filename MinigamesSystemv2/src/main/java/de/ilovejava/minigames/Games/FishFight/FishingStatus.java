@@ -2,8 +2,8 @@ package de.ilovejava.minigames.Games.FishFight;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Calendar;
 
@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class FishingStatus {
 
 	//Currently assigned auto bite task
-	private final int task;
+	private final BukkitTask task;
 
 	//Start of bite
 	private final long start = Calendar.getInstance().getTimeInMillis();
@@ -25,11 +25,10 @@ public class FishingStatus {
 
 	/**
 	 * Constructor for the status
-	 *
-	 * @param task(int): Task id for auto bite
 	 * @param lastState(PlayerFishEvent.State): Last known state
+	 * @param task
 	 */
-	public FishingStatus(int task, PlayerFishEvent.State lastState) {
+	public FishingStatus(BukkitTask task, PlayerFishEvent.State lastState) {
 		this.task = task;
 		this.lastState = lastState;
 	}
@@ -38,7 +37,7 @@ public class FishingStatus {
 	 * Utility method to stop the auto bite task
 	 */
 	public void stop() {
-		Bukkit.getScheduler().cancelTask(task);
+		task.cancel();
 	}
 
 	/**

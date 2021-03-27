@@ -92,7 +92,7 @@ public class IceScooterTimeTrial extends Game {
 				//Checkpoints
 			} else if (location.getName().contains("CHECKPOINT")) {
 				//Retrieve number of checkpoint
-				Integer number = location.getData("NUMBER", Integer.class);
+				Integer number = location.getIntOption("NUMBER");
 				//Check if another edge of the checkpoint has been found
 				if (cps.containsKey(number)) {
 					CustomLocation first = cps.get(number);
@@ -145,7 +145,7 @@ public class IceScooterTimeTrial extends Game {
 		World world = gameMap.getWorld();
 		//Spawn boats at given locations
 		gameMap.getLocations().stream()
-				.filter(location -> location.getData("BOAT") != null)
+				.filter(location -> location.getOption("BOAT") != null)
 				.limit(activePlayers.size())
 				.forEach(boatLocation -> allBoats.add(world.spawn(boatLocation.getLocation(), Boat.class)));
 		//Make boats take no damage
@@ -183,7 +183,7 @@ public class IceScooterTimeTrial extends Game {
 		if (currentLap > 0) {
 			stopTime(player);
 		}
-		int maxLap = gameMap.getOption(GameOptions.MAXLAP.name(), Integer.class);
+		int maxLap = gameMap.getIntOption(GameOptions.MAXLAP);
 		if (currentLap == maxLap) {
 			Boat boat = activeBoats.get(player.getLevel() - 1);
 			activeBoats.remove(boat);
@@ -207,7 +207,7 @@ public class IceScooterTimeTrial extends Game {
 		if (times.containsKey(player)) {
 			times.get(player).add(start);
 		} else {
-			List<Long> lapTimes = new ArrayList<>(gameMap.getOption(GameOptions.MAXLAP.name(), Integer.class));
+			List<Long> lapTimes = new ArrayList<>(gameMap.getIntOption(GameOptions.MAXLAP));
 			times.put(player, lapTimes);
 		}
 	}

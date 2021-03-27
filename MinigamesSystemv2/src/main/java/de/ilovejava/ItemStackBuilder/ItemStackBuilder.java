@@ -11,7 +11,7 @@ public class ItemStackBuilder {
 	private final ItemStack item;
 
 	public ItemStackBuilder(ItemStack stack) {
-		this.item = new ItemStack(stack);
+		this.item = new ItemStack(stack.clone());
 	}
 
 	public ItemStackBuilder(Material type) {

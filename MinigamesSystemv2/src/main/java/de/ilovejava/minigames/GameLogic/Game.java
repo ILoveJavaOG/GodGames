@@ -35,6 +35,7 @@ public abstract class Game {
 	@Getter
 	private final int id;
 
+	@Getter
 	//Players who are actively participating
 	protected Set<Player> activePlayers = new HashSet<>();
 
@@ -57,14 +58,16 @@ public abstract class Game {
 	private boolean isLoading = false;
 
 	//Id of the current loading task
-	private Integer loadingTask = null;
+	private int loadingTask;
 
 	private final int defaultLoadingTime = 10;
+
 	//Default load time
 	private int loadingTime = defaultLoadingTime;
 
 	protected HashMap<Class<?>, Method> gameEvents = new HashMap<>();
 
+	@Getter
 	protected Events eventHandler;
 
 	/**
@@ -104,7 +107,7 @@ public abstract class Game {
 		Tracker.registerPlayer(joinedPlayer, getId());
 		this.playerJoin(joinedPlayer);
 		//Start loading if minimum number of players is reached
-		if (this.getGameMap().getOption(GameOptions.MINPLAYERS.name(), Integer.class) <= getNumPlayers() && !isLoading) {
+		if (this.getGameMap().getIntOption(GameOptions.MINPLAYERS.name()) <= getNumPlayers() && !isLoading) {
 			load();
 		}
 	}
@@ -142,7 +145,6 @@ public abstract class Game {
 	 */
 	private void cancelLoad() {
 		Bukkit.getScheduler().cancelTask(loadingTask);
-		loadingTask = null;
 		isLoading = false;
 		loadingTime = defaultLoadingTime;
 	}
@@ -183,7 +185,7 @@ public abstract class Game {
 		Tracker.unregisterPlayer(leavingPlayer);
 		this.playerLeave(leavingPlayer);
 		//Stop loading if not enough players
-		if (this.getGameMap().getOption(GameOptions.MINPLAYERS.name(), Integer.class) > getNumPlayers() && isLoading) {
+		if (this.getGameMap().getIntOption(GameOptions.MINPLAYERS.name()) > getNumPlayers() && isLoading) {
 			abortLoad();
 		}
 	}
@@ -191,6 +193,8 @@ public abstract class Game {
 	protected void gameOver() {
 		activePlayers.forEach(Tracker::unregisterPlayer);
 		watchingPlayers.forEach(Tracker::unregisterPlayer);
+		activePlayers.forEach(active -> active.teleport(gameMap.getWorld().getSpawnLocation()));
+		watchingPlayers.forEach(active -> active.teleport(gameMap.getWorld().getSpawnLocation()));
 		Selector selector = Selector.selectors.get(name);
 		selector.nextGame(getId(), gameMap);
 	}

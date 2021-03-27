@@ -159,7 +159,7 @@ public class SnowWarItemStacks {
 	//======================Armor=======================//
 	private static final Material[] armorTypes = {Material.LEATHER_BOOTS, Material.LEATHER_LEGGINGS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET};
 
-	public static ItemStack[] getArmor() {
+	public static ItemStack[] getArmor(int team) {
 		Random random = new Random();
 		ItemStack[] armor = new ItemStack[4];
 		for (int i = 0; i < 4; i++) {
@@ -169,7 +169,8 @@ public class SnowWarItemStacks {
 					.build().build();
 			LeatherArmorMeta meta = (LeatherArmorMeta) piece.getItemMeta();
 			assert meta != null;
-			meta.setColor(Color.fromBGR(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
+			Color color = (team == 1 ? Color.BLUE : Color.RED);
+			meta.setColor(color);
 			piece.setItemMeta(meta);
 			armor[i] = piece;
 		}

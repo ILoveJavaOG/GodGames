@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Class to represent a location
  */
-public class CustomLocation {
+public class CustomLocation implements Optionable {
 
 	//Location which gets encapsulated
 	@Getter
@@ -63,28 +63,21 @@ public class CustomLocation {
 	}
 
 	/**
-	 * Method to retrieve option by key and cast to given class
-	 *
-	 * @param key(String) Key to look for
-	 * @param castTo(Class) Class to cast to
-	 *
-	 * @return If key contains data the data will be returned as castTo class. Null if not
-	 */
-	@Nullable
-	public <T> T getData(String key, Class<T> castTo) {
-		return castTo.cast(data.get(key));
-	}
-
-	/**
 	 * Method to retrieve option by key
 	 *
 	 * @param key(String) Key to look for
 	 *
 	 * @return Object stored at the key. Null if no object is stored
 	 */
+	@Override
 	@Nullable
-	public Object getData(String key) {
+	public Object getOption(String key) {
 		return data.get(key);
+	}
+
+	@Override
+	public <E extends Enum<E> & Options> Object getOption(E key) {
+		return data.get(key.name());
 	}
 
 	public boolean containsData(String key) {

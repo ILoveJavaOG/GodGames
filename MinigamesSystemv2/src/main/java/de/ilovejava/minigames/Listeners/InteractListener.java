@@ -4,10 +4,7 @@ import de.ilovejava.minigames.Communication.IsUsed;
 import de.ilovejava.minigames.Communication.Tracker;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -56,6 +53,12 @@ public class InteractListener implements Listener {
 	@IsUsed
 	@EventHandler
 	public void onEntityInteract(PlayerInteractAtEntityEvent event) {
+		Tracker.redirectEvent(event.getPlayer(), event);
+	}
+
+	@IsUsed
+	@EventHandler
+	public void onItemSwitch(PlayerItemHeldEvent event) {
 		Tracker.redirectEvent(event.getPlayer(), event);
 	}
 }

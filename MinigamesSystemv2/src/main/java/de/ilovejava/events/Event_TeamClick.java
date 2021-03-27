@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import de.ilovejava.commands.Command_Nick;
 import de.ilovejava.support.skin.NickSystem;
 import de.ilovejava.utils.Utils;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
